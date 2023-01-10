@@ -1,6 +1,5 @@
 package com.mahmoudhamdyae.smartlearning.ui.auth.login
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

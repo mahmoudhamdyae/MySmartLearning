@@ -11,13 +11,21 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.mahmoudhamdyae.smartlearning.data.models.User
+import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.TEACHER
+import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.STUDENT
+import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.NOTSET
 
+enum class IsTeacher() {
+    TEACHER, STUDENT, NOTSET
+}
 class LogInViewModel : ViewModel() {
 
     // EditTexts fields
     val userName = MutableLiveData<String>()
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
+
+    val isTeacher = MutableLiveData(NOTSET)
 
     val imageUri = MutableLiveData<String?>()
 
@@ -38,7 +46,7 @@ class LogInViewModel : ViewModel() {
     private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference.child("images")
 
     private fun validateTextsSignUp(): Boolean {
-        return if (userName.value.isNullOrEmpty() || email.value.isNullOrEmpty() || password.value.isNullOrEmpty()) {
+        return if (userName.value.isNullOrEmpty() || email.value.isNullOrEmpty() || password.value.isNullOrEmpty() || isTeacher.value == NOTSET) {
             _error.value = "Field Can\'t be empty"
             false
         } else {
@@ -96,7 +104,9 @@ class LogInViewModel : ViewModel() {
     }
 
     private fun saveUserInDatabase() {
-        val user = User(userName.value!!, email.value!!, imageUri.value, true, mAuth.currentUser!!.uid)
+        val isTeacher = isTeacher.value == TEACHER
+
+        val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, mAuth.currentUser!!.uid)
         databaseReference.child(mAuth.currentUser!!.uid).setValue(user).addOnSuccessListener {
         }.addOnFailureListener {
                 _error.value = it.message

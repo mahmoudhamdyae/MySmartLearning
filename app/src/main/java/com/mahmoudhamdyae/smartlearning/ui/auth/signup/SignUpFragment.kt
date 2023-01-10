@@ -10,7 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentSignUpBinding
+import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher
 import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
 
 private const val PICK_IMAGE = 1
@@ -49,6 +51,14 @@ class SignUpFragment : Fragment() {
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
+        }
+
+        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.teacher_radio_button) {
+                viewModel.isTeacher.value = IsTeacher.TEACHER
+            } else {
+                viewModel.isTeacher.value = IsTeacher.STUDENT
+            }
         }
 
         viewModel.error.observe(viewLifecycleOwner) {

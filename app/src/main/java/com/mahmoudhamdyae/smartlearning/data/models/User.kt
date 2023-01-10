@@ -6,4 +6,4 @@ data class User (
     val imageUri: String?,
     val isTeacher: Boolean,
     val userId: String
-)
+    )
