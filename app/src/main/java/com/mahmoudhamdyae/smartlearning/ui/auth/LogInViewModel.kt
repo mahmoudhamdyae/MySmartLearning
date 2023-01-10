@@ -12,8 +12,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.TEACHER
-import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.STUDENT
 import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.NOTSET
+import com.mahmoudhamdyae.smartlearning.utils.Constants
 
 enum class IsTeacher() {
     TEACHER, STUDENT, NOTSET
@@ -42,8 +42,8 @@ class LogInViewModel : ViewModel() {
         get() = _navigate
 
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child("users")
-    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference.child("images")
+    private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.USERS)
+    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference.child(Constants.IMAGES)
 
     private fun validateTextsSignUp(): Boolean {
         return if (userName.value.isNullOrEmpty() || email.value.isNullOrEmpty() || password.value.isNullOrEmpty() || isTeacher.value == NOTSET) {

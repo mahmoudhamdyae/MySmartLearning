@@ -1,9 +1,9 @@
 package com.mahmoudhamdyae.smartlearning.data.models
 
 data class User (
-    val userName: String,
-    val email: String,
-    val imageUri: String?,
-    val isTeacher: Boolean,
-    val userId: String
+    val userName: String = "",
+    val email: String = "",
+    val imageUri: String? = "",
+    val isTeacher: Boolean = false,
+    val userId: String = ""
     )
