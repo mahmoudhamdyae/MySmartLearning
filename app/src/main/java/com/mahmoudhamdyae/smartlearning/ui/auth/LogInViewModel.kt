@@ -1,12 +1,15 @@
 package com.mahmoudhamdyae.smartlearning.ui.auth
 
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.mahmoudhamdyae.smartlearning.data.models.User
 
 class LogInViewModel : ViewModel() {
@@ -15,6 +18,8 @@ class LogInViewModel : ViewModel() {
     val userName = MutableLiveData<String>()
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
+
+    val imageUri = MutableLiveData<String?>()
 
     private var _error = MutableLiveData<String>()
     val error: LiveData<String>
@@ -30,6 +35,7 @@ class LogInViewModel : ViewModel() {
 
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child("users")
+    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference.child("images")
 
     private fun validateTextsSignUp(): Boolean {
         return if (userName.value.isNullOrEmpty() || email.value.isNullOrEmpty() || password.value.isNullOrEmpty()) {
@@ -59,6 +65,7 @@ class LogInViewModel : ViewModel() {
                         // Sign up success.
                         Log.d("SignUp", "createUserWithEmail:success")
                         saveUserInDatabase()
+                        saveProfilePicture()
                         navigate()
                     } else {
                         // Sign up fails
@@ -89,11 +96,26 @@ class LogInViewModel : ViewModel() {
     }
 
     private fun saveUserInDatabase() {
-        val user = User(userName.value!!, email.value!!, true, mAuth.currentUser!!.uid)
+        val user = User(userName.value!!, email.value!!, imageUri.value, true, mAuth.currentUser!!.uid)
         databaseReference.child(mAuth.currentUser!!.uid).setValue(user).addOnSuccessListener {
         }.addOnFailureListener {
                 _error.value = it.message
             }
+    }
+
+    private fun saveProfilePicture() {
+        if (imageUri.value != null) {
+            _loading.value = true
+            mStorageRef.child(mAuth.currentUser!!.uid + ".jpg").putFile(imageUri.value!!.toUri())
+                .addOnCompleteListener { task ->
+                    _loading.value = false
+                    if (task.isSuccessful) {
+                        //
+                    } else {
+                        _error.value = task.exception.toString()
+                    }
+                }
+        }
     }
 
     private fun navigate() {

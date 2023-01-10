@@ -51,13 +51,5 @@ class LogInFragment : Fragment() {
                 viewModel.finishNavigate()
             }
         }
-
-//        viewModel.loading.observe(viewLifecycleOwner) {
-//            if (it) {
-//                binding.progressBar.visibility = View.VISIBLE
-//            } else {
-//                binding.progressBar.visibility = View.GONE
-//            }
-//        }
     }
 }

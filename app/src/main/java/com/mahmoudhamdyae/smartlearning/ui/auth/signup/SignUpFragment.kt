@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.auth.signup
 
-import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +13,15 @@ import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentSignUpBinding
 import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
 
+private const val PICK_IMAGE = 1
+
+@Suppress("DEPRECATION")
 class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var viewModel: LogInViewModel
+
+    private var imageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +40,15 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.signUpButton.setOnClickListener {
+            viewModel.imageUri.value = imageUri.toString()
             viewModel.signUp()
+        }
+
+        binding.profileImage.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
@@ -47,13 +61,19 @@ class SignUpFragment : Fragment() {
                 viewModel.finishNavigate()
             }
         }
+    }
 
-//        viewModel.loading.observe(viewLifecycleOwner) {
-//            if (it) {
-//                binding.progressBar.visibility = View.VISIBLE
-//            } else {
-//                binding.progressBar.visibility = View.GONE
-//            }
-//        }
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data == null) return
+        if (requestCode == PICK_IMAGE) {
+            imageUri = data.data
+            binding.profileImage.setImageURI(imageUri)
+        }
     }
 }
