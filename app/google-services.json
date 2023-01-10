@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "675961223573",
+    "project_id": "my-smart-learning",
+    "storage_bucket": "my-smart-learning.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675961223573:android:7c6d945e0a914871d21e9c",
+        "android_client_info": {
+          "package_name": "com.mahmoudhamdyae.smartlearning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675961223573-bni4gg85juimrkv7utf622njr82j9ijp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mahmoudhamdyae.smartlearning",
+            "certificate_hash": "ad7fcdf1ecb88ff72398b8cdce2b3983f8401f12"
+          }
+        },
+        {
+          "client_id": "675961223573-738n1lcr5g2befdikp9jo538u2q56f13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnYIEDCGkvSphvaHel8avXV_o3EDQI5HY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "675961223573-738n1lcr5g2befdikp9jo538u2q56f13.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
