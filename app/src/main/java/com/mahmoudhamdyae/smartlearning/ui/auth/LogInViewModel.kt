@@ -1,58 +1,106 @@
 package com.mahmoudhamdyae.smartlearning.ui.auth
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mahmoudhamdyae.smartlearning.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.mahmoudhamdyae.smartlearning.data.models.User
 
 class LogInViewModel : ViewModel() {
 
-    private val _userName = MutableLiveData<String>()
-    val userName: LiveData<String>
-        get() = _userName
+    // EditTexts fields
+    val userName = MutableLiveData<String>()
+    val email = MutableLiveData<String>()
+    val password = MutableLiveData<String>()
 
-    private var _email = MutableLiveData<String>()
-    val email: LiveData<String>
-        get() = _email
-
-    private var _password = MutableLiveData<String>()
-    val password: LiveData<String>
-        get() = _password
-
-    private var _error = MutableLiveData<Int>()
-    val error: LiveData<Int>
+    private var _error = MutableLiveData<String>()
+    val error: LiveData<String>
         get() = _error
 
-    fun validateTextsSignUp(userName: String?, email: String?, password: String?): Boolean {
-        return if (userName.isNullOrEmpty() || email.isNullOrEmpty() || password.isNullOrEmpty()) {
-            _error.value = R.string.log_in_sign_up_error
+    private val _loading = MutableLiveData(false)
+    val loading: LiveData<Boolean>
+        get() = _loading
+
+    private var _navigate = MutableLiveData(false)
+    val navigate: LiveData<Boolean>
+        get() = _navigate
+
+    private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child("users")
+
+    private fun validateTextsSignUp(): Boolean {
+        return if (userName.value.isNullOrEmpty() || email.value.isNullOrEmpty() || password.value.isNullOrEmpty()) {
+            _error.value = "Field Can\'t be empty"
             false
         } else {
             true
         }
     }
 
-    fun validateTextsLogIn(email: String?, password: String?): Boolean {
-        return if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
-            _error.value = R.string.log_in_sign_up_error
+    private fun validateTextsLogIn(): Boolean {
+        return if (email.value.isNullOrEmpty() || password.value.isNullOrEmpty()) {
+            _error.value = "Field Can\'t be empty"
             false
         } else {
             true
         }
     }
 
-    fun signUp(userName: String?, email: String?, password: String?) {
-        validateTextsSignUp(userName, email, password)
+    fun signUp() {
+        if (validateTextsSignUp()) {
 
-        _userName.value = userName!!
-        _email.value = email!!
-        _password.value = password!!
+            _loading.value = true
+            mAuth.createUserWithEmailAndPassword(email.value!!, password.value!!)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Sign up success.
+                        Log.d("SignUp", "createUserWithEmail:success")
+                        saveUserInDatabase()
+                        navigate()
+                    } else {
+                        // Sign up fails
+                        Log.w("SignUp", "createUserWithEmail:failure", task.exception)
+                    }
+                    _loading.value = false
+                }
+        }
     }
 
-    fun logIn(email: String?, password: String?) {
-        validateTextsLogIn(email, password)
+    fun logIn() {
+        if (validateTextsLogIn()) {
 
-        _email.value = email!!
-        _password.value = password!!
+            _loading.value = true
+            mAuth.signInWithEmailAndPassword(email.value!!, password.value!!)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Log in success.
+                        Log.d("LogIn", "signInWithEmail:success")
+                        navigate()
+                    } else {
+                        // Log in fails.
+                        Log.w("LogIn", "signInWithEmail:failure", task.exception)
+                    }
+                    _loading.value = false
+                }
+        }
+    }
+
+    private fun saveUserInDatabase() {
+        val user = User(userName.value!!, email.value!!, true, mAuth.currentUser!!.uid)
+        databaseReference.child(mAuth.currentUser!!.uid).setValue(user).addOnSuccessListener {
+        }.addOnFailureListener {
+                _error.value = it.message
+            }
+    }
+
+    private fun navigate() {
+        _navigate.value = true
+    }
+
+    fun finishNavigate() {
+        _navigate.value = false
     }
 }

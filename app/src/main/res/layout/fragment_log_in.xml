@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,6 +54,7 @@
                 android:hint="@string/login_email_edit_text_hint"
                 android:inputType="textEmailAddress"
                 android:paddingBottom="@dimen/edit_text_padding"
+                android:text="@={viewModel.email}"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/edit_text_size" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -73,6 +77,7 @@
                 android:inputType="textPassword"
                 android:paddingBottom="@dimen/edit_text_padding"
                 android:singleLine="true"
+                android:text="@={viewModel.password}"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/edit_text_size"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -112,5 +117,15 @@
                 android:text="@string/login_create_account"
                 android:textColor="@color/create_account" />
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityView="@{viewModel.loading}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

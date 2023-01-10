@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
 
+    id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
 }
 
@@ -53,6 +54,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-common-ktx:20.2.0'
     // Firebase Authentication
     implementation 'com.google.firebase:firebase-auth:21.1.0'
+    // Firebase Database
+    implementation 'com.google.firebase:firebase-database:20.1.0'
+    // Firebase Storage
+    implementation 'com.google.firebase:firebase-storage:20.1.0'
 
     // Circular Images
     implementation 'de.hdodenhof:circleimageview:3.0.0'
