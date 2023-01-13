@@ -1,80 +1,34 @@
 package com.mahmoudhamdyae.smartlearning.data.repository
 
 import android.net.Uri
-import android.util.Log
-import androidx.core.net.toUri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.mahmoudhamdyae.smartlearning.data.models.User
+import com.mahmoudhamdyae.smartlearning.utils.Constants
 
 class FirebaseRepository {
 
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String>
-        get() = _error
-
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var databaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child("users")
-    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference.child("images")
+    private var userDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.USERS)
+    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference.child(Constants.IMAGES)
 
-    fun signUp(user: User, password: String) {
-        mAuth.createUserWithEmailAndPassword(user.email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign up success.
-                    Log.d("SignUp", "createUserWithEmail:success")
-                    saveUserInDatabase(user)
-                    saveProfilePicture(user.imageUri?.toUri())
-                    _error.value = "SUCCESS"
-                } else {
-                    // Sign up fails
-                    Log.w("SignUp", "createUserWithEmail:failure", task.exception)
-                    _error.value = task.exception.toString()
-                }
-            }
-    }
+    fun getUid() = mAuth.currentUser!!.uid
 
-    fun logIn(email: String, password: String) {
+    fun signUp(email: String, password: String) =
+        mAuth.createUserWithEmailAndPassword(email, password)
+
+    fun logIn(email: String, password: String) =
         mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Log in success.
-                    Log.d("LogIn", "signInWithEmail:success")
-                    _error.value = "SUCCESS"
-                } else {
-                    // Log in fails.
-                    Log.w("LogIn", "signInWithEmail:failure", task.exception)
-                    _error.value = task.exception.toString()
-                }
-            }
-    }
 
-    private fun saveUserInDatabase(user: User) {
-        databaseReference.child(mAuth.currentUser!!.uid).setValue(user)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _error.value = "SUCCESS"
-                } else {
-                    _error.value = task.exception.toString()
-                }
-            }
-    }
+    fun saveUserInDatabase(user: User) =
+        userDatabaseReference.child(getUid()).setValue(user)
 
-    private fun saveProfilePicture(imageUri: Uri?) {
-        if (imageUri != null) {
-            mStorageRef.child(mAuth.currentUser!!.uid + ".jpg").putFile(imageUri)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _error.value = "SUCCESS"
-                    } else {
-                        _error.value = task.exception.toString()
-                    }
-                }
-        }
-    }
+    fun saveProfilePicture(imageUri: Uri) =
+        mStorageRef.child(getUid() + ".jpg").putFile(imageUri)
+
+    fun getUserData(valueEventListener: ValueEventListener) =
+        userDatabaseReference.child(getUid()).addValueEventListener(valueEventListener)
+
 }

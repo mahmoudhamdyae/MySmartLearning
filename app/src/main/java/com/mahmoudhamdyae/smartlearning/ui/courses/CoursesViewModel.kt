@@ -4,11 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
-import com.mahmoudhamdyae.smartlearning.utils.Constants
+import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 
 class CoursesViewModel: ViewModel() {
 
@@ -18,13 +19,11 @@ class CoursesViewModel: ViewModel() {
     val courses: LiveData<List<Course>>
         get() = _courses
 
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User>
+    private val _user = MutableLiveData<User?>()
+    val user: LiveData<User?>
         get() = _user
 
-    private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var databaseReference: DatabaseReference =
-        FirebaseDatabase.getInstance().reference.child(Constants.USERS).child(mAuth.currentUser!!.uid)
+    private val repository = FirebaseRepository()
 
     init {
         // todo delete this
@@ -39,15 +38,19 @@ class CoursesViewModel: ViewModel() {
     }
 
     private fun getUserData() {
-        databaseReference.addValueEventListener(object : ValueEventListener {
+        val valueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                _user.value = dataSnapshot.getValue(User::class.java)
+                _user.value =  dataSnapshot.getValue(User::class.java)
             }
-
             override fun onCancelled(databaseError: DatabaseError) {
                 // Getting Post failed, log a message
                 Log.w("LogInViewModel", "loadPost:onCancelled", databaseError.toException())
             }
-        })
+        }
+
+        repository.getUserData(valueEventListener)
+    }
+
+    private fun getCourses() {
     }
 }

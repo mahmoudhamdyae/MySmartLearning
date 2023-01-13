@@ -3,6 +3,7 @@ package com.mahmoudhamdyae.smartlearning.ui.courses
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -66,7 +67,7 @@ class MainFragment: Fragment() {
 
     private fun saveUserLocally() {
         viewModel.user.observe(viewLifecycleOwner) {
-            val userName = it.userName
+            val userName = it!!.userName
             val isTeacher = it.teacher
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
             with(sharedPref!!.edit()) {
