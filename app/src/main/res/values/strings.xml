@@ -9,7 +9,6 @@
     <string name="don_t_have_an_account">Do not have an account? </string>
     <string name="login_create_account">Create Account</string>
 
-
     <!-- Sign Up Activity -->
     <string name="sign_up_under_app_name_intro">Sign Up Here!</string>
     <string name="sign_up_choose_profile_image">Choose your profile image</string>
@@ -26,6 +25,37 @@
 
     <string name="log_in_sign_up_error">Field Can\'t be empty</string>
 
-    <!-- Main Fragment -->
-    <string name="sign_out">Sign Out</string>
+    <!-- Main Fragment Menu -->
+    <string name="sign_out_menu">Sign Out</string>
+    <string name="profile_menu">My Profile</string>
+
+    <!-- Course Dialog -->
+    <string name="course_dialog_name_edit_text_hint">Enter Course Name</string>
+    <string name="course_dialog_year_text_view">Select course year</string>
+    <string name="course_dialog_save_button">Save</string>
+    <string name="course_dialog_cancel_button">Cancel</string>
+    <string name="course_delete_dialog_msg">Are you sure you want to delete this course ?</string>
+    <string name="course_delete_dialog_delete">Delete</string>
+    <string name="course_delete_dialog_cancel">Cancel</string>
+    <string name="add_new_course">Add New Course</string>
+
+    <!-- Course Activity -->
+    <string name="course_quizzes">Quizzes</string>
+    <string name="course_add_student">Add student</string>
+    <string name="course_materials">Materials</string>
+    <string name="course_chat">Chat</string>
+    <string name="course_private_chat">Private chat</string>
+
+    <string name="action_delete">Delete</string>
+    <string name="action_students">Students</string>
+    <string name="action_course_details">Course details</string>
+
+    <!-- Content Descriptions -->
+    <string name="add_fab_content_description">Add</string>
+    <string name="delete_button_content_description">Delete</string>
+    <string name="quiz_item_content_description">Delete</string>
+    <string name="add_student_item_content_description">Delete</string>
+    <string name="materials_item_content_description">Delete</string>
+    <string name="group_chat_item_content_description">Delete</string>
+    <string name="private_chat_item_content_description">Delete</string>
 </resources>
