@@ -7,19 +7,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mahmoudhamdyae.smartlearning.R
-import com.mahmoudhamdyae.smartlearning.databinding.FragmentMainBinding
-import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
+import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 
 @Suppress("DEPRECATION")
-class MainFragment: Fragment() {
+class CoursesFragment: Fragment() {
 
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentCoursesBinding
     private lateinit var viewModel: CoursesViewModel
-    private lateinit var logInViewModel: LogInViewModel
 
     private lateinit var mAUth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -29,10 +28,10 @@ class MainFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding = FragmentCoursesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this)[CoursesViewModel::class.java]
-        logInViewModel = ViewModelProvider(this)[LogInViewModel::class.java]
+        binding.viewModel = viewModel
 
         setHasOptionsMenu(true)
 
@@ -42,10 +41,15 @@ class MainFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.coursesList.layoutManager = GridLayoutManager(context, 1)
         binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             // Navigate to Course Fragment
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToCourseFragment())
+            findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment())
         })
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+        }
 
         // Initialize Firebase Auth
         mAUth = FirebaseAuth.getInstance()
@@ -90,7 +94,7 @@ class MainFragment: Fragment() {
     }
 
     private fun navigateToLoginScreen() {
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToLogInFragment())
+        findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToLogInFragment())
     }
 
     @Deprecated("Deprecated in Java", ReplaceWith(
@@ -108,7 +112,7 @@ class MainFragment: Fragment() {
         // Handle item selection
         return when (item.itemId) {
             R.id.profile -> {
-                findNavController().navigate(MainFragmentDirections.actionMainFragmentToProfileFragment())
+                findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToProfileFragment())
                 true
             }
             R.id.sign_out -> {
@@ -121,8 +125,12 @@ class MainFragment: Fragment() {
     }
 
     private fun teacherActivity() {
-
         binding.addFab.setOnClickListener {
+            createDialog()
+        }
+    }
+
+    private fun createDialog() {
 //            // Create AlertDialog and show it.
 //            val layoutInflater = LayoutInflater.from(context)
 //            val popupInputDialogView = layoutInflater.inflate(R.layout.course_dialog, null)
@@ -169,13 +177,12 @@ class MainFragment: Fragment() {
 //                dialog.dismiss()
 //            }
 //            dialog.show()
-        }
     }
 
     private fun studentActivity() {
         binding.addFab.setOnClickListener {
             // Navigate to search fragment
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToSearchFragment())
+            findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToSearchFragment())
         }
     }
 }

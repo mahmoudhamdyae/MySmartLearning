@@ -9,13 +9,13 @@ import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.databinding.CourseItemBinding
 
 class CoursesAdapter(private val onClickListener: OnClickListener) :
-    ListAdapter<Course, CoursesAdapter.MoviePropertyViewHolder>(DiffCallback) {
+    ListAdapter<Course, CoursesAdapter.CoursePropertyViewHolder>(DiffCallback) {
 
     /**
-     * The MoviePropertyViewHolder constructor takes the binding variable from the associated
+     * The CoursePropertyViewHolder constructor takes the binding variable from the associated
      * GridViewItem, which nicely gives it access to the full [Course] information.
      */
-    class MoviePropertyViewHolder(private var binding: CourseItemBinding):
+    class CoursePropertyViewHolder(private var binding: CourseItemBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bind(course: Course) {
             binding.property = course
@@ -29,19 +29,19 @@ class CoursesAdapter(private val onClickListener: OnClickListener) :
      * Create new [RecyclerView] item views (invoked by the layout manager)
      */
     override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): MoviePropertyViewHolder {
-        return MoviePropertyViewHolder(CourseItemBinding.inflate(LayoutInflater.from(parent.context)))
+                                    viewType: Int): CoursePropertyViewHolder {
+        return CoursePropertyViewHolder(CourseItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     /**
      * Replaces the contents of a view (invoked by the layout manager)
      */
-    override fun onBindViewHolder(holder: MoviePropertyViewHolder, position: Int) {
-        val movie = getItem(position)
+    override fun onBindViewHolder(holder: CoursePropertyViewHolder, position: Int) {
+        val course = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(movie)
+            onClickListener.onClick(course)
         }
-        holder.bind(movie)
+        holder.bind(course)
     }
 
     /**

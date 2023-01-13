@@ -23,6 +23,10 @@ class CoursesViewModel: ViewModel() {
     val user: LiveData<User?>
         get() = _user
 
+    private var _error = MutableLiveData<String>()
+    val error: LiveData<String>
+        get() = _error
+
     private val repository = FirebaseRepository()
 
     init {
@@ -34,7 +38,7 @@ class CoursesViewModel: ViewModel() {
 
         _courses.value = c
 
-        getUserData()
+//        getUserData()
     }
 
     private fun getUserData() {
@@ -49,8 +53,5 @@ class CoursesViewModel: ViewModel() {
         }
 
         repository.getUserData(valueEventListener)
-    }
-
-    private fun getCourses() {
     }
 }

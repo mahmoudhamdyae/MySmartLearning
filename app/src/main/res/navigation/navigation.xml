@@ -3,26 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/coursesFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.mahmoudhamdyae.smartlearning.ui.courses.MainFragment"
+        android:id="@+id/coursesFragment"
+        android:name="com.mahmoudhamdyae.smartlearning.ui.courses.CoursesFragment"
         android:label="MainFragment"
-        tools:layout="@layout/fragment_main">
+        tools:layout="@layout/fragment_courses">
         <action
-            android:id="@+id/action_mainFragment_to_logInFragment"
+            android:id="@+id/action_coursesFragment_to_logInFragment"
             app:destination="@id/logInFragment"
             app:popUpTo="@id/logInFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_mainFragment_to_searchFragment"
+            android:id="@+id/action_coursesFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_profileFragment"
+            android:id="@+id/action_coursesFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_courseFragment"
+            android:id="@+id/action_coursesFragment_to_courseFragment"
             app:destination="@id/courseFragment" />
     </fragment>
     <fragment
@@ -35,8 +35,8 @@
             app:destination="@id/signUpFragment" />
         <action
             android:id="@+id/action_logInFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment"
+            app:destination="@id/coursesFragment"
+            app:popUpTo="@id/coursesFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -46,8 +46,8 @@
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment"
+            app:destination="@id/coursesFragment"
+            app:popUpTo="@id/coursesFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

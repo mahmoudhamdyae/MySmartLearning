@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.mahmoudhamdyae.smartlearning.ui.courses.CoursesViewModel" />
@@ -19,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:coursesData="@{viewModel.courses}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/course_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
