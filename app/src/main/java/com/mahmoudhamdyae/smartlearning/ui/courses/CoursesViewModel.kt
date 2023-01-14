@@ -35,18 +35,6 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
     }
 
     private fun getUserData() {
-//        val userDatabaseReference: DatabaseReference =
-//            FirebaseDatabase.getInstance().reference.child(Constants.USERS)
-//
-//        userDatabaseReference.child(repository.getUid()).addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                _user.value =  dataSnapshot.getValue(User::class.java)
-//            }
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                // Getting Post failed, log a message
-//                Log.w("LogInViewModel", "loadPost:onCancelled", databaseError.toException())
-//            }
-//        })
         _user = repository.getUserData()
     }
 }
