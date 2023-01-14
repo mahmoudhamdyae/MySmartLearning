@@ -1,17 +1,18 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 
-class CoursesViewModel: ViewModel() {
+class CoursesViewModel(application: Application): BaseViewModel(application) {
 
     val courseName = MutableLiveData<String>()
 
@@ -22,10 +23,6 @@ class CoursesViewModel: ViewModel() {
     private val _user = MutableLiveData<User?>()
     val user: LiveData<User?>
         get() = _user
-
-    private var _error = MutableLiveData<String>()
-    val error: LiveData<String>
-        get() = _error
 
     private val repository = FirebaseRepository()
 

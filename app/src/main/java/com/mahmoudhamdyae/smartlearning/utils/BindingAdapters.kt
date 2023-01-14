@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.ui.courses.CoursesAdapter
 
-@BindingAdapter("visibilityView")
-fun visibilityOfView(view: View, visibility: Boolean) {
-    if (visibility) {
+@BindingAdapter("visibilityOfLoading")
+fun visibilityOfProgressBar(view: View, status: STATUS?) {
+    if (status == STATUS.LOADING) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.GONE

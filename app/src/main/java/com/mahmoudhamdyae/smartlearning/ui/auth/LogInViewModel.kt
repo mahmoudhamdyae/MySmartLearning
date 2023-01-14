@@ -1,20 +1,22 @@
 package com.mahmoudhamdyae.smartlearning.ui.auth
 
+import android.app.Application
 import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.NOTSET
 import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.TEACHER
+import com.mahmoudhamdyae.smartlearning.utils.STATUS
 
 enum class IsTeacher {
     TEACHER, STUDENT, NOTSET
 }
 
-class LogInViewModel : ViewModel() {
+class LogInViewModel(application: Application) : BaseViewModel(application) {
 
     // EditTexts fields
     val userName = MutableLiveData<String>()
@@ -24,14 +26,6 @@ class LogInViewModel : ViewModel() {
     val isTeacher = MutableLiveData(NOTSET)
 
     val imageUri = MutableLiveData<String?>()
-
-    private var _error = MutableLiveData<String>()
-    val error: LiveData<String>
-        get() = _error
-
-    private val _loading = MutableLiveData(false)
-    val loading: LiveData<Boolean>
-        get() = _loading
 
     private var _navigate = MutableLiveData(false)
     val navigate: LiveData<Boolean>
@@ -60,7 +54,7 @@ class LogInViewModel : ViewModel() {
     fun signUp() {
         if (validateTextsSignUp()) {
 
-            _loading.value = true
+            _status.value = STATUS.LOADING
             repository.signUp(email.value!!, password.value!!)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -69,11 +63,12 @@ class LogInViewModel : ViewModel() {
                         saveUserInDatabase()
                         saveProfilePicture()
                         navigate()
+                        _status.value = STATUS.DONE
                     } else {
                         // Sign up fails
                         Log.w("SignUp", "createUserWithEmail:failure", task.exception)
+                        _status.value = STATUS.ERROR
                     }
-                    _loading.value = false
                 }
         }
     }
@@ -81,18 +76,19 @@ class LogInViewModel : ViewModel() {
     fun logIn() {
         if (validateTextsLogIn()) {
 
-            _loading.value = true
+            _status.value = STATUS.LOADING
             repository.logIn(email.value!!, password.value!!)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // Log in success.
                         Log.d("LogIn", "signInWithEmail:success")
                         navigate()
+                        _status.value = STATUS.DONE
                     } else {
                         // Log in fails.
                         Log.w("LogIn", "signInWithEmail:failure", task.exception)
+                        _status.value = STATUS.ERROR
                     }
-                    _loading.value = false
                 }
         }
     }
@@ -110,14 +106,14 @@ class LogInViewModel : ViewModel() {
 
     private fun saveProfilePicture() {
         if (imageUri.value != null) {
-            _loading.value = true
+            _status.value = STATUS.LOADING
             repository.saveProfilePicture(imageUri.value!!.toUri())
                 .addOnCompleteListener { task ->
-                    _loading.value = false
                     if (task.isSuccessful) {
-                        //
+                        _status.value = STATUS.DONE
                     } else {
                         _error.value = task.exception.toString()
+                        _status.value = STATUS.ERROR
                     }
                 }
         }
