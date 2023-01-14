@@ -59,27 +59,52 @@
         android:id="@+id/quizFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.QuizFragment"
         android:label="QuizFragment"
-        tools:layout="@layout/fragment_quiz" />
+        tools:layout="@layout/fragment_quiz">
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/addStudentFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.addstudent.AddStudentFragment"
         android:label="AddStudentFragment"
-        tools:layout="@layout/fragment_add_student" />
+        tools:layout="@layout/fragment_add_student">
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/materialsFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsFragment"
         android:label="MaterialsFragment"
-        tools:layout="@layout/fragment_materials" />
+        tools:layout="@layout/fragment_materials">
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/groupChatFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.groupchat.GroupChatFragment"
         android:label="GroupChatFragment"
-        tools:layout="@layout/fragment_group_chat" />
+        tools:layout="@layout/fragment_group_chat">
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/privateChatFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.privatechat.PrivateChatFragment"
         android:label="PrivateChatFragment"
-        tools:layout="@layout/fragment_private_chat" />
+        tools:layout="@layout/fragment_private_chat">
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.profile.ProfileFragment"
@@ -108,6 +133,6 @@
         <argument
             android:name="courseId"
             app:argType="string"
-            app:nullable="true"/>
+            app:nullable="true" />
     </fragment>
 </navigation>

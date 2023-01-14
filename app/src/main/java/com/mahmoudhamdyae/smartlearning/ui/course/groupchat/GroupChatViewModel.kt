@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.groupchat
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 
-class GroupChatViewModel: ViewModel() {
+class GroupChatViewModel(application: Application): BaseViewModel(application) {
 }

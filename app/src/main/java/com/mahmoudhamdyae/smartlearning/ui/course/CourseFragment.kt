@@ -30,23 +30,23 @@ class CourseFragment: Fragment() {
         Toast.makeText(context, courseId, Toast.LENGTH_SHORT).show()
 
         binding.quizzesCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment())
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(courseId))
         }
 
         binding.addStudentCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToAddStudentFragment())
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToAddStudentFragment(courseId))
         }
 
         binding.materialsCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToMaterialsFragment())
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToMaterialsFragment(courseId))
         }
 
         binding.groupChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToGroupChatFragment())
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToGroupChatFragment(courseId))
         }
 
         binding.privateChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment())
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(courseId))
         }
     }
 }

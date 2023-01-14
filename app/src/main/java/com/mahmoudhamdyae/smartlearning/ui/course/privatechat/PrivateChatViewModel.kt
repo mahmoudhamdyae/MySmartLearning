@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.privatechat
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 
-class PrivateChatViewModel: ViewModel() {
+class PrivateChatViewModel(application: Application): BaseViewModel(application) {
 }

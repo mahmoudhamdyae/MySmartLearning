@@ -8,13 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
-import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.NOTSET
-import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher.TEACHER
+import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
-
-enum class IsTeacher {
-    TEACHER, STUDENT, NOTSET
-}
 
 class LogInViewModel(application: Application) : BaseViewModel(application) {
 
@@ -23,7 +18,7 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
-    val isTeacher = MutableLiveData(NOTSET)
+    val isTeacher = MutableLiveData(IsTeacher.NOTSET)
 
     val imageUri = MutableLiveData<String?>()
 
@@ -34,7 +29,7 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     private val repository = FirebaseRepository()
 
     private fun validateTextsSignUp(): Boolean {
-        return if (userName.value.isNullOrEmpty() || email.value.isNullOrEmpty() || password.value.isNullOrEmpty() || isTeacher.value == NOTSET) {
+        return if (userName.value.isNullOrEmpty() || email.value.isNullOrEmpty() || password.value.isNullOrEmpty() || isTeacher.value == IsTeacher.NOTSET) {
             _error.value = "Field Can\'t be empty"
             false
         } else {
@@ -94,7 +89,7 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun saveUserInDatabase() {
-        val isTeacher = isTeacher.value == TEACHER
+        val isTeacher = isTeacher.value == IsTeacher.TEACHER
 
         val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
         repository.saveUserInDatabase(user)

@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentSignUpBinding
-import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher
 import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
+import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 
 private const val PICK_IMAGE = 1
 

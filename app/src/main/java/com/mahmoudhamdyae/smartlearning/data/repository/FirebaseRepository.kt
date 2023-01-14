@@ -1,6 +1,8 @@
 package com.mahmoudhamdyae.smartlearning.data.repository
 
 import android.net.Uri
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -28,6 +30,19 @@ class FirebaseRepository {
     fun saveProfilePicture(imageUri: Uri) =
         mStorageRef.child(getUid() + ".jpg").putFile(imageUri)
 
-    fun getUserData(valueEventListener: ValueEventListener) =
-        userDatabaseReference.child(getUid()).addValueEventListener(valueEventListener)
+    fun getUserData(): MutableLiveData<User?> {
+        val user = MutableLiveData<User?>()
+
+        userDatabaseReference.child(getUid()).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                user.value =  dataSnapshot.getValue(User::class.java)
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w("LogInViewModel", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+
+        return user
+    }
 }

@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.addstudent
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 
-class AddStudentViewModel: ViewModel() {
+class AddStudentViewModel(application: Application): BaseViewModel(application) {
 }

@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 
-class QuizViewModel: ViewModel() {
+class QuizViewModel(application: Application): BaseViewModel(application) {
 }

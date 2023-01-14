@@ -1,12 +1,8 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
@@ -20,7 +16,7 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
     val courses: LiveData<List<Course>>
         get() = _courses
 
-    private val _user = MutableLiveData<User?>()
+    private var _user = MutableLiveData<User?>()
     val user: LiveData<User?>
         get() = _user
 
@@ -39,16 +35,18 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
     }
 
     private fun getUserData() {
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                _user.value =  dataSnapshot.getValue(User::class.java)
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w("LogInViewModel", "loadPost:onCancelled", databaseError.toException())
-            }
-        }
-
-        repository.getUserData(valueEventListener)
+//        val userDatabaseReference: DatabaseReference =
+//            FirebaseDatabase.getInstance().reference.child(Constants.USERS)
+//
+//        userDatabaseReference.child(repository.getUid()).addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                _user.value =  dataSnapshot.getValue(User::class.java)
+//            }
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                // Getting Post failed, log a message
+//                Log.w("LogInViewModel", "loadPost:onCancelled", databaseError.toException())
+//            }
+//        })
+        _user = repository.getUserData()
     }
 }
