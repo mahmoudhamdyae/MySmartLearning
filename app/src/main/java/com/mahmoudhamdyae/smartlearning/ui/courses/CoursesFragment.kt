@@ -3,7 +3,6 @@ package com.mahmoudhamdyae.smartlearning.ui.courses
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -82,7 +81,6 @@ class CoursesFragment: BaseFragment() {
     private fun getUserType() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         val isTeacher = sharedPref.getBoolean(Constants.ISTEACHER, false)
-        Toast.makeText(context, isTeacher.toString(), Toast.LENGTH_SHORT).show()
         if (isTeacher) {
             teacherActivity()
         } else {

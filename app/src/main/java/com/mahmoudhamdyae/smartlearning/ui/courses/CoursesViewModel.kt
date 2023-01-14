@@ -35,7 +35,7 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
 
         _courses.value = c
 
-//        getUserData()
+        getUserData()
     }
 
     private fun getUserData() {
