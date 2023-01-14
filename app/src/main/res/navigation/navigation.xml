@@ -105,5 +105,9 @@
         <action
             android:id="@+id/action_courseFragment_to_privateChatFragment"
             app:destination="@id/privateChatFragment" />
+        <argument
+            android:name="courseId"
+            app:argType="string"
+            app:nullable="true"/>
     </fragment>
 </navigation>

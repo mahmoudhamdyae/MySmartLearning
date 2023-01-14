@@ -43,7 +43,7 @@ class CoursesFragment: BaseFragment() {
         binding.coursesList.layoutManager = GridLayoutManager(context, 1)
         binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             // Navigate to Course Fragment
-            findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment())
+            findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
         })
 
         // Initialize Firebase Auth
