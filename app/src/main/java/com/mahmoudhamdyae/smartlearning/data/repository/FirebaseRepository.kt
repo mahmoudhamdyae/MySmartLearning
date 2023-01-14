@@ -30,5 +30,4 @@ class FirebaseRepository {
 
     fun getUserData(valueEventListener: ValueEventListener) =
         userDatabaseReference.child(getUid()).addValueEventListener(valueEventListener)
-
 }

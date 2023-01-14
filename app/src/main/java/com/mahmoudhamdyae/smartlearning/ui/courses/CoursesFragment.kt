@@ -86,6 +86,7 @@ class CoursesFragment: Fragment() {
     private fun getUserType() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         val isTeacher = sharedPref.getBoolean(Constants.ISTEACHER, false)
+        Toast.makeText(context, isTeacher.toString(), Toast.LENGTH_SHORT).show()
         if (isTeacher) {
             teacherActivity()
         } else {
