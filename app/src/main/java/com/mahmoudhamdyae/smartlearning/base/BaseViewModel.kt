@@ -6,6 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 
+/**
+ * Base class for View Models to declare the common LiveData objects in one place
+ */
 abstract class BaseViewModel(application: Application): AndroidViewModel(application) {
 
     protected var _error = MutableLiveData<String>()

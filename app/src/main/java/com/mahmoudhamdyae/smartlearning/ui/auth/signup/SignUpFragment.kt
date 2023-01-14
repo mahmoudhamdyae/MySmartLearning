@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.R
+import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentSignUpBinding
 import com.mahmoudhamdyae.smartlearning.ui.auth.IsTeacher
 import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
@@ -18,10 +17,10 @@ import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
 private const val PICK_IMAGE = 1
 
 @Suppress("DEPRECATION")
-class SignUpFragment : Fragment() {
+class SignUpFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSignUpBinding
-    private lateinit var viewModel: LogInViewModel
+    override lateinit var viewModel: LogInViewModel
 
     private var imageUri: Uri? = null
 
@@ -59,10 +58,6 @@ class SignUpFragment : Fragment() {
             } else {
                 viewModel.isTeacher.value = IsTeacher.STUDENT
             }
-        }
-
-        viewModel.error.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
 
         viewModel.navigate.observe(viewLifecycleOwner) {

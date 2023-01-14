@@ -4,21 +4,21 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mahmoudhamdyae.smartlearning.R
+import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 
 @Suppress("DEPRECATION")
-class CoursesFragment: Fragment() {
+class CoursesFragment: BaseFragment() {
 
     private lateinit var binding: FragmentCoursesBinding
-    private lateinit var viewModel: CoursesViewModel
+    override lateinit var viewModel: CoursesViewModel
 
     private lateinit var mAUth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -46,10 +46,6 @@ class CoursesFragment: Fragment() {
             // Navigate to Course Fragment
             findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment())
         })
-
-        viewModel.error.observe(viewLifecycleOwner) {
-            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
-        }
 
         // Initialize Firebase Auth
         mAUth = FirebaseAuth.getInstance()
