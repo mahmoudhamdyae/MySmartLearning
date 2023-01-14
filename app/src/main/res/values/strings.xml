@@ -53,6 +53,8 @@
     <!-- Content Descriptions -->
     <string name="add_fab_content_description">Add</string>
     <string name="delete_button_content_description">Delete</string>
+    <string name="play_button_content_description">Delete</string>
+    <string name="download_button_content_description">Delete</string>
     <string name="quiz_item_content_description">Delete</string>
     <string name="add_student_item_content_description">Delete</string>
     <string name="materials_item_content_description">Delete</string>
