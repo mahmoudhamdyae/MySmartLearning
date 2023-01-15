@@ -45,12 +45,3 @@ fun visibleIfTeacher(view: View, isTeacher: IsTeacher?) {
         view.visibility = View.GONE
     }
 }
-
-@BindingAdapter("visibleIfStudent")
-fun visibleIfStudent(view: View, isTeacher: IsTeacher?) {
-    if (isTeacher == IsTeacher.STUDENT) {
-        view.visibility = View.VISIBLE
-    } else {
-        view.visibility = View.GONE
-    }
-}

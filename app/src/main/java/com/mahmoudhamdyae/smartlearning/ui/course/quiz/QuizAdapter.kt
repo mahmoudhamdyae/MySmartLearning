@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.databinding.QuizItemBinding
 
-class QuizAdapter(private val onClickListener: OnClickListener) :
+class QuizAdapter(private val onClickListener: OnClickListener, val isTeacher: Boolean) :
     ListAdapter<Quiz, QuizAdapter.QuizzesPropertyViewHolder>(DiffCallback) {
 
     /**
@@ -17,8 +18,16 @@ class QuizAdapter(private val onClickListener: OnClickListener) :
      */
     class QuizzesPropertyViewHolder(private var binding: QuizItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(quiz: Quiz) {
+        fun bind(quiz: Quiz, isTeacher: Boolean) {
             binding.property = quiz
+            if (isTeacher) {
+                binding.checkedImage.visibility = View.GONE
+                binding.degreeText.visibility = View.GONE
+                binding.degree.visibility = View.GONE
+                binding.solvedOrNot.visibility = View.GONE
+            } else {
+                binding.deleteButton.visibility = View.GONE
+            }
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -42,11 +51,11 @@ class QuizAdapter(private val onClickListener: OnClickListener) :
      * Replaces the contents of a view (invoked by the layout manager)
      */
     override fun onBindViewHolder(holder: QuizzesPropertyViewHolder, position: Int) {
-        val course = getItem(position)
+        val quiz = getItem(position)
         holder.itemView.setOnClickListener {
-            onClickListener.onClick(course)
+            onClickListener.onClick(quiz)
         }
-        holder.bind(course)
+        holder.bind(quiz, isTeacher)
     }
 
     /**

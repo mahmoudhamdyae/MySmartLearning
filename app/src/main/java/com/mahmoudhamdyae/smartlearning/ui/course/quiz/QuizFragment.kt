@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizBinding
+import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 
 class QuizFragment: BaseFragment() {
 
@@ -32,8 +34,20 @@ class QuizFragment: BaseFragment() {
 
         getUserType()
 
+        viewModel.isTeacher.observe(viewLifecycleOwner) {
+            val isTeacher = it == IsTeacher.TEACHER
+//            makeAdapter(isTeacher)
+            Toast.makeText(context, isTeacher.toString(), Toast.LENGTH_SHORT).show()
+        }
+//        makeAdapter(true)
         binding.quizzesList.layoutManager = GridLayoutManager(context, 1)
         binding.quizzesList.adapter = QuizAdapter(QuizAdapter.OnClickListener {
-        })
+        }, true)
+    }
+
+    private fun makeAdapter(isTeacher: Boolean) {
+        binding.quizzesList.layoutManager = GridLayoutManager(context, 1)
+        binding.quizzesList.adapter = QuizAdapter(QuizAdapter.OnClickListener {
+        }, isTeacher)
     }
 }
