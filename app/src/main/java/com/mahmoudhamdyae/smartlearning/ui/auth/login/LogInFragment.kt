@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentLogInBinding
 import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
+import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModelFactory
 
 class LogInFragment : BaseFragment() {
 
     private lateinit var binding: FragmentLogInBinding
-    override val viewModel: LogInViewModel by viewModels()
+    override val viewModel: LogInViewModel by viewModels {
+        LogInViewModelFactory(FirebaseRepository())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

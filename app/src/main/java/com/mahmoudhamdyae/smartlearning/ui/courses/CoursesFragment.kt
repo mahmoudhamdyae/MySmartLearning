@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 
@@ -17,7 +18,9 @@ import com.mahmoudhamdyae.smartlearning.utils.Constants
 class CoursesFragment: BaseFragment() {
 
     private lateinit var binding: FragmentCoursesBinding
-    override val viewModel: CoursesViewModel by viewModels()
+    override val viewModel: CoursesViewModel by viewModels {
+        CoursesViewModelFactory(FirebaseRepository())
+    }
 
     private lateinit var mAUth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference

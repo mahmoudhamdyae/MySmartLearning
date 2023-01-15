@@ -1,12 +1,11 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 
-class QuizViewModel(application: Application): BaseViewModel(application) {
+class QuizViewModel : BaseViewModel() {
 
     private val _quizzes = MutableLiveData<List<Quiz>>()
     val quizzes: LiveData<List<Quiz>>

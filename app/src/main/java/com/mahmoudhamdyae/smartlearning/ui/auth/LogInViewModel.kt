@@ -1,17 +1,18 @@
 package com.mahmoudhamdyae.smartlearning.ui.auth
 
-import android.app.Application
 import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 
-class LogInViewModel(application: Application) : BaseViewModel(application) {
+class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel() {
 
     // EditTexts fields
     val userName = MutableLiveData<String>()
@@ -23,8 +24,6 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     private var _navigate = MutableLiveData(false)
     val navigate: LiveData<Boolean>
         get() = _navigate
-
-    private val repository = FirebaseRepository()
 
     private fun validateTextsSignUp(): Boolean {
         return if (userName.value.isNullOrEmpty()) {
@@ -133,4 +132,12 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     fun finishNavigate() {
         _navigate.value = false
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+class LogInViewModelFactory (
+    private val repository: FirebaseRepository
+) : ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel> create(modelClass: Class<T>) =
+        (LogInViewModel(repository) as T)
 }

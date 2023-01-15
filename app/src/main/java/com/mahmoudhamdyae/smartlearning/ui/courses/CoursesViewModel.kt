@@ -1,14 +1,15 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 
-class CoursesViewModel(application: Application): BaseViewModel(application) {
+class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewModel() {
 
     val courseName = MutableLiveData<String>()
 
@@ -19,8 +20,6 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
     private var _user = MutableLiveData<User?>()
     val user: LiveData<User?>
         get() = _user
-
-    private val repository = FirebaseRepository()
 
     init {
         val c = mutableListOf<Course>()
@@ -34,4 +33,12 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
     fun getUserData() {
         _user = repository.getUserData()
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+class CoursesViewModelFactory (
+    private val repository: FirebaseRepository
+) : ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel> create(modelClass: Class<T>) =
+        (CoursesViewModel(repository) as T)
 }
