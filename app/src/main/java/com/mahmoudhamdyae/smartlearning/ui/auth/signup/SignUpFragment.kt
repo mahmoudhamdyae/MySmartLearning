@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
@@ -20,7 +20,7 @@ private const val PICK_IMAGE = 1
 class SignUpFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSignUpBinding
-    override lateinit var viewModel: LogInViewModel
+    override val viewModel: LogInViewModel by viewModels()
 
     private var imageUri: Uri? = null
 
@@ -30,7 +30,6 @@ class SignUpFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[LogInViewModel::class.java]
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentLogInBinding
@@ -13,7 +13,7 @@ import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
 class LogInFragment : BaseFragment() {
 
     private lateinit var binding: FragmentLogInBinding
-    override lateinit var viewModel: LogInViewModel
+    override val viewModel: LogInViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +21,6 @@ class LogInFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLogInBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[LogInViewModel::class.java]
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
