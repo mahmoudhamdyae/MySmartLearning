@@ -3,7 +3,7 @@ package com.mahmoudhamdyae.smartlearning.ui.courses
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +17,7 @@ import com.mahmoudhamdyae.smartlearning.utils.Constants
 class CoursesFragment: BaseFragment() {
 
     private lateinit var binding: FragmentCoursesBinding
-    override lateinit var viewModel: CoursesViewModel
+    override val viewModel: CoursesViewModel by viewModels()
 
     private lateinit var mAUth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -29,7 +29,6 @@ class CoursesFragment: BaseFragment() {
     ): View {
         binding = FragmentCoursesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this)[CoursesViewModel::class.java]
         binding.viewModel = viewModel
 
         setHasOptionsMenu(true)

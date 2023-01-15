@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCourseBinding
@@ -12,7 +12,7 @@ import com.mahmoudhamdyae.smartlearning.databinding.FragmentCourseBinding
 class CourseFragment: BaseFragment() {
 
     private lateinit var binding: FragmentCourseBinding
-    override lateinit var viewModel: CourseViewModel
+    override val viewModel: CourseViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +20,6 @@ class CourseFragment: BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCourseBinding.inflate(inflater)
-        viewModel = ViewModelProvider(this)[CourseViewModel::class.java]
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 

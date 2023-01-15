@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentGroupChatBinding
 
 class GroupChatFragment: BaseFragment() {
 
     private lateinit var binding: FragmentGroupChatBinding
-    override lateinit var viewModel: GroupChatViewModel
+    override val viewModel: GroupChatViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +20,6 @@ class GroupChatFragment: BaseFragment() {
     ): View {
         binding = FragmentGroupChatBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this)[GroupChatViewModel::class.java]
         binding.viewModel = viewModel
 
         return binding.root

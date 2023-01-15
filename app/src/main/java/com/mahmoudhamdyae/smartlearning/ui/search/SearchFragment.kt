@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentSearchBinding
 
 class SearchFragment: BaseFragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    override lateinit var viewModel: SearchViewModel
+    override val viewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +20,6 @@ class SearchFragment: BaseFragment() {
     ): View {
         binding = FragmentSearchBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         binding.viewModel = viewModel
 
         return binding.root
