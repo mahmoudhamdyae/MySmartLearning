@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentAddStudentBinding
 
-class AddStudentFragment: Fragment() {
+class AddStudentFragment: BaseFragment() {
 
     private lateinit var binding: FragmentAddStudentBinding
-    private lateinit var viewModel: AddStudentViewModel
+    override lateinit var viewModel: AddStudentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -1,7 +1,10 @@
 package com.mahmoudhamdyae.smartlearning.base
 
+import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.mahmoudhamdyae.smartlearning.utils.Constants
+import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 
 /**
  * Base Fragment to observe on the common LiveData objects
@@ -19,5 +22,11 @@ abstract class BaseFragment: Fragment() {
         viewModel.error.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    protected fun getUserType() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val isTeacher = sharedPref.getBoolean(Constants.ISTEACHER, false)
+        viewModel.setIsTeacher(if (isTeacher) IsTeacher.TEACHER else IsTeacher.STUDENT)
     }
 }
