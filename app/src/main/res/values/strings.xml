@@ -50,6 +50,12 @@
     <string name="action_students">Students</string>
     <string name="action_course_details">Course details</string>
 
+    <!-- Quiz Activity -->
+    <string name="quiz_activity_quiz_number">Quiz Number : </string>
+    <!-- Quiz Adapter For Student -->
+    <string name="quiz_solved">Solved</string>
+    <string name="quiz_not_solved">Not Solved</string>
+
     <!-- Content Descriptions -->
     <string name="add_fab_content_description">Add</string>
     <string name="delete_button_content_description">Delete</string>
