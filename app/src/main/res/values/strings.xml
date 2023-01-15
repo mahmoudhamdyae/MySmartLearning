@@ -59,11 +59,12 @@
     <!-- Content Descriptions -->
     <string name="add_fab_content_description">Add</string>
     <string name="delete_button_content_description">Delete</string>
-    <string name="play_button_content_description">Delete</string>
-    <string name="download_button_content_description">Delete</string>
-    <string name="quiz_item_content_description">Delete</string>
-    <string name="add_student_item_content_description">Delete</string>
-    <string name="materials_item_content_description">Delete</string>
-    <string name="group_chat_item_content_description">Delete</string>
-    <string name="private_chat_item_content_description">Delete</string>
+    <string name="play_button_content_description">Play</string>
+    <string name="download_button_content_description">Download</string>
+    <string name="quiz_item_content_description">Quiz</string>
+    <string name="add_student_item_content_description">Add Student</string>
+    <string name="materials_item_content_description">Materials</string>
+    <string name="group_chat_item_content_description">Chat</string>
+    <string name="private_chat_item_content_description">Chat</string>
+    <string name="quiz_solved_content_description">Solved or Not Image</string>
 </resources>

@@ -6,16 +6,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
-import com.mahmoudhamdyae.smartlearning.databinding.QuizItemForStudentBinding
+import com.mahmoudhamdyae.smartlearning.databinding.QuizItemBinding
 
-class QuizAdapterForStudent(private val onClickListener: OnClickListener) :
-    ListAdapter<Quiz, QuizAdapterForStudent.QuizzesPropertyViewHolder>(DiffCallback) {
+class QuizAdapter(private val onClickListener: OnClickListener) :
+    ListAdapter<Quiz, QuizAdapter.QuizzesPropertyViewHolder>(DiffCallback) {
 
     /**
      * The CoursePropertyViewHolder constructor takes the binding variable from the associated
      * GridViewItem, which nicely gives it access to the full [Quiz] information.
      */
-    class QuizzesPropertyViewHolder(private var binding: QuizItemForStudentBinding):
+    class QuizzesPropertyViewHolder(private var binding: QuizItemBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bind(quiz: Quiz) {
             binding.property = quiz
@@ -30,7 +30,7 @@ class QuizAdapterForStudent(private val onClickListener: OnClickListener) :
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizzesPropertyViewHolder {
         return QuizzesPropertyViewHolder(
-            QuizItemForStudentBinding.inflate(
+            QuizItemBinding.inflate(
                 LayoutInflater.from(
                     parent.context
                 )

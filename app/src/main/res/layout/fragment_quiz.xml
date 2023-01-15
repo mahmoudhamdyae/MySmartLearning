@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:quizzesData="@{viewModel.quizzes}"
-            tools:listitem="@layout/quiz_item_for_student" />
+            tools:listitem="@layout/quiz_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_fab"

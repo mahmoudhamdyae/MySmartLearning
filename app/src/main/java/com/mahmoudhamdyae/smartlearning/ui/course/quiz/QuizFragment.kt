@@ -33,7 +33,7 @@ class QuizFragment: BaseFragment() {
         getUserType()
 
         binding.quizzesList.layoutManager = GridLayoutManager(context, 1)
-        binding.quizzesList.adapter = QuizAdapterForStudent(QuizAdapterForStudent.OnClickListener {
+        binding.quizzesList.adapter = QuizAdapter(QuizAdapter.OnClickListener {
         })
     }
 }
