@@ -9,8 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.databinding.QuizItemBinding
 
-class QuizAdapter(private val onClickListener: OnClickListener, val isTeacher: Boolean) :
+class QuizAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<Quiz, QuizAdapter.QuizzesPropertyViewHolder>(DiffCallback) {
+
+    private var isTeacher = true
+    fun setIsTeacher(isTeacher1: Boolean) {
+        isTeacher = isTeacher1
+    }
 
     /**
      * The CoursePropertyViewHolder constructor takes the binding variable from the associated
