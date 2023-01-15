@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.mahmoudhamdyae.smartlearning.ui.course.CourseViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,13 +17,15 @@
         <RelativeLayout
             android:id="@+id/quizzes_card"
             android:layout_width="match_parent"
-            android:background="@color/list_item_color"
-            android:layout_height="60dp">
+            android:layout_height="60dp"
+            android:background="@color/list_item_color">
+
             <ImageView
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:contentDescription="@string/quiz_item_content_description"
                 android:src="@drawable/quiz" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:background="@color/list_item_color" >
+            android:background="@color/list_item_color"
+            app:visibleIfTeacher="@{viewModel.isTeacher}">
 
             <ImageView
                 android:layout_width="55dp"
@@ -55,7 +66,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
-            android:background="@color/list_item_color" >
+            android:background="@color/list_item_color">
 
             <ImageView
                 android:layout_width="55dp"
@@ -80,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:background="@color/list_item_color" >
+            android:background="@color/list_item_color">
 
             <ImageView
                 android:layout_width="55dp"
@@ -103,7 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:background="@color/list_item_color" >
+            android:background="@color/list_item_color">
 
             <ImageView
                 android:layout_width="wrap_content"

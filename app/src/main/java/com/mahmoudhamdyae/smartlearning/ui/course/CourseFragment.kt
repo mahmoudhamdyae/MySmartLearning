@@ -1,17 +1,22 @@
 package com.mahmoudhamdyae.smartlearning.ui.course
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCourseBinding
+import com.mahmoudhamdyae.smartlearning.utils.Constants
+import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 
 class CourseFragment: Fragment() {
 
     private lateinit var binding: FragmentCourseBinding
+    private lateinit var viewModel: CourseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,6 +24,9 @@ class CourseFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCourseBinding.inflate(inflater)
+        viewModel = ViewModelProvider(this)[CourseViewModel::class.java]
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         return binding.root
     }
@@ -27,7 +35,12 @@ class CourseFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val courseId = CourseFragmentArgs.fromBundle(requireArguments()).courseId
-        Toast.makeText(context, courseId, Toast.LENGTH_SHORT).show()
+
+        getUserType()
+
+        viewModel.isTeacher.observe(viewLifecycleOwner) {
+            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+        }
 
         binding.quizzesCard.setOnClickListener {
             findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(courseId))
@@ -48,5 +61,11 @@ class CourseFragment: Fragment() {
         binding.privateChatCard.setOnClickListener {
             findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(courseId))
         }
+    }
+
+    private fun getUserType() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val isTeacher = sharedPref.getBoolean(Constants.ISTEACHER, false)
+        viewModel.setIsTeacher(if (isTeacher) IsTeacher.TEACHER else IsTeacher.STUDENT)
     }
 }

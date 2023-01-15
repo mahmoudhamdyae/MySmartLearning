@@ -18,8 +18,6 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
-    val isTeacher = MutableLiveData(IsTeacher.NOTSET)
-
     val imageUri = MutableLiveData<String?>()
 
     private var _navigate = MutableLiveData(false)
@@ -38,7 +36,7 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
         } else if (password.value.isNullOrEmpty()) {
             _error.value = "Password Can\'t be empty"
             false
-        }  else if (isTeacher.value == IsTeacher.NOTSET) {
+        }  else if (_isTeacher.value == IsTeacher.NOTSET) {
             _error.value = "Please, choose your account type"
             false
         } else {
@@ -103,7 +101,7 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun saveUserInDatabase() {
-        val isTeacher = isTeacher.value == IsTeacher.TEACHER
+        val isTeacher = _isTeacher.value == IsTeacher.TEACHER
 
         val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
         repository.saveUserInDatabase(user)

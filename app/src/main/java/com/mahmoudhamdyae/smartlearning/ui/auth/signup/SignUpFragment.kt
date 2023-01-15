@@ -54,9 +54,9 @@ class SignUpFragment : BaseFragment() {
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.teacher_radio_button) {
-                viewModel.isTeacher.value = IsTeacher.TEACHER
+                viewModel.setIsTeacher(IsTeacher.TEACHER)
             } else {
-                viewModel.isTeacher.value = IsTeacher.STUDENT
+                viewModel.setIsTeacher(IsTeacher.STUDENT)
             }
         }
 

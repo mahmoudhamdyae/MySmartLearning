@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
+import com.mahmoudhamdyae.smartlearning.data.models.User
+import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 
 class CoursesViewModel(application: Application): BaseViewModel(application) {
 
@@ -14,6 +16,12 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
     val courses: LiveData<List<Course>>
         get() = _courses
 
+    private var _user = MutableLiveData<User?>()
+    val user: LiveData<User?>
+        get() = _user
+
+    private val repository = FirebaseRepository()
+
     init {
         // todo delete this
         val c = mutableListOf<Course>()
@@ -22,7 +30,9 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
         c.add(Course("name3", "year3", "teacherName3"))
 
         _courses.value = c
+    }
 
-        getUserData()
+    fun getUserData() {
+        _user = repository.getUserData()
     }
 }

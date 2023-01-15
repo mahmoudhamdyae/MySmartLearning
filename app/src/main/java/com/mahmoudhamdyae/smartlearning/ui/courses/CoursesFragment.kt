@@ -61,10 +61,20 @@ class CoursesFragment: BaseFragment() {
             navigateToLoginScreen()
         } else {
             saveUserLocally()
+            viewModel.user.observe(viewLifecycleOwner) {
+                if (it!!.teacher) {
+                    teacherActivity()
+                } else {
+                    studentActivity()
+                }
+            }
         }
     }
 
     private fun saveUserLocally() {
+        // Get user from Firebase and save it in user LiveData object
+        viewModel.getUserData()
+        // Observe User Livedata
         viewModel.user.observe(viewLifecycleOwner) {
             val userName = it!!.userName
             val isTeacher = it.teacher
@@ -74,17 +84,6 @@ class CoursesFragment: BaseFragment() {
                 putBoolean(Constants.ISTEACHER, isTeacher)
                 apply()
             }
-            getUserType()
-        }
-    }
-
-    private fun getUserType() {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val isTeacher = sharedPref.getBoolean(Constants.ISTEACHER, false)
-        if (isTeacher) {
-            teacherActivity()
-        } else {
-            studentActivity()
         }
     }
 
