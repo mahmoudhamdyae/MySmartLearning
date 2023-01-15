@@ -29,8 +29,17 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     private val repository = FirebaseRepository()
 
     private fun validateTextsSignUp(): Boolean {
-        return if (userName.value.isNullOrEmpty() || email.value.isNullOrEmpty() || password.value.isNullOrEmpty() || isTeacher.value == IsTeacher.NOTSET) {
-            _error.value = "Field Can\'t be empty"
+        return if (userName.value.isNullOrEmpty()) {
+            _error.value = "User Name Can\'t be empty"
+            false
+        } else if (email.value.isNullOrEmpty()) {
+            _error.value = "Email Can\'t be empty"
+            false
+        } else if (password.value.isNullOrEmpty()) {
+            _error.value = "Password Can\'t be empty"
+            false
+        }  else if (isTeacher.value == IsTeacher.NOTSET) {
+            _error.value = "Please, choose your account type"
             false
         } else {
             true
@@ -38,8 +47,11 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
     }
 
     private fun validateTextsLogIn(): Boolean {
-        return if (email.value.isNullOrEmpty() || password.value.isNullOrEmpty()) {
-            _error.value = "Field Can\'t be empty"
+        return if (email.value.isNullOrEmpty()) {
+            _error.value = "Email Can\'t be empty"
+            false
+        } else if (password.value.isNullOrEmpty()) {
+            _error.value = "Password Can\'t be empty"
             false
         } else {
             true
@@ -62,6 +74,7 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
                     } else {
                         // Sign up fails
                         Log.w("SignUp", "createUserWithEmail:failure", task.exception)
+                        _error.value = task.exception?.message.toString()
                         _status.value = STATUS.ERROR
                     }
                 }
@@ -82,6 +95,7 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
                     } else {
                         // Log in fails.
                         Log.w("LogIn", "signInWithEmail:failure", task.exception)
+                        _error.value = task.exception?.message.toString()
                         _status.value = STATUS.ERROR
                     }
                 }
@@ -107,7 +121,7 @@ class LogInViewModel(application: Application) : BaseViewModel(application) {
                     if (task.isSuccessful) {
                         _status.value = STATUS.DONE
                     } else {
-                        _error.value = task.exception.toString()
+                        _error.value = task.exception?.message.toString()
                         _status.value = STATUS.ERROR
                     }
                 }
