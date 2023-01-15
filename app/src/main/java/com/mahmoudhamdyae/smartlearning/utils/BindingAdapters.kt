@@ -5,11 +5,26 @@ import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Course
+import com.mahmoudhamdyae.smartlearning.data.models.Quiz
+import com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsAdapter
+import com.mahmoudhamdyae.smartlearning.ui.course.quiz.QuizAdapterForStudent
 import com.mahmoudhamdyae.smartlearning.ui.courses.CoursesAdapter
 
 @BindingAdapter("coursesData")
 fun bindCoursesRecyclerView(recyclerView: RecyclerView, data: List<Course>?) {
     val adapter = recyclerView.adapter as CoursesAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("materialsData")
+fun bindMaterialsRecyclerView(recyclerView: RecyclerView, data: List<String>?) {
+    val adapter = recyclerView.adapter as MaterialsAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("quizzesData")
+fun bindQuizzesRecyclerView(recyclerView: RecyclerView, data: List<Quiz>?) {
+    val adapter = recyclerView.adapter as QuizAdapterForStudent
     adapter.submitList(data)
 }
 

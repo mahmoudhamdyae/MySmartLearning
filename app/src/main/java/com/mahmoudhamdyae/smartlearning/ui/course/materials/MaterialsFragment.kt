@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
 
@@ -30,5 +31,9 @@ class MaterialsFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getUserType()
+
+        binding.materialsList.layoutManager = GridLayoutManager(context, 1)
+        binding.materialsList.adapter = MaterialsAdapter(MaterialsAdapter.OnClickListener {
+        })
     }
 }

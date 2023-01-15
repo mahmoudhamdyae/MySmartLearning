@@ -23,7 +23,6 @@ class CoursesViewModel(application: Application): BaseViewModel(application) {
     private val repository = FirebaseRepository()
 
     init {
-        // todo delete this
         val c = mutableListOf<Course>()
         c.add(Course("name1", "year1", "teacherName1"))
         c.add(Course("name2", "year2", "teacherName2"))
