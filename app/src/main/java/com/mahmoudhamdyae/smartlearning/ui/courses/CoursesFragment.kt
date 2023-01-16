@@ -47,7 +47,6 @@ class CoursesFragment: BaseFragment() {
         binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             // Navigate to Course Fragment
             findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
-//          Toast.makeText(context, it.id, Toast.LENGTH_SHORT).show()
         })
 
         // Initialize Firebase Auth
@@ -66,13 +65,6 @@ class CoursesFragment: BaseFragment() {
         } else {
             saveUserLocally()
             viewModel.getListOfCourses()
-            viewModel.user.observe(viewLifecycleOwner) {
-                if (it!!.teacher) {
-                    teacherActivity()
-                } else {
-                    studentActivity()
-                }
-            }
         }
     }
 
@@ -81,12 +73,16 @@ class CoursesFragment: BaseFragment() {
         viewModel.getUserData()
         // Observe User Livedata
         viewModel.user.observe(viewLifecycleOwner) {
-            val userName = it!!.userName
-            val isTeacher = it.teacher
+            if (it!!.teacher) {
+                teacherActivity()
+            } else {
+                studentActivity()
+            }
+
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
             with(sharedPref!!.edit()) {
-                putString(Constants.USERNAME, userName)
-                putBoolean(Constants.ISTEACHER, isTeacher)
+                putString(Constants.USERNAME, it.userName)
+                putBoolean(Constants.ISTEACHER, it.teacher)
                 apply()
             }
         }

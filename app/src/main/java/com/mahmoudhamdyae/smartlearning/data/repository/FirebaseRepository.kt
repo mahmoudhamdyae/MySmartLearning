@@ -52,7 +52,7 @@ class FirebaseRepository {
     }
 
     fun addCourse(course: Course) : Task<Void> =
-        courseDatabaseReference.child(course.id!!).setValue(course).addOnSuccessListener {
+        courseDatabaseReference.child(course.id).setValue(course).addOnSuccessListener {
             userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
     }
 
@@ -75,6 +75,8 @@ class FirebaseRepository {
         return courses
     }
 
-    fun delCourse(course: Course) {
-    }
+    fun delCourse(courseId: String): Task<Void> =
+        courseDatabaseReference.child(courseId).removeValue().addOnSuccessListener {
+            userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
+        }
 }
