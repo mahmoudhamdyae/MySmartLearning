@@ -16,7 +16,7 @@ import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
-
+import com.mahmoudhamdyae.smartlearning.utils.getFileName
 
 @Suppress("DEPRECATION")
 class MaterialsFragment: BaseFragment() {
@@ -57,7 +57,7 @@ class MaterialsFragment: BaseFragment() {
             intent.action = Intent.ACTION_GET_CONTENT
             intent.type = "application/pdf"
             try {
-                startActivityForResult(Intent.createChooser(intent, "Select Material"), PICK_FILE)
+                startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), PICK_FILE)
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
@@ -86,15 +86,7 @@ class MaterialsFragment: BaseFragment() {
         if (data == null) return
         if (requestCode == PICK_FILE && resultCode == RESULT_OK) {
             val file: Uri = data.data!!
-            // Get name of the file
-            var nameOfFile = file.path
-//            Toast.makeText(context, nameOfFile, Toast.LENGTH_SHORT).show()
-            val cut = nameOfFile?.lastIndexOf('/')
-            if (cut != -1) {
-                nameOfFile = nameOfFile?.substring(cut!!.plus(1))
-            }
-            viewModel.addMaterial(file, nameOfFile, courseId)
-//            Toast.makeText(context, nameOfFile, Toast.LENGTH_SHORT).show()
+            viewModel.addMaterial(file, context?.getFileName(file), courseId)
         }
     }
 
