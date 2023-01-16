@@ -1,10 +1,14 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
+import android.util.Log
 import androidx.lifecycle.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import com.mahmoudhamdyae.smartlearning.utils.Constants
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
 
@@ -12,13 +16,18 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
 
     val courseName = MutableLiveData<String>()
 
-    private var _courses = MutableLiveData<MutableList<Course?>>()
-    val courses: LiveData<MutableList<Course?>>
-        get() = _courses
+    val courses = MutableLiveData<MutableList<Course?>>(mutableListOf())
 
     private var _user = MutableLiveData<User?>()
     val user: LiveData<User?>
         get() = _user
+
+    init {
+        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+        if (mAuth.currentUser != null) {
+            getListOfCourses()
+        }
+    }
 
     fun getUserData() {
         try {
@@ -45,12 +54,28 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     fun getListOfCourses() {
         try {
             viewModelScope.launch {
-                _status.value = STATUS.LOADING
-                _courses = repository.getCourses()
-                _error.value = _courses.value.toString()
-                _status.value = STATUS.DONE
+                val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+                val userDatabaseReference: DatabaseReference =
+                    FirebaseDatabase.getInstance().reference.child(Constants.USERS)
+
+                userDatabaseReference.child(mAuth.currentUser!!.uid).child(Constants.COURSES)
+                    .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        courses.value!!.clear()
+                        for (course in dataSnapshot.children) {
+                            courses.value!!.add(course.getValue(Course::class.java))
+                        }
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Getting Post failed, log a message
+                        Log.w("getCourses:onCancelled", "loadPost:onCancelled", databaseError.toException())
+                        _error.value = "onCaneellde"
+                    }
+                })
             }
-        } catch (_: Exception) {}
+        } catch (e: Exception) {
+            _error.value = e.message
+        }
     }
 }
 
