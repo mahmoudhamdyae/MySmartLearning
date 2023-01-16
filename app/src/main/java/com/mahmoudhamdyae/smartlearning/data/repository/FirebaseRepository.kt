@@ -57,25 +57,8 @@ class FirebaseRepository {
             userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
     }
 
-    fun getCourses(): MutableLiveData<MutableList<Course?>> {
-        val courses = MutableLiveData<MutableList<Course?>>()
-        val c: MutableList<Course?> = mutableListOf()
-        userDatabaseReference.child(getUid()).child(Constants.COURSES).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (course in dataSnapshot.children) {
-                    c.add(course.getValue(Course::class.java))
-//                    courses.value!!.add(course.getValue(Course::class.java))
-                }
-            }
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                Log.w("getCourses:onCancelled", "loadPost:onCancelled", databaseError.toException())
-            }
-        })
-
-        courses.value = c
-        return courses
-    }
+    fun getCourses(): DatabaseReference =
+        userDatabaseReference.child(getUid()).child(Constants.COURSES)
 
     fun delCourse(courseId: String): Task<Void> =
         courseDatabaseReference.child(courseId).removeValue().addOnSuccessListener {
