@@ -1,11 +1,14 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
+import android.util.Log
 import androidx.lifecycle.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import com.mahmoudhamdyae.smartlearning.utils.Constants
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
 
@@ -13,15 +16,18 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
 
     val courseName = MutableLiveData<String>()
 
-    val courses = MutableLiveData<MutableList<Course?>>(mutableListOf())
+//    val courses = MutableLiveData<MutableList<Course?>>(mutableListOf())
+    private val _courses = MutableLiveData<List<Course>>()
+    val courses: LiveData<List<Course>>
+        get() = _courses
 
     private var _user = MutableLiveData<User?>()
     val user: LiveData<User?>
         get() = _user
 
     init {
-        courses.value?.add(Course("name1"))
-        courses.value?.add(Course("name2"))
+//        courses.value?.add(Course("name1"))
+//        courses.value?.add(Course("name2"))
     }
 
     fun getUserData() {
@@ -49,26 +55,32 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     fun getListOfCourses() {
         try {
             viewModelScope.launch {
-//                val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-//                val userDatabaseReference: DatabaseReference =
-//                    FirebaseDatabase.getInstance().reference.child(Constants.USERS)
-//
-//                userDatabaseReference.child(mAuth.currentUser!!.uid).child(Constants.COURSES)
-//                    .addValueEventListener(object : ValueEventListener {
-//                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                        courses.value!!.clear()
-//                        for (course in dataSnapshot.children) {
-//                            courses.value!!.add(course.getValue(Course::class.java))
-//                        }
-//                    }
-//                    override fun onCancelled(databaseError: DatabaseError) {
-//                        // Getting Post failed, log a message
-//                        Log.w("getCourses:onCancelled", "loadPost:onCancelled", databaseError.toException())
-//                    }
-//                })
+                _status.value = STATUS.LOADING
+                val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+                val userDatabaseReference: DatabaseReference =
+                    FirebaseDatabase.getInstance().reference.child(Constants.USERS)
+
+                userDatabaseReference.child(mAuth.currentUser!!.uid).child(Constants.COURSES)
+                    .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val coursesList : MutableList<Course> = mutableListOf()
+                        for (course in dataSnapshot.children) {
+                            val courseItem = course.getValue(Course::class.java)
+                            coursesList.add(courseItem!!)
+                        }
+                        _courses.value = coursesList
+                        _status.value = STATUS.DONE
+                    }
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Getting Post failed, log a message
+                        Log.w("getCourses:onCancelled", "loadPost:onCancelled", databaseError.toException())
+                        _status.value = STATUS.ERROR
+                    }
+                })
             }
         } catch (e: Exception) {
             _error.value = e.message
+            _status.value = STATUS.ERROR
         }
     }
 }
