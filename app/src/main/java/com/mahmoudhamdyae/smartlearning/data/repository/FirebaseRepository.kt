@@ -17,7 +17,7 @@ import com.mahmoudhamdyae.smartlearning.utils.Constants
 class FirebaseRepository {
 
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var userDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.USERS).child(getUid())
+    private var userDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.USERS)
     private var courseDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.COURSES)
     private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference.child(Constants.IMAGES)
 
@@ -30,7 +30,7 @@ class FirebaseRepository {
         mAuth.signInWithEmailAndPassword(email, password)
 
     fun saveUserInDatabase(user: User): Task<Void> =
-        userDatabaseReference.setValue(user)
+        userDatabaseReference.child(getUid()).setValue(user)
 
     fun saveProfilePicture(imageUri: Uri): UploadTask =
         mStorageRef.child(getUid() + ".jpg").putFile(imageUri)
@@ -38,7 +38,7 @@ class FirebaseRepository {
     fun getUserData(): MutableLiveData<User?> {
         val user = MutableLiveData<User?>()
 
-        userDatabaseReference.addValueEventListener(object : ValueEventListener {
+        userDatabaseReference.child(getUid()).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 user.value =  dataSnapshot.getValue(User::class.java)
             }
@@ -53,13 +53,13 @@ class FirebaseRepository {
 
     fun addCourse(course: Course) : Task<Void> =
         courseDatabaseReference.child(course.id!!).setValue(course).addOnSuccessListener {
-            userDatabaseReference.child(Constants.COURSES).child(course.id).setValue(course)
+            userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
     }
 
     fun getCourses(): MutableLiveData<MutableList<Course?>> {
         val courses = MutableLiveData<MutableList<Course?>>()
         val c: MutableList<Course?> = mutableListOf()
-        userDatabaseReference.child(Constants.COURSES).addValueEventListener(object : ValueEventListener {
+        userDatabaseReference.child(getUid()).child(Constants.COURSES).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (course in dataSnapshot.children) {
                     c.add(course.getValue(Course::class.java))

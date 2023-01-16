@@ -2,15 +2,13 @@ package com.mahmoudhamdyae.smartlearning.ui.auth
 
 import android.util.Log
 import androidx.core.net.toUri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import kotlinx.coroutines.launch
 
 class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel() {
 
@@ -58,70 +56,78 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
     fun signUp() {
         if (validateTextsSignUp()) {
 
-            _status.value = STATUS.LOADING
-            repository.signUp(email.value!!, password.value!!)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // Sign up success.
-                        Log.d("SignUp", "createUserWithEmail:success")
-                        saveUserInDatabase()
-                        saveProfilePicture()
-                        navigate()
-                        _status.value = STATUS.DONE
-                    } else {
-                        // Sign up fails
-                        Log.w("SignUp", "createUserWithEmail:failure", task.exception)
-                        _error.value = task.exception?.message.toString()
-                        _status.value = STATUS.ERROR
+            viewModelScope.launch {
+                _status.value = STATUS.LOADING
+                repository.signUp(email.value!!, password.value!!)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Sign up success.
+                            Log.d("SignUp", "createUserWithEmail:success")
+                            saveUserInDatabase()
+                            saveProfilePicture()
+                            navigate()
+                            _status.value = STATUS.DONE
+                        } else {
+                            // Sign up fails
+                            Log.w("SignUp", "createUserWithEmail:failure", task.exception)
+                            _error.value = task.exception?.message.toString()
+                            _status.value = STATUS.ERROR
+                        }
                     }
-                }
+            }
         }
     }
 
     fun logIn() {
         if (validateTextsLogIn()) {
 
-            _status.value = STATUS.LOADING
-            repository.logIn(email.value!!, password.value!!)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // Log in success.
-                        Log.d("LogIn", "signInWithEmail:success")
-                        navigate()
-                        _status.value = STATUS.DONE
-                    } else {
-                        // Log in fails.
-                        Log.w("LogIn", "signInWithEmail:failure", task.exception)
-                        _error.value = task.exception?.message.toString()
-                        _status.value = STATUS.ERROR
+            viewModelScope.launch {
+                _status.value = STATUS.LOADING
+                repository.logIn(email.value!!, password.value!!)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Log in success.
+                            Log.d("LogIn", "signInWithEmail:success")
+                            navigate()
+                            _status.value = STATUS.DONE
+                        } else {
+                            // Log in fails.
+                            Log.w("LogIn", "signInWithEmail:failure", task.exception)
+                            _error.value = task.exception?.message.toString()
+                            _status.value = STATUS.ERROR
+                        }
                     }
-                }
+            }
         }
     }
 
     private fun saveUserInDatabase() {
-        val isTeacher = _isTeacher.value == IsTeacher.TEACHER
+        viewModelScope.launch {
+            val isTeacher = _isTeacher.value == IsTeacher.TEACHER
 
-        val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
-        repository.saveUserInDatabase(user)
-            .addOnSuccessListener {
-        }.addOnFailureListener {
-                _error.value = it.message
-            }
+            val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
+            repository.saveUserInDatabase(user)
+                .addOnSuccessListener {
+                }.addOnFailureListener {
+                    _error.value = it.message
+                }
+        }
     }
 
     private fun saveProfilePicture() {
-        if (imageUri.value != null) {
-            _status.value = STATUS.LOADING
-            repository.saveProfilePicture(imageUri.value!!.toUri())
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _status.value = STATUS.DONE
-                    } else {
-                        _error.value = task.exception?.message.toString()
-                        _status.value = STATUS.ERROR
+        viewModelScope.launch {
+            if (imageUri.value != null) {
+                _status.value = STATUS.LOADING
+                repository.saveProfilePicture(imageUri.value!!.toUri())
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            _status.value = STATUS.DONE
+                        } else {
+                            _error.value = task.exception?.message.toString()
+                            _status.value = STATUS.ERROR
+                        }
                     }
-                }
+            }
         }
     }
 
