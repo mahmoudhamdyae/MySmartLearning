@@ -9,6 +9,7 @@ object Constants {
 
     // Firebase Storage
     const val IMAGES = "images"
+    const val MATERIALS = "materials"
 
     // Shared preferences keys
     const val KEY = "key"

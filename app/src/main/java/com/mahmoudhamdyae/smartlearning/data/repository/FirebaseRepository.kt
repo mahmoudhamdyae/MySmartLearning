@@ -19,7 +19,8 @@ class FirebaseRepository {
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private var userDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.USERS)
     private var courseDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.COURSES)
-    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference.child(Constants.IMAGES)
+    private var materialsDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.MATERIALS)
+    private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
 
     fun getUid() = mAuth.currentUser!!.uid
 
@@ -33,7 +34,7 @@ class FirebaseRepository {
         userDatabaseReference.child(getUid()).setValue(user)
 
     fun saveProfilePicture(imageUri: Uri): UploadTask =
-        mStorageRef.child(getUid() + ".jpg").putFile(imageUri)
+        mStorageRef.child(Constants.IMAGES).child(getUid() + ".jpg").putFile(imageUri)
 
     fun getUserData(): MutableLiveData<User?> {
         val user = MutableLiveData<User?>()
@@ -80,4 +81,19 @@ class FirebaseRepository {
         courseDatabaseReference.child(courseId).removeValue().addOnSuccessListener {
             userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
         }
+
+    fun addMaterialStorage(file: Uri, name: String, courseId: String): UploadTask =
+        mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).putFile(file)
+
+    fun addMaterialsToDataBase(name: String, courseId: String): Task<Void> =
+        materialsDatabaseReference.child(courseId).push().setValue(name)
+
+    fun getMaterial(): MutableList<String> {
+        val c = mutableListOf<String>()
+        c.add("1")
+        c.add("2")
+        c.add("3")
+
+        return c
+    }
 }
