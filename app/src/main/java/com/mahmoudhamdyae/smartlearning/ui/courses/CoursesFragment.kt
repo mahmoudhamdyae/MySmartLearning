@@ -3,6 +3,7 @@ package com.mahmoudhamdyae.smartlearning.ui.courses
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -10,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
@@ -46,6 +48,7 @@ class CoursesFragment: BaseFragment() {
         binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             // Navigate to Course Fragment
             findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
+//          Toast.makeText(context, it.id, Toast.LENGTH_SHORT).show()
         })
 
         // Initialize Firebase Auth
@@ -123,6 +126,9 @@ class CoursesFragment: BaseFragment() {
     private fun teacherActivity() {
         binding.addFab.setOnClickListener {
             createDialog()
+//
+            val course = Course("test", "testYear", "myName", 10)
+            viewModel.addCourse(course)
         }
     }
 

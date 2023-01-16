@@ -8,13 +8,14 @@ import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import com.mahmoudhamdyae.smartlearning.utils.STATUS
 
 class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewModel() {
 
     val courseName = MutableLiveData<String>()
 
-    private val _courses = MutableLiveData<List<Course>>()
-    val courses: LiveData<List<Course>>
+    private var _courses = MutableLiveData<MutableList<Course?>>()
+    val courses: LiveData<MutableList<Course?>>
         get() = _courses
 
     private var _user = MutableLiveData<User?>()
@@ -22,16 +23,30 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         get() = _user
 
     init {
-        val c = mutableListOf<Course>()
-        c.add(Course("name1", "year1", "teacherName1"))
-        c.add(Course("name2", "year2", "teacherName2"))
-        c.add(Course("name3", "year3", "teacherName3"))
-
-        _courses.value = c
+        getCourses()
     }
 
     fun getUserData() {
         _user = repository.getUserData()
+    }
+
+    fun addCourse(course: Course) {
+        _status.value = STATUS.LOADING
+        repository.addCourse(course).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                _status.value = STATUS.DONE
+            } else {
+                _status.value = STATUS.ERROR
+                _error.value = task.exception?.message
+            }
+        }
+    }
+
+    private fun getCourses() {
+        _status.value = STATUS.LOADING
+        _courses = repository.getCourses()
+        _error.value = _courses.value.toString()
+        _status.value = STATUS.DONE
     }
 }
 

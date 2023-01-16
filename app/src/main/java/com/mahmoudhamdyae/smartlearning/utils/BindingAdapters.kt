@@ -11,7 +11,7 @@ import com.mahmoudhamdyae.smartlearning.ui.course.quiz.QuizAdapter
 import com.mahmoudhamdyae.smartlearning.ui.courses.CoursesAdapter
 
 @BindingAdapter("coursesData")
-fun bindCoursesRecyclerView(recyclerView: RecyclerView, data: List<Course>?) {
+fun bindCoursesRecyclerView(recyclerView: RecyclerView, data: MutableList<Course?>?) {
     val adapter = recyclerView.adapter as CoursesAdapter
     adapter.submitList(data)
 }
