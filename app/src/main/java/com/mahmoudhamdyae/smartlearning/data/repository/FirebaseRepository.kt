@@ -63,6 +63,7 @@ class FirebaseRepository {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (course in dataSnapshot.children) {
                     c.add(course.getValue(Course::class.java))
+//                    courses.value!!.add(course.getValue(Course::class.java))
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {
