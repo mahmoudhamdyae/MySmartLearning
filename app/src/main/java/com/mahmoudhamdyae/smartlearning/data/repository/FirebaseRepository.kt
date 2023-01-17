@@ -72,9 +72,10 @@ class FirebaseRepository {
         userDatabaseReference.child(getUid()).child(Constants.COURSES)
 
     fun delCourse(courseId: String): Task<Void> =
-        courseDatabaseReference.child(courseId).removeValue().addOnSuccessListener {
-            userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
-        }
+        courseDatabaseReference.child(courseId).removeValue()
+
+    fun delCourseFromUser(courseId: String): Task<Void> =
+        userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
 
     fun getAllCourses() {
     }

@@ -35,7 +35,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
             _uploadStatus.value = STATUS.LOADING
             repository.addCourseToCourses(course).addOnCompleteListener { courseTask ->
                 if (courseTask.isSuccessful) {
-                    repository.addCourseToUser(course).addOnCompleteListener {userTask ->
+                    repository.addCourseToUser(course).addOnCompleteListener { userTask ->
                         if (userTask.isSuccessful) {
                             _uploadStatus.value = STATUS.DONE
                         } else {
@@ -75,6 +75,28 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         } catch (e: Exception) {
             _error.value = e.message
             _downloadStatus.value = STATUS.ERROR
+        }
+    }
+
+    fun delCourse(courseId: String) {
+        repository.delCourse(courseId).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                _uploadStatus.value = STATUS.DONE
+            } else {
+                _uploadStatus.value = STATUS.ERROR
+                _error.value = task.exception?.message
+            }
+        }
+    }
+
+    fun delCourseFromUser(courseId: String) {
+        repository.delCourseFromUser(courseId).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                _uploadStatus.value = STATUS.DONE
+            } else {
+                _uploadStatus.value = STATUS.ERROR
+                _error.value = task.exception?.message
+            }
         }
     }
 }
