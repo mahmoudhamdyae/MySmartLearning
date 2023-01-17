@@ -59,8 +59,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
                         _status.value = STATUS.DONE
                     }
                     override fun onCancelled(databaseError: DatabaseError) {
-                        // Getting Post failed, log a message
-                        Log.w("getCourses:onCancelled", "loadPost:onCancelled", databaseError.toException())
+                        Log.w("getCourses:onCancelled", "loadCourses:onCancelled", databaseError.toException())
                         _status.value = STATUS.ERROR
                     }
 

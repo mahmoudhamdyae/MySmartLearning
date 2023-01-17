@@ -24,6 +24,8 @@ class FirebaseRepository {
 
     fun getUid() = mAuth.currentUser!!.uid
 
+    // Users
+
     fun signUp(email: String, password: String): Task<AuthResult> =
         mAuth.createUserWithEmailAndPassword(email, password)
 
@@ -52,6 +54,8 @@ class FirebaseRepository {
         return user
     }
 
+    // Courses
+
     fun addCourse(course: Course) : Task<Void> =
         courseDatabaseReference.child(course.id).setValue(course).addOnSuccessListener {
             userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
@@ -65,18 +69,18 @@ class FirebaseRepository {
             userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
         }
 
+    // Materials
+
     fun addMaterialStorage(file: Uri, name: String, courseId: String): UploadTask =
         mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).putFile(file)
 
     fun addMaterialsToDataBase(name: String, courseId: String): Task<Void> =
         materialsDatabaseReference.child(courseId).push().setValue(name)
 
-    fun getMaterial(): MutableList<String> {
-        val c = mutableListOf<String>()
-        c.add("1")
-        c.add("2")
-        c.add("3")
+    fun getMaterials(courseId: String): DatabaseReference =
+        materialsDatabaseReference.child(courseId)
 
-        return c
-    }
+    // Quizzes
+
+    // Chats
 }

@@ -1,15 +1,21 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.materials
 
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import android.util.Log
+import androidx.lifecycle.*
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.CreationExtras
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import kotlinx.coroutines.launch
 
-class MaterialsViewModel(private val repository: FirebaseRepository) : BaseViewModel() {
+class MaterialsViewModel(
+    private val repository: FirebaseRepository
+) : BaseViewModel() {
 
     private val _materials = MutableLiveData<List<String>>()
     val materials: LiveData<List<String>>
@@ -45,13 +51,37 @@ class MaterialsViewModel(private val repository: FirebaseRepository) : BaseViewM
     }
 
     private fun getListOfMaterials() {
-        _materials.value = repository.getMaterial()
+        try {
+            viewModelScope.launch {
+//                _status.value = STATUS.LOADING
+                repository.getMaterials("44c9eb1b-4c6f-4961-9ee3-f20f77f3c33e").addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val materialsList: MutableList<String> = mutableListOf()
+                        for (material in dataSnapshot.children) {
+                            val materialItem = material.getValue(String::class.java)
+                            materialsList.add(materialItem!!)
+                        }
+                        _materials.value = materialsList
+//                        _status.value = STATUS.DONE
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.w("getMaterials:Cancelled", "loadMaterials:onCancelled", error.toException())
+//                        _status.value = STATUS.ERROR
+                    }
+                })
+            }
+        } catch (e: Exception) {
+            _error.value = e.message
+//            _status.value = STATUS.ERROR
+        }
     }
 }
 
 @Suppress("UNCHECKED_CAST")
 class MaterialsViewModelFactory (
-    private val repository: FirebaseRepository
+    private val repository: FirebaseRepository,
+//    private val courseId: String
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>) =
         (MaterialsViewModel(repository) as T)
