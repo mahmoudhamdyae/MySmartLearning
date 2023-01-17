@@ -3,8 +3,6 @@ package com.mahmoudhamdyae.smartlearning.ui.course.materials
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -30,19 +28,19 @@ class MaterialsViewModel(
     }
 
     fun addMaterial(file: Uri, name: String?, courseId: String) {
-        _status.value = STATUS.LOADING
+        _uploadStatus.value = STATUS.LOADING
         repository.addMaterialStorage(file, name!!, courseId).addOnCompleteListener { taskStorage ->
             if (taskStorage.isSuccessful) {
                 repository.addMaterialsToDataBase(name, courseId).addOnCompleteListener { taskDatabase  ->
                     if (taskDatabase.isSuccessful) {
-                        _status.value = STATUS.DONE
+                        _uploadStatus.value = STATUS.DONE
                     } else {
-                        _status.value = STATUS.ERROR
+                        _uploadStatus.value = STATUS.ERROR
                         _error.value = taskDatabase.exception?.message
                     }
                 }
             } else {
-                _status.value = STATUS.ERROR
+                _uploadStatus.value = STATUS.ERROR
                 _error.value = taskStorage.exception?.message
             }
         }.addOnProgressListener {
@@ -53,7 +51,7 @@ class MaterialsViewModel(
     private fun getListOfMaterials() {
         try {
             viewModelScope.launch {
-//                _status.value = STATUS.LOADING
+                _downloadStatus.value = STATUS.LOADING
                 repository.getMaterials("44c9eb1b-4c6f-4961-9ee3-f20f77f3c33e").addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val materialsList: MutableList<String> = mutableListOf()
@@ -62,18 +60,18 @@ class MaterialsViewModel(
                             materialsList.add(materialItem!!)
                         }
                         _materials.value = materialsList
-//                        _status.value = STATUS.DONE
+                        _downloadStatus.value = STATUS.DONE
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         Log.w("getMaterials:Cancelled", "loadMaterials:onCancelled", error.toException())
-//                        _status.value = STATUS.ERROR
+                        _downloadStatus.value = STATUS.ERROR
                     }
                 })
             }
         } catch (e: Exception) {
             _error.value = e.message
-//            _status.value = STATUS.ERROR
+            _downloadStatus.value = STATUS.ERROR
         }
     }
 }

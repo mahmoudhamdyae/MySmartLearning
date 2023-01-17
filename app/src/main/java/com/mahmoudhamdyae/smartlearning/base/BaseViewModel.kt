@@ -19,9 +19,13 @@ abstract class BaseViewModel: ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    protected val _status = MutableLiveData<STATUS>()
-    val status: LiveData<STATUS>
-        get() = _status
+    protected val _uploadStatus = MutableLiveData<STATUS>()
+    val uploadStatus: LiveData<STATUS>
+        get() = _uploadStatus
+
+    protected val _downloadStatus = MutableLiveData<STATUS>()
+    val downloadStatus: LiveData<STATUS>
+        get() = _downloadStatus
 
     fun setIsTeacher(isTeacher: IsTeacher) {
         _isTeacher.value = isTeacher

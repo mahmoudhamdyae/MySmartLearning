@@ -64,7 +64,7 @@ class MaterialsFragment: BaseFragment() {
         }
 
         progressDialog = ProgressDialog(context)
-        viewModel.status.observe(viewLifecycleOwner) {
+        viewModel.uploadStatus.observe(viewLifecycleOwner) {
             if (it == STATUS.LOADING) {
                 progressDialog.show()
             } else {

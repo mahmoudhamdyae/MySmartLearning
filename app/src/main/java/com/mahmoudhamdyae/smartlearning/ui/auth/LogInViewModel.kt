@@ -57,7 +57,7 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         if (validateTextsSignUp()) {
 
             viewModelScope.launch {
-                _status.value = STATUS.LOADING
+                _downloadStatus.value = STATUS.LOADING
                 repository.signUp(email.value!!, password.value!!)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -66,12 +66,12 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
                             saveUserInDatabase()
                             saveProfilePicture()
                             navigate()
-                            _status.value = STATUS.DONE
+                            _downloadStatus.value = STATUS.DONE
                         } else {
                             // Sign up fails
                             Log.w("SignUp", "createUserWithEmail:failure", task.exception)
                             _error.value = task.exception?.message.toString()
-                            _status.value = STATUS.ERROR
+                            _downloadStatus.value = STATUS.ERROR
                         }
                     }
             }
@@ -82,19 +82,19 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         if (validateTextsLogIn()) {
 
             viewModelScope.launch {
-                _status.value = STATUS.LOADING
+                _downloadStatus.value = STATUS.LOADING
                 repository.logIn(email.value!!, password.value!!)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             // Log in success.
                             Log.d("LogIn", "signInWithEmail:success")
                             navigate()
-                            _status.value = STATUS.DONE
+                            _downloadStatus.value = STATUS.DONE
                         } else {
                             // Log in fails.
                             Log.w("LogIn", "signInWithEmail:failure", task.exception)
                             _error.value = task.exception?.message.toString()
-                            _status.value = STATUS.ERROR
+                            _downloadStatus.value = STATUS.ERROR
                         }
                     }
             }
@@ -117,14 +117,14 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
     private fun saveProfilePicture() {
         viewModelScope.launch {
             if (imageUri.value != null) {
-                _status.value = STATUS.LOADING
+                _downloadStatus.value = STATUS.LOADING
                 repository.saveProfilePicture(imageUri.value!!.toUri())
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            _status.value = STATUS.DONE
+                            _downloadStatus.value = STATUS.DONE
                         } else {
                             _error.value = task.exception?.message.toString()
-                            _status.value = STATUS.ERROR
+                            _downloadStatus.value = STATUS.ERROR
                         }
                     }
             }

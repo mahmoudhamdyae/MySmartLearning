@@ -32,12 +32,12 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
 
     fun addCourse(course: Course) {
         viewModelScope.launch {
-            _status.value = STATUS.LOADING
+            _uploadStatus.value = STATUS.LOADING
             repository.addCourse(course).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    _status.value = STATUS.DONE
+                    _uploadStatus.value = STATUS.DONE
                 } else {
-                    _status.value = STATUS.ERROR
+                    _uploadStatus.value = STATUS.ERROR
                     _error.value = task.exception?.message
                 }
             }
@@ -47,7 +47,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     fun getListOfCourses() {
         try {
             viewModelScope.launch {
-                _status.value = STATUS.LOADING
+                _downloadStatus.value = STATUS.LOADING
                 repository.getCourses().addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val coursesList : MutableList<Course> = mutableListOf()
@@ -56,18 +56,18 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
                             coursesList.add(courseItem!!)
                         }
                         _courses.value = coursesList
-                        _status.value = STATUS.DONE
+                        _downloadStatus.value = STATUS.DONE
                     }
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.w("getCourses:onCancelled", "loadCourses:onCancelled", databaseError.toException())
-                        _status.value = STATUS.ERROR
+                        _downloadStatus.value = STATUS.ERROR
                     }
 
                 })
             }
         } catch (e: Exception) {
             _error.value = e.message
-            _status.value = STATUS.ERROR
+            _downloadStatus.value = STATUS.ERROR
         }
     }
 }
