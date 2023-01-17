@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="activity_padding">4dp</dimen>
-
     <dimen name="fragments_margin">4dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_padding">4dp</dimen>
+    <dimen name="card_text_margin">4dp</dimen>
+    <dimen name="card_corner_radius">16dp</dimen>
+    <dimen name="icons_margin">4dp</dimen>
+    <dimen name="button_radius">16dp</dimen>
+
+    <!-- Course Card -->
+    <dimen name="course_card_height">60dp</dimen>
+    <dimen name="course_card_image_height">60dp</dimen>
+    <dimen name="course_card_image_width">60dp</dimen>
+    <dimen name="course_card_text_size">25sp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="text_primary_size">25sp</dimen>
+    <dimen name="text_secondary_size">15sp</dimen>
 
     <!-- Auth -->
+    <dimen name="smart_learning_label_margin">25sp</dimen>
+    <dimen name="profile_picture_width">60dp</dimen>
+    <dimen name="profile_picture_height">60dp</dimen>
+    <dimen name="profile_picture_margin">16dp</dimen>
+    <dimen name="profile_label_margin">35dp</dimen>
     <dimen name="edit_text_drawable_padding">8dp</dimen>
     <dimen name="edit_text_padding">20dp</dimen>
+    <dimen name="edit_text_margin">8dp</dimen>
+    <dimen name="smart_learning_label_size">35sp</dimen>
     <dimen name="edit_text_size">16sp</dimen>
-
-    <dimen name="button_radius">16dp</dimen>
+    <dimen name="button_margin">16dp</dimen>
 </resources>

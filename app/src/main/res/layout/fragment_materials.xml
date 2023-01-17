@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsViewModel" />
@@ -11,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/fragments_margin">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/materials_list"
@@ -24,6 +26,7 @@
             android:id="@+id/add_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/fab_background"
             android:contentDescription="@string/add_fab_content_description"
             android:src="@drawable/ic_baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"

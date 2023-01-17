@@ -6,8 +6,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/list_item_color">
+        android:layout_margin="@dimen/card_margin"
+        android:padding="@dimen/card_padding"
+        app:cardBackgroundColor="@color/card_color"
+        app:cardCornerRadius="@dimen/card_corner_radius">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,6 +20,9 @@
                 android:id="@+id/material_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/card_text_margin"
+                android:textColor="@color/text_primary_color"
+                android:textSize="@dimen/text_primary_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Material Text" />
@@ -26,7 +31,7 @@
                 android:id="@+id/download_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:layout_margin="@dimen/icons_margin"
                 android:contentDescription="@string/download_button_content_description"
                 app:layout_constraintEnd_toStartOf="@id/play_button"
                 app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +41,7 @@
                 android:id="@+id/play_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:layout_margin="@dimen/icons_margin"
                 android:contentDescription="@string/play_button_content_description"
                 app:layout_constraintEnd_toStartOf="@id/delete_button"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,7 +51,7 @@
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
+                android:layout_margin="@dimen/icons_margin"
                 android:contentDescription="@string/delete_button_content_description"
                 android:src="@drawable/ic_baseline_delete_24"
                 app:layout_constraintEnd_toEndOf="parent"

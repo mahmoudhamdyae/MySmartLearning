@@ -8,12 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="text_color">#a176d9</color>
+    <color name="text_primary_color">#a176d9</color>
+    <color name="text_secondary_color">#B298D5</color>
     <color name="error_text_color">#9A0606</color>
     <color name="button_background">#3A2588</color>
+    <color name="fab_background">#5C380B</color>
     <color name="button_text">#FFFFFF</color>
     <color name="icons_tint">#0D209E</color>
-    <color name="create_account">#a1b4f9</color>
+    <color name="window_background">#3E7E57EA</color>
+    <color name="card_color">#dae7f2</color>
 
-    <color name="list_item_color">#dae7f2</color>
+    <color name="auth_red">#990D3C</color>
 </resources>

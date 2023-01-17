@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.mahmoudhamdyae.smartlearning.ui.course.addstudent.AddStudentViewModel" />
@@ -9,7 +10,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/fragments_margin">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

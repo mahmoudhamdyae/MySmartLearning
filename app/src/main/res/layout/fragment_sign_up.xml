@@ -22,52 +22,56 @@
 
             <TextView
                 android:id="@+id/main_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/text_color"
-                android:textSize="35sp"
+                android:textColor="@color/text_primary_color"
+                android:textSize="@dimen/smart_learning_label_size"
                 android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/sub_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:text="@string/sign_up_under_app_name_intro"
-                android:textColor="@color/text_color"
-                android:textSize="15sp"
+                android:textColor="@color/text_secondary_color"
+                android:textSize="@dimen/text_secondary_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/main_text" />
 
             <TextView
                 android:id="@+id/choose_profile_picture_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/sign_up_choose_profile_image"
-                android:textColor="#990033"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/profile_label_margin"
+                android:textColor="@color/auth_red"
+                android:textSize="@dimen/text_secondary_size"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sub_text" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="@dimen/profile_picture_width"
+                android:layout_height="@dimen/profile_picture_height"
                 android:layout_gravity="center"
                 android:src="@drawable/default_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/choose_profile_picture_text" />
+                android:layout_margin="@dimen/profile_picture_margin"
+                app:layout_constraintStart_toEndOf="@id/choose_profile_picture_text"
+                app:layout_constraintTop_toBottomOf="@id/sub_text"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:errorEnabled="true"
+                android:layout_marginTop="@dimen/profile_picture_margin"
                 app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -78,10 +82,10 @@
                     android:drawablePadding="@dimen/edit_text_drawable_padding"
                     android:hint="@string/sign_up_user_name_edit_text_hint"
                     android:inputType="textPersonName"
-                    android:paddingBottom="@dimen/edit_text_padding"
+                    android:padding="@dimen/edit_text_padding"
                     android:text="@={viewModel.userName}"
-                    android:textColor="@color/text_color"
-                    android:textColorHint="@color/text_color"
+                    android:textColor="@color/text_primary_color"
+                    android:textColorHint="@color/text_primary_color"
                     android:textSize="@dimen/edit_text_size" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,9 +105,8 @@
                     android:hint="@string/sign_up_email_edit_text_hint"
                     android:inputType="textEmailAddress"
                     android:padding="@dimen/edit_text_padding"
-                    android:paddingBottom="@dimen/edit_text_padding"
                     android:text="@={viewModel.email}"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/text_primary_color"
                     android:textSize="@dimen/edit_text_size" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,23 +126,25 @@
                     android:drawablePadding="@dimen/edit_text_drawable_padding"
                     android:hint="@string/sign_up_password_edit_text_hint"
                     android:inputType="textPassword"
-                    android:paddingBottom="@dimen/edit_text_padding"
+                    android:padding="@dimen/edit_text_padding"
                     android:singleLine="true"
                     android:text="@={viewModel.password}"
-                    android:textColor="@color/text_color"
-                    android:textColorHint="#616161"
+                    android:textColor="@color/text_primary_color"
+                    android:textColorHint="@color/text_primary_color"
                     android:textSize="@dimen/edit_text_size"
                     app:errorEnabled="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/select_account_type_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/select_account_type"
-                android:textColor="#990033"
-                android:textSize="18sp"
+                android:textColor="@color/auth_red"
+                android:textSize="@dimen/text_secondary_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/password" />
 
             <RadioGroup
@@ -174,10 +179,8 @@
                 android:id="@+id/sign_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="50dp"
-                android:background="@drawable/button_selector"
+                android:layout_margin="@dimen/button_margin"
+                android:background="@drawable/button_background"
                 android:text="@string/sign_up_sign_up_button"
                 android:textColor="@color/button_text"
                 android:textSize="16sp"
