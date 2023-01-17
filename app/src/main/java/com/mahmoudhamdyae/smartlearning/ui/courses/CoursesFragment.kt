@@ -15,7 +15,6 @@ import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 
-@Suppress("DEPRECATION")
 class CoursesFragment: BaseFragment() {
 
     private lateinit var binding: FragmentCoursesBinding
@@ -35,7 +34,7 @@ class CoursesFragment: BaseFragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        setHasOptionsMenu(true)
+        binding.toolbar.inflateMenu(R.menu.menu_main)
 
         return binding.root
     }
@@ -48,6 +47,21 @@ class CoursesFragment: BaseFragment() {
             // Navigate to Course Fragment
             findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
         })
+
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.profile -> {
+                    findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToProfileFragment())
+                    true
+                }
+                R.id.sign_out -> {
+                    FirebaseAuth.getInstance().signOut()
+                    navigateToLoginScreen()
+                    true
+                }
+                else -> false
+            }
+        }
 
         // Initialize Firebase Auth
         mAUth = FirebaseAuth.getInstance()
@@ -90,33 +104,6 @@ class CoursesFragment: BaseFragment() {
 
     private fun navigateToLoginScreen() {
         findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToLogInFragment())
-    }
-
-    @Deprecated("Deprecated in Java", ReplaceWith(
-        "super.onCreateOptionsMenu(menu, inflater)",
-        "androidx.fragment.app.Fragment"))
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_main, menu)
-    }
-
-    @Deprecated("Deprecated in Java", ReplaceWith(
-        "super.onOptionsItemSelected(item)",
-        "androidx.fragment.app.Fragment"))
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
-        return when (item.itemId) {
-            R.id.profile -> {
-                findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToProfileFragment())
-                true
-            }
-            R.id.sign_out -> {
-                FirebaseAuth.getInstance().signOut()
-                navigateToLoginScreen()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     private fun teacherActivity() {

@@ -8,6 +8,7 @@
     <dimen name="card_corner_radius">16dp</dimen>
     <dimen name="icons_margin">4dp</dimen>
     <dimen name="button_radius">16dp</dimen>
+    <dimen name="toolbar_margin">8dp</dimen>
 
     <!-- Course Card -->
     <dimen name="course_card_height">60dp</dimen>

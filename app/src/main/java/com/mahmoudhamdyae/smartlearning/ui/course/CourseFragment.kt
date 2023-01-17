@@ -33,6 +33,10 @@ class CourseFragment: BaseFragment() {
 
         getUserType()
 
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.quizzesCard.setOnClickListener {
             findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(courseId))
         }

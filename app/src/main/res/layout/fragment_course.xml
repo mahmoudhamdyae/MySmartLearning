@@ -15,6 +15,15 @@
         android:layout_margin="@dimen/fragments_margin"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/toolbar_margin"
+            android:contentDescription="@string/back_button_content_description" />
+
         <RelativeLayout
             android:id="@+id/quizzes_card"
             android:layout_width="match_parent"
