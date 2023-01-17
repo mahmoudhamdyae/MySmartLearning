@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.auth.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentLogInBinding
 import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
 import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModelFactory
+import com.mahmoudhamdyae.smartlearning.utils.Constants
 
 class LogInFragment : BaseFragment() {
 
@@ -34,6 +36,8 @@ class LogInFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeFirstTime()
+
         binding.logInButton.setOnClickListener {
             viewModel.logIn()
         }
@@ -47,6 +51,15 @@ class LogInFragment : BaseFragment() {
                 findNavController().navigate(LogInFragmentDirections.actionLogInFragmentToMainFragment())
                 viewModel.finishNavigate()
             }
+        }
+    }
+
+    private fun observeFirstTime() {
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        val isFirstTime = sharedPref.getBoolean(Constants.FIRSTTIME, true)
+        if (isFirstTime) {
+            // Implement first time logic
+            findNavController().navigate(LogInFragmentDirections.actionLogInFragmentToWelcomeFragment())
         }
     }
 }

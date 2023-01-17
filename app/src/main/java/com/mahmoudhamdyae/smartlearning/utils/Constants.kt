@@ -15,4 +15,5 @@ object Constants {
     const val KEY = "key"
     const val USERNAME = "userName"
     const val ISTEACHER = "isTeacher"
+    const val FIRSTTIME = "firstTime"
 }
