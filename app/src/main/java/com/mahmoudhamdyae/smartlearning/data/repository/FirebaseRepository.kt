@@ -62,18 +62,22 @@ class FirebaseRepository {
 
     // Courses
 
-    fun addCourse(course: Course) : Task<Void> =
-        courseDatabaseReference.child(course.id).setValue(course).addOnSuccessListener {
-            userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
-    }
+    fun addCourseToCourses(course: Course) : Task<Void> =
+        courseDatabaseReference.child(course.id).setValue(course)
 
-    fun getCourses(): DatabaseReference =
+    fun addCourseToUser(course: Course): Task<Void> =
+        userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
+
+    fun getUserCourses(): DatabaseReference =
         userDatabaseReference.child(getUid()).child(Constants.COURSES)
 
     fun delCourse(courseId: String): Task<Void> =
         courseDatabaseReference.child(courseId).removeValue().addOnSuccessListener {
             userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
         }
+
+    fun getAllCourses() {
+    }
 
     // Materials
 

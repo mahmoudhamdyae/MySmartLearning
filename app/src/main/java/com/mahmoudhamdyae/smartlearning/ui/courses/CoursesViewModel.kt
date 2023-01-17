@@ -33,12 +33,19 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     fun addCourse(course: Course) {
         viewModelScope.launch {
             _uploadStatus.value = STATUS.LOADING
-            repository.addCourse(course).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _uploadStatus.value = STATUS.DONE
+            repository.addCourseToCourses(course).addOnCompleteListener { courseTask ->
+                if (courseTask.isSuccessful) {
+                    repository.addCourseToUser(course).addOnCompleteListener {userTask ->
+                        if (userTask.isSuccessful) {
+                            _uploadStatus.value = STATUS.DONE
+                        } else {
+                            _uploadStatus.value = STATUS.ERROR
+                            _error.value = courseTask.exception?.message
+                        }
+                    }
                 } else {
                     _uploadStatus.value = STATUS.ERROR
-                    _error.value = task.exception?.message
+                    _error.value = courseTask.exception?.message
                 }
             }
         }
@@ -48,7 +55,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         try {
             viewModelScope.launch {
                 _downloadStatus.value = STATUS.LOADING
-                repository.getCourses().addValueEventListener(object : ValueEventListener {
+                repository.getUserCourses().addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val coursesList : MutableList<Course> = mutableListOf()
                         for (course in dataSnapshot.children) {
