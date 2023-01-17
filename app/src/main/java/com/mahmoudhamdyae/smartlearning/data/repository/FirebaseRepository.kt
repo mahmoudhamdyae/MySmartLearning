@@ -54,6 +54,12 @@ class FirebaseRepository {
         return user
     }
 
+    fun addStudentToCourse(user: User) {
+    }
+
+    fun getStudents() {
+    }
+
     // Courses
 
     fun addCourse(course: Course) : Task<Void> =

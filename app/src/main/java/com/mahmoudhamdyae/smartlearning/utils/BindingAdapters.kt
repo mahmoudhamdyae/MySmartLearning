@@ -6,6 +6,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
+import com.mahmoudhamdyae.smartlearning.data.models.User
+import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.AddStudentAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.quiz.QuizAdapter
 import com.mahmoudhamdyae.smartlearning.ui.courses.CoursesAdapter
@@ -13,6 +15,12 @@ import com.mahmoudhamdyae.smartlearning.ui.courses.CoursesAdapter
 @BindingAdapter("coursesData")
 fun bindCoursesRecyclerView(recyclerView: RecyclerView, data: List<Course>?) {
     val adapter = recyclerView.adapter as CoursesAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("studentsData")
+fun bindStudentsRecyclerView(recyclerView: RecyclerView, data: List<User>?) {
+    val adapter = recyclerView.adapter as AddStudentAdapter
     adapter.submitList(data)
 }
 
