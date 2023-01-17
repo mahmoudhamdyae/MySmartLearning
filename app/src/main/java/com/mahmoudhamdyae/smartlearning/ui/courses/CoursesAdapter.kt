@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.databinding.CourseItemBinding
 
-class CoursesAdapter(private val onClickListener: OnClickListener) :
+class CoursesAdapter(
+    private val onClickListener: OnClickListener,
+    private val search: Boolean
+) :
     ListAdapter<Course, CoursesAdapter.CoursePropertyViewHolder>(DiffCallback) {
 
     /**
@@ -17,8 +21,11 @@ class CoursesAdapter(private val onClickListener: OnClickListener) :
      */
     class CoursePropertyViewHolder(private var binding: CourseItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(course: Course) {
+        fun bind(course: Course, search: Boolean) {
             binding.property = course
+            if (search) {
+                binding.deleteButton.visibility = View.GONE
+            }
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -41,7 +48,7 @@ class CoursesAdapter(private val onClickListener: OnClickListener) :
         holder.itemView.setOnClickListener {
             onClickListener.onClick(course)
         }
-        holder.bind(course)
+        holder.bind(course, search)
     }
 
     /**

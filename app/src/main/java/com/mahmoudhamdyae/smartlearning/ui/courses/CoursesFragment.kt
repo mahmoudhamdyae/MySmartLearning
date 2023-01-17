@@ -46,7 +46,7 @@ class CoursesFragment: BaseFragment() {
         binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             // Navigate to Course Fragment
             findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
-        })
+        }, false)
 
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
