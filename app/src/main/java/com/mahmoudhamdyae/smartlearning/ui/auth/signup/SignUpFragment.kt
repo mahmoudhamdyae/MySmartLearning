@@ -43,6 +43,10 @@ class SignUpFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.signUpButton.setOnClickListener {
             viewModel.imageUri.value = imageUri.toString()
             viewModel.signUp()

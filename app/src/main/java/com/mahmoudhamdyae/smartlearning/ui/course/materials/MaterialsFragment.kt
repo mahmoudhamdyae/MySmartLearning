@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
@@ -47,6 +48,10 @@ class MaterialsFragment: BaseFragment() {
         courseId = MaterialsFragmentArgs.fromBundle(requireArguments()).courseId!!
 
         getUserType()
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         binding.materialsList.layoutManager = GridLayoutManager(context, 1)
         binding.materialsList.adapter = MaterialsAdapter(MaterialsAdapter.OnClickListener {

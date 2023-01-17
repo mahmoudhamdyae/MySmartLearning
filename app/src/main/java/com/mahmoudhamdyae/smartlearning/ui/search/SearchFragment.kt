@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentSearchBinding
 
@@ -23,5 +24,13 @@ class SearchFragment: BaseFragment() {
         binding.viewModel = viewModel
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 }

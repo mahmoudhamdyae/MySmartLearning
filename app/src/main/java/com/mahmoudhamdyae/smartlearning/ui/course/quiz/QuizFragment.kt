@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizBinding
@@ -31,6 +32,10 @@ class QuizFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getUserType()
+
+        binding.backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         val adapter = QuizAdapter(QuizAdapter.OnClickListener {
         })
