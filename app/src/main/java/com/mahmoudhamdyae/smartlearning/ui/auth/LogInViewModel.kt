@@ -131,6 +131,18 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         }
     }
 
+    private var _user = MutableLiveData<User?>()
+    val user: LiveData<User?>
+        get() = _user
+
+    fun getUserData() {
+        try {
+            viewModelScope.launch {
+                _user = repository.getUserData()
+            }
+        } catch (_: Exception) {}
+    }
+
     private fun navigate() {
         _navigate.value = true
     }

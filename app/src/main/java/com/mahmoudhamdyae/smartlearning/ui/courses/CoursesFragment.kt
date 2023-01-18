@@ -26,6 +26,8 @@ class CoursesFragment: BaseFragment() {
     private lateinit var mAUth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
 
+    private var isTeacher = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,7 +50,9 @@ class CoursesFragment: BaseFragment() {
             // Navigate to Course Fragment
             findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
         },  CoursesAdapter.OnDelClickListener {
-            Toast.makeText(context, "del", Toast.LENGTH_SHORT).show()
+            if (isTeacher) {
+            } else {
+            }
         }, false)
 
         binding.toolbar.setOnMenuItemClickListener {
@@ -90,10 +94,12 @@ class CoursesFragment: BaseFragment() {
         viewModel.getUserData()
         // Observe User Livedata
         viewModel.user.observe(viewLifecycleOwner) {
-            if (it!!.teacher) {
+            isTeacher = if (it!!.teacher) {
                 teacherActivity()
+                true
             } else {
                 studentActivity()
+                false
             }
 
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
