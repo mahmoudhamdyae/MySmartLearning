@@ -37,10 +37,12 @@ class AddStudentFragment: BaseFragment() {
             findNavController().navigateUp()
         }
 
+        val courseId = AddStudentFragmentArgs.fromBundle(requireArguments()).courseId
+
         binding.studentsList.layoutManager = GridLayoutManager(requireContext(), 1)
         binding.studentsList.adapter = AddStudentAdapter(AddStudentAdapter.OnClickListener {
             // Add this student to the course
-            viewModel.addStudentToCourse(it)
+            viewModel.addStudentToCourse(it, courseId!!)
         })
     }
 }

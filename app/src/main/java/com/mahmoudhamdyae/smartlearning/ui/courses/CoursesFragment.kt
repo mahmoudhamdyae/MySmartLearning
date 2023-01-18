@@ -49,9 +49,12 @@ class CoursesFragment: BaseFragment() {
         binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             // Navigate to Course Fragment
             findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
-        },  CoursesAdapter.OnDelClickListener {
+        },  CoursesAdapter.OnDelClickListener { courseId ->
             if (isTeacher) {
+                viewModel.delCourse(courseId)
+                viewModel.delCourseFromUser(courseId)
             } else {
+                viewModel.delCourseFromUser(courseId)
             }
         }, false)
 

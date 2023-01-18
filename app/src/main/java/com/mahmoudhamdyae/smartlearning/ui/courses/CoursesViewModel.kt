@@ -79,7 +79,23 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     }
 
     fun delCourse(courseId: String) {
-        repository.delCourse(courseId).addOnCompleteListener { task ->
+        _uploadStatus.value = STATUS.LOADING
+        repository.delCourseFromCourses(courseId).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                delCourseFromStudents(courseId)
+                delMaterials(courseId)
+            } else {
+                _uploadStatus.value = STATUS.ERROR
+                _error.value = task.exception?.message
+            }
+        }
+    }
+
+    private fun delCourseFromStudents(courseId: String) = repository.delCourseFromStudents(courseId)
+
+    fun delCourseFromUser(courseId: String) {
+        _uploadStatus.value = STATUS.LOADING
+        repository.delCourseFromUser(courseId).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 _uploadStatus.value = STATUS.DONE
             } else {
@@ -89,8 +105,8 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         }
     }
 
-    fun delCourseFromUser(courseId: String) {
-        repository.delCourseFromUser(courseId).addOnCompleteListener { task ->
+    private fun delMaterials(courseId: String) {
+        repository.delMaterialsOfCourse(courseId).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 _uploadStatus.value = STATUS.DONE
             } else {

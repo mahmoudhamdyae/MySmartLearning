@@ -19,7 +19,6 @@ class FirebaseRepository {
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private var userDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.USERS)
     private var courseDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.COURSES)
-    private var materialsDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance().reference.child(Constants.MATERIALS)
     private var mStorageRef: StorageReference = FirebaseStorage.getInstance().reference
 
     fun getUid() = mAuth.currentUser!!.uid
@@ -54,11 +53,16 @@ class FirebaseRepository {
         return user
     }
 
-    fun addStudentToCourse(user: User) {
-    }
+    fun addStudentToCourse(user: User, courseId: String): Task<Void> =
+        courseDatabaseReference.child(courseId).child(Constants.STUDENTS).setValue(user)
 
-    fun getStudents() {
-    }
+    fun addCourseToStudent(user: User, courseId: String): Task<Void> =
+        userDatabaseReference.child(user.userId!!).child(Constants.COURSES).setValue(courseId)
+
+    fun getStudentsOfCourse(courseId: String): DatabaseReference =
+        courseDatabaseReference.child(Constants.COURSES).child(courseId).child(Constants.STUDENTS)
+
+    fun getAllStudents(): DatabaseReference = userDatabaseReference
 
     // Courses
 
@@ -71,14 +75,27 @@ class FirebaseRepository {
     fun getUserCourses(): DatabaseReference =
         userDatabaseReference.child(getUid()).child(Constants.COURSES)
 
-    fun delCourse(courseId: String): Task<Void> =
+    fun delCourseFromCourses(courseId: String): Task<Void> =
         courseDatabaseReference.child(courseId).removeValue()
+
+    fun delCourseFromStudents(courseId: String) {
+        getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (student in snapshot.children) {
+                    val studentItem = student.getValue(User::class.java)
+                    userDatabaseReference.child(studentItem!!.userId!!).child(Constants.COURSES).child(courseId).removeValue()
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("getStudents:Cancelled", "loadStudents:onCancelled", error.toException())
+            }
+        })
+    }
 
     fun delCourseFromUser(courseId: String): Task<Void> =
         userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
 
-    fun getAllCourses() {
-    }
+    fun getAllCourses(): DatabaseReference = courseDatabaseReference
 
     // Materials
 
@@ -86,10 +103,19 @@ class FirebaseRepository {
         mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).putFile(file)
 
     fun addMaterialsToDataBase(name: String, courseId: String): Task<Void> =
-        materialsDatabaseReference.child(courseId).push().setValue(name)
+        courseDatabaseReference.child(courseId).child(Constants.MATERIALS).push().setValue(name)
 
     fun getMaterials(courseId: String): DatabaseReference =
-        materialsDatabaseReference.child(courseId)
+        courseDatabaseReference.child(courseId).child(Constants.MATERIALS)
+
+    fun delMaterialStorage(courseId: String, name: String): Task<Void> =
+        mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).delete()
+
+    fun delMaterialDatabase(courseId: String, name: String): Task<Void> =
+        courseDatabaseReference.child(courseId).child(Constants.MATERIALS).child(name).removeValue()
+
+    fun delMaterialsOfCourse(courseId: String): Task<Void> =
+        mStorageRef.child(Constants.MATERIALS).child(courseId).delete()
 
     // Quizzes
 
