@@ -11,9 +11,9 @@ import com.mahmoudhamdyae.smartlearning.databinding.CourseItemBinding
 
 class CoursesAdapter(
     private val onClickListener: OnClickListener,
+    private val onDelClickListener: OnDelClickListener,
     private val search: Boolean
-) :
-    ListAdapter<Course, CoursesAdapter.CoursePropertyViewHolder>(DiffCallback) {
+) : ListAdapter<Course, CoursesAdapter.CoursePropertyViewHolder>(DiffCallback) {
 
     /**
      * The CoursePropertyViewHolder constructor takes the binding variable from the associated
@@ -21,11 +21,8 @@ class CoursesAdapter(
      */
     class CoursePropertyViewHolder(private var binding: CourseItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(course: Course, search: Boolean) {
+        fun bind(course: Course) {
             binding.property = course
-            if (search) {
-                binding.deleteButton.visibility = View.GONE
-            }
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -37,7 +34,14 @@ class CoursesAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): CoursePropertyViewHolder {
-        return CoursePropertyViewHolder(CourseItemBinding.inflate(LayoutInflater.from(parent.context)))
+        val binding = CourseItemBinding.inflate(LayoutInflater.from(parent.context))
+        if (search) {
+            binding.deleteButton.visibility = View.GONE
+        }
+        binding.deleteButton.setOnClickListener {
+            onDelClickListener.onDelClick(binding.property!!.id)
+        }
+        return CoursePropertyViewHolder(binding)
     }
 
     /**
@@ -48,7 +52,7 @@ class CoursesAdapter(
         holder.itemView.setOnClickListener {
             onClickListener.onClick(course)
         }
-        holder.bind(course, search)
+        holder.bind(course)
     }
 
     /**
@@ -72,5 +76,9 @@ class CoursesAdapter(
      */
     class OnClickListener(val clickListener: (course: Course) -> Unit) {
         fun onClick(course: Course) = clickListener(course)
+    }
+
+    class OnDelClickListener(val clickListener: (courseId: String) -> Unit) {
+        fun onDelClick(courseId: String) = clickListener(courseId)
     }
 }

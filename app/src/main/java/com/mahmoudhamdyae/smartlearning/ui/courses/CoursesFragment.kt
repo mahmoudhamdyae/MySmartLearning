@@ -3,6 +3,7 @@ package com.mahmoudhamdyae.smartlearning.ui.courses
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,6 +47,8 @@ class CoursesFragment: BaseFragment() {
         binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             // Navigate to Course Fragment
             findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
+        },  CoursesAdapter.OnDelClickListener {
+            Toast.makeText(context, "del", Toast.LENGTH_SHORT).show()
         }, false)
 
         binding.toolbar.setOnMenuItemClickListener {
