@@ -72,14 +72,16 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     }
 
     fun delCourse(courseId: String) {
-        this._status.value = STATUS.LOADING
-        repository.delCourseFromCourses(courseId).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                delCourseFromStudents(courseId)
-                delMaterials(courseId)
-            } else {
-                this._status.value = STATUS.ERROR
-                _error.value = task.exception?.message
+        viewModelScope.launch {
+            _status.value = STATUS.LOADING
+            repository.delCourseFromCourses(courseId).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    delCourseFromStudents(courseId)
+                    delMaterials(courseId)
+                } else {
+                    _status.value = STATUS.ERROR
+                    _error.value = task.exception?.message
+                }
             }
         }
     }
@@ -89,11 +91,30 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     }
 
     fun delCourseFromUser(courseId: String) {
-        onCompleteListener(repository.delCourseFromUser(courseId))
+        viewModelScope.launch {
+            onCompleteListener(repository.delCourseFromUser(courseId))
+        }
     }
 
     private fun delMaterials(courseId: String) {
         repository.delMaterialsStorage(courseId)
+    }
+
+    fun decreaseNoOfStudents(courseId: String) {
+        viewModelScope.launch {
+            _status.value = STATUS.LOADING
+            repository.getNoOfStudentsInCourse(courseId).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val noOfStudents = snapshot.getValue(Int::class.java)!! - 1
+                    onCompleteListener(repository.updateNoOfStudents(courseId, noOfStudents))
+                    _status.value = STATUS.DONE
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    _status.value = STATUS.ERROR
+                }
+            })
+        }
     }
 }
 

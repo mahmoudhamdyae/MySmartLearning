@@ -61,6 +61,8 @@ class CoursesFragment: BaseFragment() {
             viewModel.delCourseFromUser(courseId)
             if (isTeacher) {
                 viewModel.delCourse(courseId)
+            } else {
+                viewModel.decreaseNoOfStudents(courseId)
             }
         }, false)
 
