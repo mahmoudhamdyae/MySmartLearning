@@ -84,14 +84,16 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         }
     }
 
-    private fun delCourseFromStudents(courseId: String) = repository.delCourseFromStudents(courseId)
+    private fun delCourseFromStudents(courseId: String) {
+        repository.delCourseFromStudents(courseId)
+    }
 
     fun delCourseFromUser(courseId: String) {
         uploadOnCompleteListener(repository.delCourseFromUser(courseId))
     }
 
     private fun delMaterials(courseId: String) {
-        uploadOnCompleteListener(repository.delMaterialsOfCourse(courseId))
+        repository.delMaterialsStorage(courseId)
     }
 }
 

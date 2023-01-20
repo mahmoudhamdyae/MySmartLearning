@@ -29,12 +29,12 @@ abstract class BaseViewModel: ViewModel() {
     }
 
     fun uploadOnCompleteListener(uploadTask: Task<Void>) {
-        this._uploadStatus.value = STATUS.LOADING
+        _uploadStatus.value = STATUS.LOADING
         uploadTask.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                this._uploadStatus.value = STATUS.DONE
+                _uploadStatus.value = STATUS.DONE
             } else {
-                this._uploadStatus.value = STATUS.ERROR
+                _uploadStatus.value = STATUS.ERROR
                 _error.value = task.exception?.message
             }
         }

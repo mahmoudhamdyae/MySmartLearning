@@ -133,7 +133,7 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child(Constants.MATERIALS).child(name).removeValue()
     }
 
-    fun delMaterialsOfCourse(courseId: String): Task<Void> {
+    fun delMaterialsStorage(courseId: String): Task<Void> {
         return mStorageRef.child(Constants.MATERIALS).child(courseId).delete()
     }
 
