@@ -50,6 +50,13 @@
     <string name="action_students">Students</string>
     <string name="action_course_details">Course details</string>
 
+    <!-- Course Details Dialog -->
+    <string name="course_details_head">Course Details </string>
+    <string name="course_details_course_name">Course Name: </string>
+    <string name="course_details_teacher_name">Teacher Name: </string>
+    <string name="course_details_year">Year: </string>
+    <string name="course_details_number_of_students">Number of students: </string>
+
     <!-- Quiz Activity -->
     <string name="quiz_activity_quiz_number">Quiz Number : </string>
     <!-- Quiz Adapter For Student -->
@@ -68,4 +75,5 @@
     <string name="private_chat_item_content_description">Chat</string>
     <string name="quiz_solved_content_description">Solved or Not Image</string>
     <string name="back_button_content_description">Back</string>
+    <string name="details_image_content_description">Details</string>
 </resources>

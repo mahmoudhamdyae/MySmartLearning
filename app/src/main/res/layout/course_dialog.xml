@@ -33,9 +33,10 @@
                         android:id="@+id/add_new_course_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary_color"
                         android:layout_margin="@dimen/dialog_text_margin"
                         android:text="@string/add_new_course"
-                        android:textSize="24sp"
+                        android:textSize="@dimen/text_primary_size"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dialog_edit_text_margin"
                         android:autofillHints="name"
+                        android:textColorHint="@color/text_primary_color"
                         android:hint="@string/course_dialog_name_edit_text_hint"
                         android:inputType="text"
                         android:text="@={viewModel.courseName}"
@@ -57,8 +59,10 @@
                         android:id="@+id/year_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary_color"
                         android:layout_margin="@dimen/dialog_text_margin"
                         android:text="@string/course_dialog_year_text_view"
+                        android:textSize="@dimen/text_secondary_size"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/course_name_edit_text" />
@@ -69,6 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dialog_spinner_margin"
                         app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/text_primary_color"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/year_text_view" />
 

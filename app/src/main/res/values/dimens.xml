@@ -25,7 +25,6 @@
     <dimen name="profile_picture_width">60dp</dimen>
     <dimen name="profile_picture_height">60dp</dimen>
     <dimen name="profile_picture_margin">16dp</dimen>
-    <dimen name="profile_label_margin">35dp</dimen>
     <dimen name="edit_text_drawable_padding">8dp</dimen>
     <dimen name="edit_text_padding">20dp</dimen>
     <dimen name="edit_text_margin">8dp</dimen>
@@ -40,4 +39,5 @@
     <dimen name="dialog_edit_text_margin">8dp</dimen>
     <dimen name="dialog_button_margin">8dp</dimen>
     <dimen name="dialog_spinner_margin">8dp</dimen>
+    <dimen name="dialog_image_margin">8dp</dimen>
 </resources>

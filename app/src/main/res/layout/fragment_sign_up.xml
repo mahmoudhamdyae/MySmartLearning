@@ -57,9 +57,9 @@
             <TextView
                 android:id="@+id/choose_profile_picture_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/profile_label_margin"
-                android:gravity="center"
+                android:layout_height="@dimen/profile_picture_height"
+                android:gravity="center_vertical"
+                android:layout_margin="@dimen/profile_picture_margin"
                 android:text="@string/sign_up_choose_profile_image"
                 android:textColor="@color/auth_red"
                 android:textSize="@dimen/text_secondary_size"
