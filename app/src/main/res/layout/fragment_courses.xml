@@ -19,17 +19,17 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@color/auth_red"
             android:layout_marginBottom="@dimen/toolbar_margin"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:src="@color/auth_red"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/courses_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:coursesData="@{viewModel.courses}"
-            tools:listitem="@layout/course_item"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:listitem="@layout/course_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_fab"
@@ -50,6 +50,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:visibilityOfLoading="@{viewModel.uploadStatus}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="empty"
+            app:bindEmptyView="@{viewModel.courses}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -53,3 +53,12 @@ fun visibleIfTeacher(view: View, isTeacher: IsTeacher?) {
         view.visibility = View.GONE
     }
 }
+
+@BindingAdapter("bindEmptyView")
+fun bindEmptyView(view: View, data: List<Any>?) {
+    if (data.isNullOrEmpty()) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.GONE
+    }
+}
