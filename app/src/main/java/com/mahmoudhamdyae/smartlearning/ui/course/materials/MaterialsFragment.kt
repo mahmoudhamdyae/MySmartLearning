@@ -60,7 +60,7 @@ class MaterialsFragment: BaseFragment() {
         binding.addFab.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
-            intent.type = "application/pdf"
+            intent.type = "application/*"
             try {
                 startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), PICK_FILE)
             } catch (e: ActivityNotFoundException) {
