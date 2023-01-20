@@ -51,8 +51,10 @@ class AddStudentViewModel(
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val studentsList: MutableList<User> = mutableListOf()
                     for (student in snapshot.children) {
-                        val materialItem = student.getValue(User::class.java)
-                        studentsList.add(materialItem!!)
+                        val studentItem = student.getValue(User::class.java)
+                        if (!studentItem!!.teacher) {
+                            studentsList.add(studentItem)
+                        }
                     }
                     _students.value = studentsList
                     _downloadStatus.value = STATUS.DONE

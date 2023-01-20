@@ -23,19 +23,23 @@ class FirebaseRepository {
 
     fun getUid() = mAuth.currentUser!!.uid
 
-    // Users
+    // Auth
 
-    fun signUp(email: String, password: String): Task<AuthResult> =
-        mAuth.createUserWithEmailAndPassword(email, password)
+    fun signUp(email: String, password: String): Task<AuthResult> {
+        return mAuth.createUserWithEmailAndPassword(email, password)
+    }
 
-    fun logIn(email: String, password: String): Task<AuthResult> =
-        mAuth.signInWithEmailAndPassword(email, password)
+    fun logIn(email: String, password: String): Task<AuthResult> {
+        return mAuth.signInWithEmailAndPassword(email, password)
+    }
 
-    fun saveUserInDatabase(user: User): Task<Void> =
-        userDatabaseReference.child(getUid()).setValue(user)
+    fun saveUserInDatabase(user: User): Task<Void> {
+        return userDatabaseReference.child(getUid()).setValue(user)
+    }
 
-    fun saveProfilePicture(imageUri: Uri): UploadTask =
-        mStorageRef.child(Constants.IMAGES).child(getUid() + ".jpg").putFile(imageUri)
+    fun saveProfilePicture(imageUri: Uri): UploadTask {
+        return mStorageRef.child(Constants.IMAGES).child(getUid() + ".jpg").putFile(imageUri)
+    }
 
     fun getUserData(): MutableLiveData<User?> {
         val user = MutableLiveData<User?>()
@@ -53,30 +57,39 @@ class FirebaseRepository {
         return user
     }
 
-    fun addStudentToCourse(user: User, courseId: String): Task<Void> =
-        courseDatabaseReference.child(courseId).child(Constants.STUDENTS).setValue(user)
+    // Users
 
-    fun addCourseToStudent(user: User, courseId: String): Task<Void> =
-        userDatabaseReference.child(user.userId!!).child(Constants.COURSES).setValue(courseId)
+    fun addStudentToCourse(user: User, courseId: String): Task<Void> {
+        return courseDatabaseReference.child(courseId).child(Constants.STUDENTS).setValue(user)
+    }
 
-    fun getStudentsOfCourse(courseId: String): DatabaseReference =
-        courseDatabaseReference.child(Constants.COURSES).child(courseId).child(Constants.STUDENTS)
+    fun addCourseToStudent(user: User, courseId: String): Task<Void> {
+        return userDatabaseReference.child(user.userId!!).child(Constants.COURSES).setValue(courseId)
+    }
+
+    fun getStudentsOfCourse(courseId: String): DatabaseReference {
+        return courseDatabaseReference.child(Constants.COURSES).child(courseId).child(Constants.STUDENTS)
+    }
 
     fun getAllStudents(): DatabaseReference = userDatabaseReference
 
     // Courses
 
-    fun addCourseToCourses(course: Course) : Task<Void> =
-        courseDatabaseReference.child(course.id).setValue(course)
+    fun addCourseToCourses(course: Course) : Task<Void> {
+        return courseDatabaseReference.child(course.id).setValue(course)
+    }
 
-    fun addCourseToUser(course: Course): Task<Void> =
-        userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
+    fun addCourseToUser(course: Course): Task<Void> {
+        return userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
+    }
 
-    fun getUserCourses(): DatabaseReference =
-        userDatabaseReference.child(getUid()).child(Constants.COURSES)
+    fun getUserCourses(): DatabaseReference {
+        return userDatabaseReference.child(getUid()).child(Constants.COURSES)
+    }
 
-    fun delCourseFromCourses(courseId: String): Task<Void> =
-        courseDatabaseReference.child(courseId).removeValue()
+    fun delCourseFromCourses(courseId: String): Task<Void> {
+        return courseDatabaseReference.child(courseId).removeValue()
+    }
 
     fun delCourseFromStudents(courseId: String) {
         getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
@@ -92,30 +105,37 @@ class FirebaseRepository {
         })
     }
 
-    fun delCourseFromUser(courseId: String): Task<Void> =
-        userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
+    fun delCourseFromUser(courseId: String): Task<Void> {
+        return userDatabaseReference.child(getUid()).child(Constants.COURSES).child(courseId).removeValue()
+    }
 
     fun getAllCourses(): DatabaseReference = courseDatabaseReference
 
     // Materials
 
-    fun addMaterialStorage(file: Uri, name: String, courseId: String): UploadTask =
-        mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).putFile(file)
+    fun addMaterialStorage(file: Uri, name: String, courseId: String): UploadTask {
+        return mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).putFile(file)
+    }
 
-    fun addMaterialsToDataBase(name: String, courseId: String): Task<Void> =
-        courseDatabaseReference.child(courseId).child(Constants.MATERIALS).push().setValue(name)
+    fun addMaterialsToDataBase(name: String, courseId: String): Task<Void> {
+        return courseDatabaseReference.child(courseId).child(Constants.MATERIALS).push().setValue(name)
+    }
 
-    fun getMaterials(courseId: String): DatabaseReference =
-        courseDatabaseReference.child(courseId).child(Constants.MATERIALS)
+    fun getMaterials(courseId: String): DatabaseReference {
+        return courseDatabaseReference.child(courseId).child(Constants.MATERIALS)
+    }
 
-    fun delMaterialStorage(courseId: String, name: String): Task<Void> =
-        mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).delete()
+    fun delMaterialStorage(courseId: String, name: String): Task<Void> {
+        return mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).delete()
+    }
 
-    fun delMaterialDatabase(courseId: String, name: String): Task<Void> =
-        courseDatabaseReference.child(courseId).child(Constants.MATERIALS).child(name).removeValue()
+    fun delMaterialDatabase(courseId: String, name: String): Task<Void> {
+        return courseDatabaseReference.child(courseId).child(Constants.MATERIALS).child(name).removeValue()
+    }
 
-    fun delMaterialsOfCourse(courseId: String): Task<Void> =
-        mStorageRef.child(Constants.MATERIALS).child(courseId).delete()
+    fun delMaterialsOfCourse(courseId: String): Task<Void> {
+        return mStorageRef.child(Constants.MATERIALS).child(courseId).delete()
+    }
 
     // Quizzes
 

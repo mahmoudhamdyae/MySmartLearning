@@ -12,7 +12,8 @@ import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
 
 class MaterialsViewModel(
-    private val repository: FirebaseRepository
+    private val repository: FirebaseRepository,
+    private val courseId: String
 ) : BaseViewModel() {
 
     private val _materials = MutableLiveData<List<String>>()
@@ -52,7 +53,7 @@ class MaterialsViewModel(
         try {
             viewModelScope.launch {
                 _downloadStatus.value = STATUS.LOADING
-                repository.getMaterials("44c9eb1b-4c6f-4961-9ee3-f20f77f3c33e").addValueEventListener(object : ValueEventListener {
+                repository.getMaterials(courseId).addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val materialsList: MutableList<String> = mutableListOf()
                         for (material in dataSnapshot.children) {
@@ -79,8 +80,8 @@ class MaterialsViewModel(
 @Suppress("UNCHECKED_CAST")
 class MaterialsViewModelFactory (
     private val repository: FirebaseRepository,
-//    private val courseId: String
+    private val courseId: String
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (MaterialsViewModel(repository) as T)
+        (MaterialsViewModel(repository, courseId) as T)
 }

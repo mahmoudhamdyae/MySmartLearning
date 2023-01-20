@@ -1,9 +1,13 @@
 package com.mahmoudhamdyae.smartlearning.ui.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
@@ -23,9 +27,26 @@ class SearchViewModel(
     }
 
     private fun getListOfCourses() {
-        repository.getAllCourses()
+        _downloadStatus.value = STATUS.LOADING
+        repository.getAllCourses().addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val coursesList: MutableList<Course> = mutableListOf()
+                for (course in snapshot.children) {
+                    val courseItem = course.getValue(Course::class.java)
+                    // todo remove user's courses
+                    coursesList.add(courseItem!!)
+                }
+                _courses.value = coursesList
+                _downloadStatus.value = STATUS.DONE
+            }
 
-        _courses.value = mutableListOf(Course("name1", "year1", "teacherName1"))
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("getCourses:Cancelled", "loadCourses:onCancelled", error.toException())
+                _downloadStatus.value = STATUS.ERROR
+            }
+        })
+
+//        _courses.value = mutableListOf(Course("name1", "year1", "teacherName1"))
     }
 
     fun addCourse(course: Course) {
