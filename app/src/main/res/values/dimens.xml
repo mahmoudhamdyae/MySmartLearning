@@ -32,4 +32,12 @@
     <dimen name="smart_learning_label_size">35sp</dimen>
     <dimen name="edit_text_size">16sp</dimen>
     <dimen name="button_margin">16dp</dimen>
+
+    <!-- Dialogs -->
+    <dimen name="dialog_margin">16dp</dimen>
+    <dimen name="dialog_padding">8dp</dimen>
+    <dimen name="dialog_text_margin">8dp</dimen>
+    <dimen name="dialog_edit_text_margin">8dp</dimen>
+    <dimen name="dialog_button_margin">8dp</dimen>
+    <dimen name="dialog_spinner_margin">8dp</dimen>
 </resources>

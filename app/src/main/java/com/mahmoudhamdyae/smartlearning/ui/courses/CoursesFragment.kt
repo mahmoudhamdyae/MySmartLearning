@@ -136,7 +136,7 @@ class CoursesFragment: BaseFragment() {
         val view = layoutInflater.inflate(R.layout.course_dialog,null)
         builder.setView(view)
 
-        // Cancel button
+        // Cancel Button
         view.findViewById<Button>(R.id.cancel_button).setOnClickListener {
             builder.dismiss()
         }

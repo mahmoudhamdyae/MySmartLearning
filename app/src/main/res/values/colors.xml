@@ -17,6 +17,7 @@
     <color name="icons_tint">#0D209E</color>
     <color name="window_background">#3E7E57EA</color>
     <color name="card_color">#dae7f2</color>
+    <color name="dialog_background">#836635</color>
 
     <color name="auth_red">#990D3C</color>
 </resources>
