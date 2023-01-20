@@ -2,19 +2,27 @@ package com.mahmoudhamdyae.smartlearning.ui.courses
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
+
 
 class CoursesFragment: BaseFragment() {
 
@@ -121,59 +129,43 @@ class CoursesFragment: BaseFragment() {
     private fun teacherActivity() {
         binding.addFab.setOnClickListener {
             createDialog()
-//
-            val course = Course("test", "testYear", "myName", 10)
-            viewModel.addCourse(course)
         }
     }
 
     private fun createDialog() {
-//            // Create AlertDialog and show it.
-//            val layoutInflater = LayoutInflater.from(context)
-//            val popupInputDialogView = layoutInflater.inflate(R.layout.course_dialog, null)
-//            // Create a AlertDialog Builder.
-//            val alertDialogBuilder: AlertDialog.Builder? = activity?.let {
-//                AlertDialog.Builder(it)
-//            }
-//            // Set title, icon, can not cancel properties.
-//            alertDialogBuilder?.setCancelable(true)
-//            // Init popup dialog view and it's ui controls.
-//
-//            // Set the inflated layout view object to the AlertDialog builder.
-//            alertDialogBuilder?.setView(popupInputDialogView)
-//            val alertDialog: AlertDialog = alertDialogBuilder!!.create()
-//            alertDialog.show()
-//            alertDialogBuilder.setView(popupInputDialogView)
-//
-//            val dialogBinding = CourseDialogBinding.inflate(layoutInflater)
-//            dialogBinding.viewModel = viewModel
-//            dialogBinding.saveButton.setOnClickListener {
-//                viewModel.addCourse()
-//            }
-//            dialogBinding.cancelButton.setOnClickListener {
-//                alertDialog.dismiss()
-//            }
 
-//            Toast.makeText(context, "haha Teacher", Toast.LENGTH_SHORT).show()
-//            val dialog = Dialog(requireContext())
-//            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//            dialog.setCancelable(false)
-//            dialog.setContentView(R.layout.course_dialog)
-//            dialog.create()
+        val builder = AlertDialog.Builder(requireContext(), R.style.Theme_SmartLearning).create()
+        val view = layoutInflater.inflate(R.layout.course_dialog,null)
+        builder.setView(view)
 
-//            val body = dialog.findViewById(R.id.body) as TextView
-//            val dialogBinding = CourseDialogBinding.inflate(layoutInflater)
-//            dialogBinding.viewModel = viewModel
-//            body.text = title
-//            val yesBtn = dialog.findViewById(R.id.yesBtn) as Button
-//            val noBtn = dialog.findViewById(R.id.noBtn) as Button
-//            dialogBinding.saveButton.setOnClickListener {
-//                dialog.dismiss()
-//            }
-//            dialogBinding.cancelButton.setOnClickListener {
-//                dialog.dismiss()
-//            }
-//            dialog.show()
+        // Cancel button
+        view.findViewById<Button>(R.id.cancel_button).setOnClickListener {
+            builder.dismiss()
+        }
+
+        // Year Spinner
+        val yearList: MutableList<String> = ArrayList()
+        yearList.add("1")
+        yearList.add("2")
+        yearList.add("3")
+        val yearAdapter: ArrayAdapter<String> = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            yearList
+        )
+        val yearSpinner = view.findViewById<Spinner>(R.id.year)
+        yearSpinner.adapter = yearAdapter
+
+        // Save button
+        view.findViewById<Button>(R.id.save_button).setOnClickListener {
+            val courseName = view.findViewById<EditText>(R.id.course_name_edit_text).text.toString()
+            val courseYear = yearSpinner.selectedItem.toString()
+            val course = Course(courseName = courseName, year = courseYear)
+            viewModel.addCourse(course)
+            builder.dismiss()
+        }
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
     }
 
     private fun studentActivity() {
