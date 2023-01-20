@@ -44,5 +44,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:visibleIfTeacher="@{viewModel.isTeacher}" />
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:progress="25"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,7 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.materials
 
 import android.app.Activity.RESULT_OK
-import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -28,7 +27,6 @@ class MaterialsFragment: BaseFragment() {
     }
 
     private lateinit var courseId: String
-    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,16 +67,15 @@ class MaterialsFragment: BaseFragment() {
             }
         }
 
-        progressDialog = ProgressDialog(context)
         viewModel.uploadStatus.observe(viewLifecycleOwner) {
             if (it == STATUS.LOADING) {
-                progressDialog.show()
+                binding.progressBar.visibility = View.VISIBLE
             } else {
-                progressDialog.dismiss()
+                binding.progressBar.visibility = View.GONE
             }
         }
         viewModel.progressDialog.observe(viewLifecycleOwner) {
-            progressDialog.setMessage("Uploading " + it.toInt() + "%...")
+            binding.progressBar.progress = it.toInt()
         }
     }
 
