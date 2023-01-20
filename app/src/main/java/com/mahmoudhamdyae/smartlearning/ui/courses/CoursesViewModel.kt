@@ -32,12 +32,12 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
 
     fun addCourse(course: Course) {
         viewModelScope.launch {
-            _uploadStatus.value = STATUS.LOADING
+            this@CoursesViewModel._uploadStatus.value = STATUS.LOADING
             repository.addCourseToCourses(course).addOnCompleteListener { courseTask ->
                 if (courseTask.isSuccessful) {
                     uploadOnCompleteListener(repository.addCourseToUser(course))
                 } else {
-                    _uploadStatus.value = STATUS.ERROR
+                    this@CoursesViewModel._uploadStatus.value = STATUS.ERROR
                     _error.value = courseTask.exception?.message
                 }
             }
@@ -47,7 +47,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     fun getListOfCourses() {
         try {
             viewModelScope.launch {
-                _downloadStatus.value = STATUS.LOADING
+                _uploadStatus.value = STATUS.LOADING
                 repository.getUserCourses().addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val coursesList : MutableList<Course> = mutableListOf()
@@ -56,29 +56,29 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
                             coursesList.add(courseItem!!)
                         }
                         _courses.value = coursesList
-                        _downloadStatus.value = STATUS.DONE
+                        _uploadStatus.value = STATUS.DONE
                     }
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.w("getCourses:onCancelled", "loadCourses:onCancelled", databaseError.toException())
-                        _downloadStatus.value = STATUS.ERROR
+                        _uploadStatus.value = STATUS.ERROR
                     }
 
                 })
             }
         } catch (e: Exception) {
             _error.value = e.message
-            _downloadStatus.value = STATUS.ERROR
+            _uploadStatus.value = STATUS.ERROR
         }
     }
 
     fun delCourse(courseId: String) {
-        _uploadStatus.value = STATUS.LOADING
+        this._uploadStatus.value = STATUS.LOADING
         repository.delCourseFromCourses(courseId).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 delCourseFromStudents(courseId)
                 delMaterials(courseId)
             } else {
-                _uploadStatus.value = STATUS.ERROR
+                this._uploadStatus.value = STATUS.ERROR
                 _error.value = task.exception?.message
             }
         }

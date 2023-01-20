@@ -24,12 +24,12 @@ class MaterialsViewModel(
         get() = _progressDialog
 
     fun addMaterial(file: Uri, name: String?, courseId: String) {
-        _uploadStatus.value = STATUS.LOADING
+        this._uploadStatus.value = STATUS.LOADING
         repository.addMaterialStorage(file, name!!, courseId).addOnCompleteListener { taskStorage ->
             if (taskStorage.isSuccessful) {
                 uploadOnCompleteListener(repository.addMaterialsToDataBase(name, courseId))
             } else {
-                _uploadStatus.value = STATUS.ERROR
+                this._uploadStatus.value = STATUS.ERROR
                 _error.value = taskStorage.exception?.message
             }
         }.addOnProgressListener {
@@ -40,7 +40,7 @@ class MaterialsViewModel(
     fun getListOfMaterials(courseId: String) {
         try {
             viewModelScope.launch {
-                _downloadStatus.value = STATUS.LOADING
+                _uploadStatus.value = STATUS.LOADING
                 repository.getMaterials(courseId).addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val materialsList: MutableList<String> = mutableListOf()
@@ -49,18 +49,18 @@ class MaterialsViewModel(
                             materialsList.add(materialItem!!)
                         }
                         _materials.value = materialsList
-                        _downloadStatus.value = STATUS.DONE
+                        _uploadStatus.value = STATUS.DONE
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         Log.w("getMaterials:Cancelled", "loadMaterials:onCancelled", error.toException())
-                        _downloadStatus.value = STATUS.ERROR
+                        _uploadStatus.value = STATUS.ERROR
                     }
                 })
             }
         } catch (e: Exception) {
             _error.value = e.message
-            _downloadStatus.value = STATUS.ERROR
+            _uploadStatus.value = STATUS.ERROR
         }
     }
 }

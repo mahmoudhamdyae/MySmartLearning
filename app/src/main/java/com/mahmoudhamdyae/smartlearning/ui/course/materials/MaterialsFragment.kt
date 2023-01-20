@@ -69,13 +69,13 @@ class MaterialsFragment: BaseFragment() {
 
         viewModel.uploadStatus.observe(viewLifecycleOwner) {
             if (it == STATUS.LOADING) {
-                binding.progressBar.visibility = View.VISIBLE
+                binding.horizontalProgressBar.visibility = View.VISIBLE
             } else {
-                binding.progressBar.visibility = View.GONE
+                binding.horizontalProgressBar.visibility = View.GONE
             }
         }
         viewModel.progressDialog.observe(viewLifecycleOwner) {
-            binding.progressBar.progress = it.toInt()
+            binding.horizontalProgressBar.progress = it.toInt()
         }
     }
 

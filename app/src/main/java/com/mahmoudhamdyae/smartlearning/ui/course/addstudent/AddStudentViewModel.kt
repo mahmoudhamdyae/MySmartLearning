@@ -24,12 +24,12 @@ class AddStudentViewModel(
     }
 
     fun addStudentToCourse(user: User, courseId: String) {
-        _uploadStatus.value = STATUS.LOADING
+        this._uploadStatus.value = STATUS.LOADING
         repository.addStudentToCourse(user, courseId).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 uploadOnCompleteListener(repository.addCourseToStudent(user, courseId))
             } else {
-                _uploadStatus.value = STATUS.ERROR
+                this._uploadStatus.value = STATUS.ERROR
                 _error.value = task.exception?.message
             }
         }
@@ -38,7 +38,7 @@ class AddStudentViewModel(
     private fun getListOfStudents() {
         try {
             viewModelScope.launch {
-                _downloadStatus.value = STATUS.LOADING
+                _uploadStatus.value = STATUS.LOADING
             }
             repository.getAllStudents().addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -50,17 +50,17 @@ class AddStudentViewModel(
                         }
                     }
                     _students.value = studentsList
-                    _downloadStatus.value = STATUS.DONE
+                    _uploadStatus.value = STATUS.DONE
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.w("getStudents:Cancelled", "loadStudents:onCancelled", error.toException())
-                    _downloadStatus.value = STATUS.ERROR
+                    _uploadStatus.value = STATUS.ERROR
                 }
             })
         } catch (e: Exception) {
             _error.value = e.message
-            _downloadStatus.value = STATUS.ERROR
+            _uploadStatus.value = STATUS.ERROR
         }
     }
 }

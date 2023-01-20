@@ -26,7 +26,7 @@ class SearchViewModel(
     }
 
     private fun getListOfCourses() {
-        _downloadStatus.value = STATUS.LOADING
+        _uploadStatus.value = STATUS.LOADING
         repository.getAllCourses().addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val coursesList: MutableList<Course> = mutableListOf()
@@ -36,12 +36,12 @@ class SearchViewModel(
                     coursesList.add(courseItem!!)
                 }
                 _courses.value = coursesList
-                _downloadStatus.value = STATUS.DONE
+                _uploadStatus.value = STATUS.DONE
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.w("getCourses:Cancelled", "loadCourses:onCancelled", error.toException())
-                _downloadStatus.value = STATUS.ERROR
+                _uploadStatus.value = STATUS.ERROR
             }
         })
     }
