@@ -27,14 +27,7 @@ class AddStudentViewModel(
         _uploadStatus.value = STATUS.LOADING
         repository.addStudentToCourse(user, courseId).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                repository.addCourseToStudent(user, courseId).addOnCompleteListener { secondTask ->
-                    if (secondTask.isSuccessful) {
-                        _uploadStatus.value = STATUS.DONE
-                    } else {
-                        _uploadStatus.value = STATUS.ERROR
-                        _error.value = task.exception?.message
-                    }
-                }
+                uploadOnCompleteListener(repository.addCourseToStudent(user, courseId))
             } else {
                 _uploadStatus.value = STATUS.ERROR
                 _error.value = task.exception?.message

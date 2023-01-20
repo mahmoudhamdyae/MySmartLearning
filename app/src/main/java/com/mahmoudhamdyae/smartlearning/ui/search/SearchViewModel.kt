@@ -11,7 +11,6 @@ import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
-import com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsViewModel
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 
 class SearchViewModel(
@@ -45,20 +44,10 @@ class SearchViewModel(
                 _downloadStatus.value = STATUS.ERROR
             }
         })
-
-//        _courses.value = mutableListOf(Course("name1", "year1", "teacherName1"))
     }
 
     fun addCourse(course: Course) {
-        _uploadStatus.value = STATUS.LOADING
-        repository.addCourseToUser(course).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                _uploadStatus.value = STATUS.DONE
-            } else {
-                _uploadStatus.value = STATUS.ERROR
-                _error.value = task.exception?.message
-            }
-        }
+        uploadOnCompleteListener(repository.addCourseToUser(course))
     }
 }
 

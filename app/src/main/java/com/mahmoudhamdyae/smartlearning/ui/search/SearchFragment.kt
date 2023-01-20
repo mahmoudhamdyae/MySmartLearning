@@ -37,6 +37,7 @@ class SearchFragment: BaseFragment() {
         binding.coursesList.layoutManager = GridLayoutManager(requireContext(), 1)
         binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             viewModel.addCourse(it)
+            findNavController().navigateUp()
         }, CoursesAdapter.OnDelClickListener {
         }, true)
 

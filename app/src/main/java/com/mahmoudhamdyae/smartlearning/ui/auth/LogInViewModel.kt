@@ -57,7 +57,7 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         if (validateTextsSignUp()) {
 
             viewModelScope.launch {
-                _downloadStatus.value = STATUS.LOADING
+                _uploadStatus.value = STATUS.LOADING
                 repository.signUp(email.value!!, password.value!!)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -66,12 +66,12 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
                             saveUserInDatabase()
                             saveProfilePicture()
                             navigate()
-                            _downloadStatus.value = STATUS.DONE
+                            _uploadStatus.value = STATUS.DONE
                         } else {
                             // Sign up fails
                             Log.w("SignUp", "createUserWithEmail:failure", task.exception)
                             _error.value = task.exception?.message.toString()
-                            _downloadStatus.value = STATUS.ERROR
+                            _uploadStatus.value = STATUS.ERROR
                         }
                     }
             }
@@ -82,19 +82,19 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         if (validateTextsLogIn()) {
 
             viewModelScope.launch {
-                _downloadStatus.value = STATUS.LOADING
+                _uploadStatus.value = STATUS.LOADING
                 repository.logIn(email.value!!, password.value!!)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             // Log in success.
                             Log.d("LogIn", "signInWithEmail:success")
                             navigate()
-                            _downloadStatus.value = STATUS.DONE
+                            _uploadStatus.value = STATUS.DONE
                         } else {
                             // Log in fails.
                             Log.w("LogIn", "signInWithEmail:failure", task.exception)
                             _error.value = task.exception?.message.toString()
-                            _downloadStatus.value = STATUS.ERROR
+                            _uploadStatus.value = STATUS.ERROR
                         }
                     }
             }
@@ -104,43 +104,27 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
     private fun saveUserInDatabase() {
         viewModelScope.launch {
             val isTeacher = _isTeacher.value == IsTeacher.TEACHER
-
             val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
-            repository.saveUserInDatabase(user)
-                .addOnSuccessListener {
-                }.addOnFailureListener {
-                    _error.value = it.message
-                }
+
+            uploadOnCompleteListener(repository.saveUserInDatabase(user))
         }
     }
 
     private fun saveProfilePicture() {
         viewModelScope.launch {
             if (imageUri.value != null) {
-                _downloadStatus.value = STATUS.LOADING
+                _uploadStatus.value = STATUS.LOADING
                 repository.saveProfilePicture(imageUri.value!!.toUri())
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            _downloadStatus.value = STATUS.DONE
+                            _uploadStatus.value = STATUS.DONE
                         } else {
                             _error.value = task.exception?.message.toString()
-                            _downloadStatus.value = STATUS.ERROR
+                            _uploadStatus.value = STATUS.ERROR
                         }
                     }
             }
         }
-    }
-
-    private var _user = MutableLiveData<User?>()
-    val user: LiveData<User?>
-        get() = _user
-
-    fun getUserData() {
-        try {
-            viewModelScope.launch {
-                _user = repository.getUserData()
-            }
-        } catch (_: Exception) {}
     }
 
     private fun navigate() {

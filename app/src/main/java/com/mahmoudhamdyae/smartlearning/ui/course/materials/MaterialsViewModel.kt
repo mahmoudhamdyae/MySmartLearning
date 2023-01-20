@@ -32,14 +32,7 @@ class MaterialsViewModel(
         _uploadStatus.value = STATUS.LOADING
         repository.addMaterialStorage(file, name!!, courseId).addOnCompleteListener { taskStorage ->
             if (taskStorage.isSuccessful) {
-                repository.addMaterialsToDataBase(name, courseId).addOnCompleteListener { taskDatabase  ->
-                    if (taskDatabase.isSuccessful) {
-                        _uploadStatus.value = STATUS.DONE
-                    } else {
-                        _uploadStatus.value = STATUS.ERROR
-                        _error.value = taskDatabase.exception?.message
-                    }
-                }
+                uploadOnCompleteListener(repository.addMaterialsToDataBase(name, courseId))
             } else {
                 _uploadStatus.value = STATUS.ERROR
                 _error.value = taskStorage.exception?.message
