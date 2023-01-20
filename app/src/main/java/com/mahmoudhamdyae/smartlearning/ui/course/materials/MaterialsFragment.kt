@@ -67,7 +67,7 @@ class MaterialsFragment: BaseFragment() {
             }
         }
 
-        viewModel.uploadStatus.observe(viewLifecycleOwner) {
+        viewModel.status.observe(viewLifecycleOwner) {
             if (it == STATUS.LOADING) {
                 binding.horizontalProgressBar.visibility = View.VISIBLE
             } else {

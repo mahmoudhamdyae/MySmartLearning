@@ -20,21 +20,21 @@ abstract class BaseViewModel: ViewModel() {
     val error: LiveData<String>
         get() = _error
 
-    protected val _uploadStatus = MutableLiveData<STATUS>()
-    val uploadStatus: LiveData<STATUS>
-        get() = this._uploadStatus
+    protected val _status = MutableLiveData<STATUS>()
+    val status: LiveData<STATUS>
+        get() = this._status
 
     fun setIsTeacher(isTeacher: IsTeacher) {
         _isTeacher.value = isTeacher
     }
 
     fun uploadOnCompleteListener(uploadTask: Task<Void>) {
-        _uploadStatus.value = STATUS.LOADING
+        _status.value = STATUS.LOADING
         uploadTask.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                _uploadStatus.value = STATUS.DONE
+                _status.value = STATUS.DONE
             } else {
-                _uploadStatus.value = STATUS.ERROR
+                _status.value = STATUS.ERROR
                 _error.value = task.exception?.message
             }
         }
