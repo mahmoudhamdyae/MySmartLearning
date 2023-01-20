@@ -73,6 +73,16 @@ class FirebaseRepository {
 
     fun getAllStudents(): DatabaseReference = userDatabaseReference
 
+    fun getNoOfStudentsInCourse(courseId: String): DatabaseReference {
+        return courseDatabaseReference.child(courseId).child("studentsNo")
+    }
+
+    fun updateNoOfStudents(courseId: String, noOfStudents: Int): Task<Void> {
+        val updates: MutableMap<String, Any> = HashMap()
+        updates["studentsNo"] = noOfStudents
+        return courseDatabaseReference.child(courseId).updateChildren(updates)
+    }
+
     // Courses
 
     fun addCourseToCourses(course: Course) : Task<Void> {

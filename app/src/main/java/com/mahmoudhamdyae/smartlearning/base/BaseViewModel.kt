@@ -28,7 +28,7 @@ abstract class BaseViewModel: ViewModel() {
         _isTeacher.value = isTeacher
     }
 
-    fun uploadOnCompleteListener(uploadTask: Task<Void>) {
+    fun onCompleteListener(uploadTask: Task<Void>) {
         _status.value = STATUS.LOADING
         uploadTask.addOnCompleteListener { task ->
             if (task.isSuccessful) {

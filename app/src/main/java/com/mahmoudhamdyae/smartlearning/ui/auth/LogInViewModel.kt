@@ -106,7 +106,7 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
             val isTeacher = _isTeacher.value == IsTeacher.TEACHER
             val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
 
-            uploadOnCompleteListener(repository.saveUserInDatabase(user))
+            onCompleteListener(repository.saveUserInDatabase(user))
         }
     }
 

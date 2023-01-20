@@ -35,7 +35,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
             this@CoursesViewModel._status.value = STATUS.LOADING
             repository.addCourseToCourses(course).addOnCompleteListener { courseTask ->
                 if (courseTask.isSuccessful) {
-                    uploadOnCompleteListener(repository.addCourseToUser(course))
+                    onCompleteListener(repository.addCourseToUser(course))
                 } else {
                     this@CoursesViewModel._status.value = STATUS.ERROR
                     _error.value = courseTask.exception?.message
@@ -89,7 +89,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     }
 
     fun delCourseFromUser(courseId: String) {
-        uploadOnCompleteListener(repository.delCourseFromUser(courseId))
+        onCompleteListener(repository.delCourseFromUser(courseId))
     }
 
     private fun delMaterials(courseId: String) {
