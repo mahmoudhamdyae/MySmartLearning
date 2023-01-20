@@ -12,8 +12,7 @@ import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
 
 class MaterialsViewModel(
-    private val repository: FirebaseRepository,
-    private val courseId: String
+    private val repository: FirebaseRepository
 ) : BaseViewModel() {
 
     private val _materials = MutableLiveData<List<String>>()
@@ -23,10 +22,6 @@ class MaterialsViewModel(
     private val _progressDialog = MutableLiveData<Double>()
     val progressDialog: LiveData<Double>
         get() = _progressDialog
-
-    init {
-        getListOfMaterials()
-    }
 
     fun addMaterial(file: Uri, name: String?, courseId: String) {
         _uploadStatus.value = STATUS.LOADING
@@ -42,7 +37,7 @@ class MaterialsViewModel(
         }
     }
 
-    private fun getListOfMaterials() {
+    fun getListOfMaterials(courseId: String) {
         try {
             viewModelScope.launch {
                 _downloadStatus.value = STATUS.LOADING
@@ -72,9 +67,8 @@ class MaterialsViewModel(
 
 @Suppress("UNCHECKED_CAST")
 class MaterialsViewModelFactory (
-    private val repository: FirebaseRepository,
-    private val courseId: String
+    private val repository: FirebaseRepository
 ) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (MaterialsViewModel(repository, courseId) as T)
+        (MaterialsViewModel(repository) as T)
 }

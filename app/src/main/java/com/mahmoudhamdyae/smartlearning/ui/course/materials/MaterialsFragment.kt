@@ -24,7 +24,7 @@ class MaterialsFragment: BaseFragment() {
 
     private lateinit var binding: FragmentMaterialsBinding
     override val viewModel: MaterialsViewModel by viewModels {
-        MaterialsViewModelFactory(FirebaseRepository(), "44c9eb1b-4c6f-4961-9ee3-f20f77f3c33e")
+        MaterialsViewModelFactory(FirebaseRepository())
     }
 
     private lateinit var courseId: String
@@ -46,6 +46,7 @@ class MaterialsFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         courseId = MaterialsFragmentArgs.fromBundle(requireArguments()).courseId!!
+        viewModel.getListOfMaterials(courseId)
 
         getUserType()
 
