@@ -11,6 +11,7 @@ import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
 
+
 class MaterialsViewModel(
     private val repository: FirebaseRepository
 ) : BaseViewModel() {
@@ -57,6 +58,39 @@ class MaterialsViewModel(
                         _status.value = STATUS.ERROR
                     }
                 })
+            }
+        } catch (e: Exception) {
+            _error.value = e.message
+            _status.value = STATUS.ERROR
+        }
+    }
+
+    fun delMaterial(courseId: String, material: String) {
+        try {
+            viewModelScope.launch {
+                _status.value = STATUS.LOADING
+                repository.delMaterialStorage(courseId, material).addOnCompleteListener {task ->
+                    if (task.isSuccessful) {
+                    repository.getMaterials(courseId).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (dataSnapshot in snapshot.children) {
+                                if (material == dataSnapshot.getValue(String::class.java)) {
+                                    onCompleteListener(repository.delMaterialDatabase(courseId, dataSnapshot.key!!))
+                                    break
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.w("getMaterials:Cancelled", "loadMaterials:onCancelled", error.toException())
+                            _status.value = STATUS.ERROR
+                        }
+                    })
+                    } else {
+                        _status.value = STATUS.ERROR
+                        _error.value = task.exception?.message
+                    }
+                }
             }
         } catch (e: Exception) {
             _error.value = e.message

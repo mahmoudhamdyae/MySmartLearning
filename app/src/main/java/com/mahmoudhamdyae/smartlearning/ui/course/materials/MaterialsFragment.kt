@@ -94,6 +94,8 @@ class MaterialsFragment: BaseFragment() {
     }
 
     private fun delMaterial(material: String) {
+        viewModel.delMaterial(courseId, material)
+        Toast.makeText(context, "$material del", Toast.LENGTH_SHORT).show()
     }
 
     @Deprecated("Deprecated in Java")

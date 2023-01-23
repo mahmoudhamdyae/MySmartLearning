@@ -2,6 +2,7 @@ package com.mahmoudhamdyae.smartlearning.data.repository
 
 import android.net.Uri
 import android.util.Log
+import androidx.databinding.adapters.NumberPickerBindingAdapter.setValue
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -60,7 +61,7 @@ class FirebaseRepository {
     // Users
 
     fun addStudentToCourse(user: User, courseId: String): Task<Void> {
-        return courseDatabaseReference.child(courseId).child(Constants.STUDENTS).setValue(user)
+        return courseDatabaseReference.child(courseId).child(Constants.STUDENTS).child(user.userId!!).setValue(user)
     }
 
     fun addCourseToStudent(user: User, courseId: String): Task<Void> {
@@ -139,8 +140,8 @@ class FirebaseRepository {
         return mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).delete()
     }
 
-    fun delMaterialDatabase(courseId: String, name: String): Task<Void> {
-        return courseDatabaseReference.child(courseId).child(Constants.MATERIALS).child(name).removeValue()
+    fun delMaterialDatabase(courseId: String, key: String): Task<Void> {
+        return courseDatabaseReference.child(courseId).child(Constants.MATERIALS).child(key).removeValue()
     }
 
     fun delMaterialsStorage(courseId: String): Task<Void> {

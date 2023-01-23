@@ -39,15 +39,15 @@ class MaterialsAdapter(
         if (!isTeacher) {
             binding.deleteButton.visibility = View.GONE
         }
-        val materialName = binding.materialText.text.toString()
+
         binding.playButton.setOnClickListener {
-            onPlayClickListener.onPlayClick(materialName)
+            onPlayClickListener.onPlayClick(binding.materialText.text.toString())
         }
         binding.downloadButton.setOnClickListener {
-            onDownloadClickListener.onDownloadClick(materialName)
+            onDownloadClickListener.onDownloadClick(binding.materialText.text.toString())
         }
         binding.deleteButton.setOnClickListener {
-            onDelClickListener.onDelClick(materialName)
+            onDelClickListener.onDelClick(binding.materialText.text.toString())
         }
         return MaterialsPropertyViewHolder(binding)
     }
