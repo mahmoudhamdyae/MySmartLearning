@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.mahmoudhamdyae.smartlearning.ui.course.groupchat.GroupChatViewModel" />
+            type="com.mahmoudhamdyae.smartlearning.ui.course.chat.ChatViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

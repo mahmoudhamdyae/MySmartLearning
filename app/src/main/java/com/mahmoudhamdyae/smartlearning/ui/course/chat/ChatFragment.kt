@@ -1,4 +1,4 @@
-package com.mahmoudhamdyae.smartlearning.ui.course.groupchat
+package com.mahmoudhamdyae.smartlearning.ui.course.chat
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
-import com.mahmoudhamdyae.smartlearning.databinding.FragmentGroupChatBinding
+import com.mahmoudhamdyae.smartlearning.databinding.FragmentChatBinding
 
-class GroupChatFragment: BaseFragment() {
+class ChatFragment: BaseFragment() {
 
-    private lateinit var binding: FragmentGroupChatBinding
-    override val viewModel: GroupChatViewModel by viewModels()
+    private lateinit var binding: FragmentChatBinding
+    override val viewModel: ChatViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentGroupChatBinding.inflate(inflater)
+        binding = FragmentChatBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
