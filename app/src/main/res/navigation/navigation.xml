@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_coursesFragment_to_courseFragment"
             app:destination="@id/courseFragment" />
+        <action
+            android:id="@+id/action_coursesFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
@@ -150,5 +153,26 @@
             app:destination="@id/logInFragment"
             app:popUpTo="@id/logInFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.mahmoudhamdyae.smartlearning.ui.notification.NotificationFragment"
+        android:label="NotificationFragment"
+        tools:layout="@layout/notification_item" >
+        <action
+            android:id="@+id/action_notificationFragment_to_courseFragment"
+            app:destination="@id/courseFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_privateChatFragment"
+            app:destination="@id/privateChatFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_groupChatFragment"
+            app:destination="@id/groupChatFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_materialsFragment"
+            app:destination="@id/materialsFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
     </fragment>
 </navigation>

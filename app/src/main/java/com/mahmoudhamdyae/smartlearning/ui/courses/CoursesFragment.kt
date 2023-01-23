@@ -68,6 +68,10 @@ class CoursesFragment: BaseFragment() {
 
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
+                R.id.notification_item -> {
+                    findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToNotificationFragment())
+                    true
+                }
                 R.id.profile -> {
                     findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToProfileFragment())
                     true

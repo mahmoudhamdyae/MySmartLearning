@@ -28,6 +28,7 @@
     <!-- Main Fragment Menu -->
     <string name="sign_out_menu">Sign Out</string>
     <string name="profile_menu">My Profile</string>
+    <string name="notification_menu">Notification</string>
 
     <!-- Course Dialog -->
     <string name="course_dialog_name_edit_text_hint">Enter Course Name</string>
