@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.databinding.StudentItemBinding
 
-class AddStudentAdapter(private val onClickListener: OnClickListener) :
-    ListAdapter<User, AddStudentAdapter.StudentPropertyViewHolder>(DiffCallback) {
+class StudentsAdapter(private val onClickListener: OnClickListener) :
+    ListAdapter<User, StudentsAdapter.StudentPropertyViewHolder>(DiffCallback) {
 
     /**
      * The CoursePropertyViewHolder constructor takes the binding variable from the associated

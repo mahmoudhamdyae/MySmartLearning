@@ -70,7 +70,7 @@ class FirebaseRepository {
     }
 
     fun getStudentsOfCourse(courseId: String): DatabaseReference {
-        return courseDatabaseReference.child(Constants.COURSES).child(courseId).child(Constants.STUDENTS)
+        return courseDatabaseReference.child(courseId).child(Constants.STUDENTS)
     }
 
     fun getAllStudents(): DatabaseReference = userDatabaseReference

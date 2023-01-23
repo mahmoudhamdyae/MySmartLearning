@@ -24,7 +24,6 @@ import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import com.mahmoudhamdyae.smartlearning.utils.getFileName
 import java.io.File
 
-
 @Suppress("DEPRECATION")
 class MaterialsFragment: BaseFragment() {
 

@@ -8,7 +8,7 @@ import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.Notification
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.models.User
-import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.AddStudentAdapter
+import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.quiz.QuizAdapter
 import com.mahmoudhamdyae.smartlearning.ui.courses.CoursesAdapter
@@ -22,7 +22,7 @@ fun bindCoursesRecyclerView(recyclerView: RecyclerView, data: List<Course>?) {
 
 @BindingAdapter("studentsData")
 fun bindStudentsRecyclerView(recyclerView: RecyclerView, data: List<User>?) {
-    val adapter = recyclerView.adapter as AddStudentAdapter
+    val adapter = recyclerView.adapter as StudentsAdapter
     adapter.submitList(data)
 }
 
