@@ -5,19 +5,25 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import com.mahmoudhamdyae.smartlearning.utils.getFileName
+import java.io.File
+
 
 @Suppress("DEPRECATION")
 class MaterialsFragment: BaseFragment() {
@@ -67,7 +73,7 @@ class MaterialsFragment: BaseFragment() {
         binding.addFab.setOnClickListener {
             val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
-            intent.type = "application/*"
+            intent.type = "application/pdf"
             try {
                 startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), PICK_FILE)
             } catch (e: ActivityNotFoundException) {
@@ -88,14 +94,36 @@ class MaterialsFragment: BaseFragment() {
     }
 
     private fun playMaterial(material: String) {
+//        val file = File(requireContext().externalCacheDir, material)
+//        viewModel.getMaterial(courseId, material, file)
+//
+//        try {
+//            val intent = Intent(Intent.ACTION_VIEW)
+//            intent.setDataAndType(Uri.fromFile(file), "application/pdf")
+//            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+//            requireContext().startActivity(intent)
+//        } catch (e: ActivityNotFoundException) {
+//            // No program to open pdf is installed
+//            Toast.makeText(context, R.string.there_is_no_app_to_read_pdf, Toast.LENGTH_SHORT).show()
+//        } catch (e: Exception) {
+//            binding.emptyView.visibility = View.VISIBLE
+//            binding.emptyView.text = e.message.toString()
+//            Toast.makeText(context, e.message.toString(), Toast.LENGTH_SHORT).show()
+//        }
     }
 
     private fun downloadMaterial(material: String) {
+        val rootPath = File(Environment.getExternalStorageDirectory(), "Download")
+        val localFile = File(rootPath, material)
+        if (localFile.exists()) {
+            Toast.makeText(context, getString(R.string.the_file_is_already_exist_toast), Toast.LENGTH_SHORT).show()
+        } else {
+            viewModel.getMaterial(courseId, material, localFile)
+        }
     }
 
     private fun delMaterial(material: String) {
         viewModel.delMaterial(courseId, material)
-        Toast.makeText(context, "$material del", Toast.LENGTH_SHORT).show()
     }
 
     @Deprecated("Deprecated in Java")

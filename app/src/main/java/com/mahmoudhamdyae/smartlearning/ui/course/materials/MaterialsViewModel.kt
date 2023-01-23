@@ -10,7 +10,7 @@ import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
-
+import java.io.File
 
 class MaterialsViewModel(
     private val repository: FirebaseRepository
@@ -95,6 +95,20 @@ class MaterialsViewModel(
         } catch (e: Exception) {
             _error.value = e.message
             _status.value = STATUS.ERROR
+        }
+    }
+
+    fun getMaterial(courseId: String, name: String, localFile: File) {
+        viewModelScope.launch {
+            _status.value = STATUS.LOADING
+            repository.getMaterial(courseId, name, localFile).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _status.value = STATUS.DONE
+                } else {
+                    _status.value = STATUS.ERROR
+                    _error.value = task.exception!!.message
+                }
+            }
         }
     }
 }

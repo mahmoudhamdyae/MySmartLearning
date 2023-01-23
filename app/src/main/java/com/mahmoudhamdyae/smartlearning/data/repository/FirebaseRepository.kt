@@ -2,18 +2,19 @@ package com.mahmoudhamdyae.smartlearning.data.repository
 
 import android.net.Uri
 import android.util.Log
-import androidx.databinding.adapters.NumberPickerBindingAdapter.setValue
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.utils.Constants
+import java.io.File
 
 class FirebaseRepository {
 
@@ -134,6 +135,10 @@ class FirebaseRepository {
 
     fun getMaterials(courseId: String): DatabaseReference {
         return courseDatabaseReference.child(courseId).child(Constants.MATERIALS)
+    }
+
+    fun getMaterial(courseId: String, name: String, localFile: File): FileDownloadTask {
+        return mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).getFile(localFile)
     }
 
     fun delMaterialStorage(courseId: String, name: String): Task<Void> {
