@@ -1,13 +1,20 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.materials
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.databinding.MaterialItemBinding
 
-class MaterialsAdapter(private val onClickListener: OnClickListener) :
+class MaterialsAdapter(
+    private val onClickListener: OnClickListener,
+    private val onPlayClickListener: OnPlayClickListener,
+    private val onDownloadClickListener: OnDownloadClickListener,
+    private val onDelClickListener: OnDelClickListener,
+    private val isTeacher: Boolean
+) :
     ListAdapter<String, MaterialsAdapter.MaterialsPropertyViewHolder>(DiffCallback) {
 
     /**
@@ -28,13 +35,21 @@ class MaterialsAdapter(private val onClickListener: OnClickListener) :
      * Create new [RecyclerView] item views (invoked by the layout manager)
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MaterialsPropertyViewHolder {
-        return MaterialsPropertyViewHolder(
-            MaterialItemBinding.inflate(
-                LayoutInflater.from(
-                    parent.context
-                )
-            )
-        )
+        val binding = MaterialItemBinding.inflate(LayoutInflater.from(parent.context))
+        if (!isTeacher) {
+            binding.deleteButton.visibility = View.GONE
+        }
+        val materialName = binding.materialText.text.toString()
+        binding.playButton.setOnClickListener {
+            onPlayClickListener.onPlayClick(materialName)
+        }
+        binding.downloadButton.setOnClickListener {
+            onDownloadClickListener.onDownloadClick(materialName)
+        }
+        binding.deleteButton.setOnClickListener {
+            onDelClickListener.onDelClick(materialName)
+        }
+        return MaterialsPropertyViewHolder(binding)
     }
 
     /**
@@ -69,5 +84,17 @@ class MaterialsAdapter(private val onClickListener: OnClickListener) :
      */
     class OnClickListener(val clickListener: (material: String) -> Unit) {
         fun onClick(material: String) = clickListener(material)
+    }
+
+    class OnPlayClickListener(val clickListener: (material: String) -> Unit) {
+        fun onPlayClick(material: String) = clickListener(material)
+    }
+
+    class OnDownloadClickListener(val clickListener: (material: String) -> Unit) {
+        fun onDownloadClick(material: String) = clickListener(material)
+    }
+
+    class OnDelClickListener(val clickListener: (material: String) -> Unit) {
+        fun onDelClick(material: String) = clickListener(material)
     }
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
+import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import com.mahmoudhamdyae.smartlearning.utils.getFileName
 
@@ -54,7 +55,14 @@ class MaterialsFragment: BaseFragment() {
 
         binding.materialsList.layoutManager = GridLayoutManager(context, 1)
         binding.materialsList.adapter = MaterialsAdapter(MaterialsAdapter.OnClickListener {
-        })
+            playMaterial(it)
+        }, MaterialsAdapter.OnPlayClickListener {
+            playMaterial(it)
+        }, MaterialsAdapter.OnDownloadClickListener {
+            downloadMaterial(it)
+        }, MaterialsAdapter.OnDelClickListener {
+            delMaterial(it)
+        }, viewModel.isTeacher.value == IsTeacher.TEACHER)
 
         binding.addFab.setOnClickListener {
             val intent = Intent()
@@ -77,6 +85,15 @@ class MaterialsFragment: BaseFragment() {
         viewModel.progressDialog.observe(viewLifecycleOwner) {
             binding.horizontalProgressBar.progress = it.toInt()
         }
+    }
+
+    private fun playMaterial(material: String) {
+    }
+
+    private fun downloadMaterial(material: String) {
+    }
+
+    private fun delMaterial(material: String) {
     }
 
     @Deprecated("Deprecated in Java")
