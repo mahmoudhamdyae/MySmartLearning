@@ -10,11 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
-import com.mahmoudhamdyae.smartlearning.databinding.FrgmentNotificationBinding
+import com.mahmoudhamdyae.smartlearning.databinding.FragmentNotificationBinding
 
 class NotificationFragment: BaseFragment() {
 
-    private lateinit var binding: FrgmentNotificationBinding
+    private lateinit var binding: FragmentNotificationBinding
     override val viewModel: NotificationViewModel by activityViewModels {
         NotificationViewModelFactory(FirebaseRepository())
     }
@@ -24,7 +24,7 @@ class NotificationFragment: BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FrgmentNotificationBinding.inflate(inflater)
+        binding = FragmentNotificationBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -40,7 +40,6 @@ class NotificationFragment: BaseFragment() {
 
         binding.notificationsList.layoutManager = GridLayoutManager(context, 1)
         binding.notificationsList.adapter = NotificationAdapter(NotificationAdapter.OnClickListener{
-            Toast.makeText(context, it.text, Toast.LENGTH_SHORT).show()
         })
     }
 }
