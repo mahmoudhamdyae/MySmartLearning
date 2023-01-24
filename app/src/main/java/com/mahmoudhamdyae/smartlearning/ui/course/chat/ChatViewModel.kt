@@ -1,6 +1,9 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.chat
 
 import androidx.lifecycle.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Message
 import com.mahmoudhamdyae.smartlearning.data.models.User
@@ -18,8 +21,48 @@ class ChatViewModel(
     val messages: LiveData<List<Message>>
         get() = _messages
 
-    fun getListOfMessages() {
-        _messages.value = listOf(Message("shhhh"))
+    fun getListOfGroupMessages(courseId: String) {
+        viewModelScope.launch {
+            _status.value = STATUS.LOADING
+            repository.getGroupChat(courseId).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val messagesList: MutableList<Message> = mutableListOf()
+                    for (message in snapshot.children) {
+                        val messageItem = message.getValue(Message::class.java)
+                        messagesList.add(messageItem!!)
+                    }
+                    _messages.value = messagesList
+                    _status.value = STATUS.DONE
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    _status.value = STATUS.ERROR
+                    _error.value = error.message
+                }
+            })
+        }
+    }
+
+    fun getListOfPrivateMessages(user: User, anotherUser: User) {
+        viewModelScope.launch {
+            _status.value = STATUS.LOADING
+            repository.getPrivateChat(user, anotherUser).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val messagesList: MutableList<Message> = mutableListOf()
+                    for (message in snapshot.children) {
+                        val messageItem = message.getValue(Message::class.java)
+                        messagesList.add(messageItem!!)
+                    }
+                    _messages.value = messagesList
+                    _status.value = STATUS.DONE
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    _status.value = STATUS.ERROR
+                    _error.value = error.message
+                }
+            })
+        }
     }
 
     private fun validateText(): Boolean = !messageText.value.isNullOrEmpty()

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -47,7 +46,11 @@ class ChatFragment: BaseFragment() {
         }
         user = ChatFragmentArgs.fromBundle(requireArguments()).user
 
-        viewModel.getListOfMessages()
+        if (isGroup) {
+            viewModel.getListOfGroupMessages(courseId)
+        } else {
+            viewModel.getListOfPrivateMessages(user!!, anotherUser!!)
+        }
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
@@ -59,10 +62,6 @@ class ChatFragment: BaseFragment() {
 
         binding.sendFab.setOnClickListener {
             viewModel.sendMessage(isGroup, courseId, user!!, anotherUser!!)
-//            Toast.makeText(context, isGroup.toString(), Toast.LENGTH_SHORT).show()
-//            Toast.makeText(context, courseId, Toast.LENGTH_SHORT).show()
-//            Toast.makeText(context, user?.userName.toString(), Toast.LENGTH_SHORT).show()
-//            Toast.makeText(context, anotherUser?.userName.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 }

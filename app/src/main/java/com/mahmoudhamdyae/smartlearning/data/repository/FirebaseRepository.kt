@@ -165,4 +165,12 @@ class FirebaseRepository {
     fun sendMessagePrivate(user: User, anotherUser: User, message: Message): Task<Void> {
         return userDatabaseReference.child(user.userId!!).child(Constants.CHATS).child(anotherUser.userId!!).child(message.time).setValue(message)
     }
+
+    fun getGroupChat(courseId: String): DatabaseReference {
+        return courseDatabaseReference.child(courseId).child(Constants.CHATS)
+    }
+
+    fun getPrivateChat(user: User, anotherUser: User): DatabaseReference {
+        return userDatabaseReference.child(user.userId!!).child(Constants.CHATS).child(anotherUser.userId!!)
+    }
 }
