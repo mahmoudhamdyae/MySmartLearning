@@ -55,5 +55,9 @@ class ChatFragment: BaseFragment() {
         binding.messageList.layoutManager = GridLayoutManager(context, 1)
         binding.messageList.adapter = ChatAdapter(ChatAdapter.OnClickListener {
         })
+
+        binding.sendFab.setOnClickListener {
+            viewModel.sendMessage()
+        }
     }
 }

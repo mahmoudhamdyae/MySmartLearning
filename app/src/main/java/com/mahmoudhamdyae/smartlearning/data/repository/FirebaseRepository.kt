@@ -156,4 +156,7 @@ class FirebaseRepository {
     // Quizzes
 
     // Chats
+
+    fun sendMessage() {
+    }
 }

@@ -21,6 +21,17 @@ class ChatViewModel(
     fun getListOfMessages() {
         _messages.value = listOf(Message("shhhh"))
     }
+
+    private fun validateText(): Boolean = !messageText.value.isNullOrEmpty()
+
+    fun sendMessage() {
+        if (validateText()) {
+            repository.sendMessage()
+            messageText.value = ""
+        } else {
+            _error.value = "Message Can\'t be empty"
+        }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")
