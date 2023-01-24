@@ -34,6 +34,7 @@ class CourseFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val courseId = CourseFragmentArgs.fromBundle(requireArguments()).courseId
+        val user = CourseFragmentArgs.fromBundle(requireArguments()).user
 
         getUserType()
 
@@ -54,11 +55,11 @@ class CourseFragment: BaseFragment() {
         }
 
         binding.groupChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToChatFragment(courseId, true))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToChatFragment(courseId, true, user))
         }
 
         binding.privateChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(courseId))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(courseId, user))
         }
 
         binding.toolbar.setOnMenuItemClickListener {

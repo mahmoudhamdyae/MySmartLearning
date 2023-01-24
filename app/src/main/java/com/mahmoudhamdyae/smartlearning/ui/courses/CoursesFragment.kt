@@ -54,9 +54,10 @@ class CoursesFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.coursesList.layoutManager = GridLayoutManager(context, 1)
-        binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
-            // Navigate to Course Fragment
-            findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(it.id))
+        binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener { course ->
+            viewModel.user.observe(viewLifecycleOwner) { user ->
+                findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(course.id, user!!))
+            }
         },  CoursesAdapter.OnDelClickListener { courseId ->
             viewModel.delCourseFromUser(courseId)
             if (isTeacher) {

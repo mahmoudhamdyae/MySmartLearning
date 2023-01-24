@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentPrivateChatBinding
 import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
@@ -21,6 +22,7 @@ class PrivateChatFragment: BaseFragment() {
     }
 
     private lateinit var courseId: String
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +42,7 @@ class PrivateChatFragment: BaseFragment() {
         getUserType()
 
         courseId = PrivateChatFragmentArgs.fromBundle(requireArguments()).courseId!!
+        user = PrivateChatFragmentArgs.fromBundle(requireArguments()).user
         viewModel.isTeacher.observe(viewLifecycleOwner) {
             if (it != IsTeacher.TEACHER) {
                 viewModel.getTeacher()
@@ -54,7 +57,7 @@ class PrivateChatFragment: BaseFragment() {
 
         binding.usersList.layoutManager = GridLayoutManager(context, 1)
         binding.usersList.adapter = StudentsAdapter(StudentsAdapter.OnClickListener {
-            findNavController().navigate(PrivateChatFragmentDirections.actionPrivateChatFragmentToChatFragment(courseId, false, it))
+            findNavController().navigate(PrivateChatFragmentDirections.actionPrivateChatFragmentToChatFragment(courseId, false, user))
         })
     }
 }

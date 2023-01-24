@@ -110,6 +110,9 @@
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.User"
             app:nullable="true"
             android:defaultValue="@null" />
+        <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
     </fragment>
     <fragment
         android:id="@+id/privateChatFragment"
@@ -123,6 +126,9 @@
         <action
             android:id="@+id/action_privateChatFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -156,6 +162,9 @@
         <action
             android:id="@+id/action_courseFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
