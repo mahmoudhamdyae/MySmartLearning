@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentChatBinding
-import com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsFragmentArgs
 
 class ChatFragment: BaseFragment() {
 
@@ -22,6 +22,7 @@ class ChatFragment: BaseFragment() {
 
     private lateinit var courseId: String
     private var isGroup = true
+    private var anotherUser: User? = User()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +41,10 @@ class ChatFragment: BaseFragment() {
 
         courseId = ChatFragmentArgs.fromBundle(requireArguments()).courseId!!
         isGroup = ChatFragmentArgs.fromBundle(requireArguments()).isGroup
-//        Toast.makeText(context, isGroup.toString(), Toast.LENGTH_SHORT).show()
+        if (!isGroup) {
+            anotherUser = ChatFragmentArgs.fromBundle(requireArguments()).anotherUser
+        }
+        Toast.makeText(context, anotherUser?.userName.toString(), Toast.LENGTH_SHORT).show()
         viewModel.getListOfMessages()
 
         binding.backButton.setOnClickListener {
