@@ -20,6 +20,7 @@ class PrivateChatViewModel(
         get() = _students
 
     fun getListOfStudents(courseId: String) {
+        _status.value = STATUS.LOADING
         viewModelScope.launch {
             _status.value = STATUS.DONE
             repository.getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
