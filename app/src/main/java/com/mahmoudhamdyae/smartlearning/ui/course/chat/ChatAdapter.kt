@@ -21,8 +21,15 @@ class ChatAdapter(
      */
     class MessagePropertyViewHolder(private var binding: ChatItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(message: Message) {
+        fun bind(message: Message, userUid: String) {
             binding.property = message
+            if (message.fromUid == userUid) {
+                binding.messageReceived.visibility = View.GONE
+                binding.myMessage.visibility = View.VISIBLE
+            } else {
+                binding.messageReceived.visibility = View.VISIBLE
+                binding.myMessage.visibility = View.GONE
+            }
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -35,25 +42,18 @@ class ChatAdapter(
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MessagePropertyViewHolder {
         val binding = ChatItemBinding.inflate(LayoutInflater.from(parent.context))
-//        if (binding.property!!.fromUid == userUid) {
-//            binding.messageReceived.visibility = View.GONE
-//            binding.myMessage.visibility = View.VISIBLE
-//        } else {
-//            binding.messageReceived.visibility = View.VISIBLE
-//            binding.myMessage.visibility = View.GONE
-//        }
         return MessagePropertyViewHolder(binding)
     }
 
     /**
      * Replaces the contents of a view (invoked by the layout manager)
      */
-    override fun onBindViewHolder(holder: ChatAdapter.MessagePropertyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MessagePropertyViewHolder, position: Int) {
         val user = getItem(position)
         holder.itemView.setOnClickListener {
             onClickListener.onClick(user)
         }
-        holder.bind(user)
+        holder.bind(user, userUid)
     }
 
     /**
