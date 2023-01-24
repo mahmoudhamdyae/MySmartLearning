@@ -1,12 +1,12 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.chat
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Message
+import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import kotlinx.coroutines.launch
 
 class ChatViewModel(
     private val repository: FirebaseRepository
@@ -24,10 +24,19 @@ class ChatViewModel(
 
     private fun validateText(): Boolean = !messageText.value.isNullOrEmpty()
 
-    fun sendMessage() {
+    fun sendMessage(isGroup: Boolean, courseId: String, user: User, anotherUser: User) {
         if (validateText()) {
-            repository.sendMessage()
-            messageText.value = ""
+            viewModelScope.launch {
+                val message = Message(messageText.value, user.userName, anotherUser.userName)
+                if (isGroup) {
+                    onCompleteListener(repository.sendMessageGroup(courseId, message))
+                } else {
+                    onCompleteListener(repository.sendMessagePrivate(user, anotherUser, message))
+                    onCompleteListener(repository.sendMessagePrivate(anotherUser, user, message))
+                }
+                _status.value = STATUS.DONE
+                messageText.value = ""
+            }
         } else {
             _error.value = "Message Can\'t be empty"
         }

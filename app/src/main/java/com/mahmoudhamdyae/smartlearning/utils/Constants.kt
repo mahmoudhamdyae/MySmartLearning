@@ -7,6 +7,8 @@ object Constants {
     const val USERS = "users"
     const val COURSES = "courses"
     const val STUDENTS = "students"
+    const val CHATS = "chats"
+    const val Quizzes = "quizzes"
 
     // Firebase Storage
     const val IMAGES = "images"

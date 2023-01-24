@@ -12,6 +12,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.mahmoudhamdyae.smartlearning.data.models.Course
+import com.mahmoudhamdyae.smartlearning.data.models.Message
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 import java.io.File
@@ -157,6 +158,11 @@ class FirebaseRepository {
 
     // Chats
 
-    fun sendMessage() {
+    fun sendMessageGroup(courseId: String, message: Message): Task<Void> {
+        return courseDatabaseReference.child(courseId).child(Constants.CHATS).child(message.time).setValue(message)
+    }
+
+    fun sendMessagePrivate(user: User, anotherUser: User, message: Message): Task<Void> {
+        return userDatabaseReference.child(user.userId!!).child(Constants.CHATS).child(anotherUser.userId!!).child(message.time).setValue(message)
     }
 }

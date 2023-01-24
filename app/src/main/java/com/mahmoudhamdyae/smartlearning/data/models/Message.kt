@@ -8,5 +8,5 @@ data class Message(
     val from: String? = null,
     val to: String? = null,
     val time: String =
-        SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.getDefault()).format(Date())
+        SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.getDefault()).format(Date())
 )
