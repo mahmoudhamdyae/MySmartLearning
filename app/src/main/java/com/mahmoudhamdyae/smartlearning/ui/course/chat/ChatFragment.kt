@@ -6,13 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentChatBinding
+import com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsFragmentArgs
 
 class ChatFragment: BaseFragment() {
 
     private lateinit var binding: FragmentChatBinding
-    override val viewModel: ChatViewModel by viewModels()
+    override val viewModel: ChatViewModel by viewModels {
+        ChatViewModelFactory(FirebaseRepository())
+    }
+
+    private lateinit var courseId: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +36,15 @@ class ChatFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        courseId = ChatFragmentArgs.fromBundle(requireArguments()).courseId!!
+        viewModel.getListOfMessages()
+
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
         }
+
+        binding.messageList.layoutManager = GridLayoutManager(context, 1)
+        binding.messageList.adapter = ChatAdapter(ChatAdapter.OnClickListener {
+        })
     }
 }

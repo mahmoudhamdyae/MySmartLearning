@@ -4,11 +4,9 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.mahmoudhamdyae.smartlearning.data.models.Course
-import com.mahmoudhamdyae.smartlearning.data.models.Notification
-import com.mahmoudhamdyae.smartlearning.data.models.Quiz
-import com.mahmoudhamdyae.smartlearning.data.models.User
+import com.mahmoudhamdyae.smartlearning.data.models.*
 import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
+import com.mahmoudhamdyae.smartlearning.ui.course.chat.ChatAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.quiz.QuizAdapter
 import com.mahmoudhamdyae.smartlearning.ui.courses.CoursesAdapter
@@ -41,6 +39,12 @@ fun bindNotificationsRecyclerView(recyclerView: RecyclerView, data: List<Notific
 @BindingAdapter("quizzesData")
 fun bindQuizzesRecyclerView(recyclerView: RecyclerView, data: List<Quiz>?) {
     val adapter = recyclerView.adapter as QuizAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("chatData")
+fun bindChatRecyclerView(recyclerView: RecyclerView, data: List<Message>?) {
+    val adapter = recyclerView.adapter as ChatAdapter
     adapter.submitList(data)
 }
 

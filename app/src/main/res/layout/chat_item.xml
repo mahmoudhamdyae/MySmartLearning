@@ -1,15 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="message"
+            name="property"
             type="com.mahmoudhamdyae.smartlearning.data.models.Message" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/message_received"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/message_margin"
+            android:background="@drawable/message_background_received"
+            android:padding="@dimen/message_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/another_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/message_text_margin"
+                android:text="@{property.user}"
+                android:textColor="@color/text_secondary_color"
+                android:textSize="@dimen/chat_secondary_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Receiver name" />
+
+            <TextView
+                android:id="@+id/another_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/another_name"
+                android:layout_margin="@dimen/message_text_margin"
+                android:text="@{property.message}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/text_primary_color"
+                android:textSize="@dimen/chat_main_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/another_name"
+                tools:text="message Received" />
+
+            <TextView
+                android:id="@+id/another_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/another_text"
+                android:layout_margin="@dimen/message_text_margin"
+                android:text="@{property.time}"
+                android:textColor="@color/text_secondary_color"
+                android:textSize="@dimen/chat_secondary_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/another_text"
+                tools:text="message time" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/my_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/message_margin"
+            android:background="@drawable/message_background_sent"
+            android:padding="@dimen/message_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/my_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/message_text_margin"
+                android:text="@{property.message}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/text_primary_color"
+                android:textSize="@dimen/chat_main_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="message sent" />
+
+            <TextView
+                android:id="@+id/my_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/my_text"
+                android:layout_margin="@dimen/message_text_margin"
+                android:text="@{property.time}"
+                android:textColor="@color/text_secondary_color"
+                android:textSize="@dimen/chat_secondary_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/my_text"
+                tools:text="time message" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

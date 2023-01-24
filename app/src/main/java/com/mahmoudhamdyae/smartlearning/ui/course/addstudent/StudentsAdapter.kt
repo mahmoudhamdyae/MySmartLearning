@@ -12,7 +12,7 @@ class StudentsAdapter(private val onClickListener: OnClickListener) :
     ListAdapter<User, StudentsAdapter.StudentPropertyViewHolder>(DiffCallback) {
 
     /**
-     * The CoursePropertyViewHolder constructor takes the binding variable from the associated
+     * The [StudentPropertyViewHolder] constructor takes the binding variable from the associated
      * GridViewItem, which nicely gives it access to the full [User] information.
      */
     class StudentPropertyViewHolder(private var binding: StudentItemBinding):

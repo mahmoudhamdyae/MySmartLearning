@@ -20,4 +20,8 @@
     <color name="dialog_background">#836635</color>
 
     <color name="auth_red">#990D3C</color>
+
+    <!-- Chat -->
+    <color name="chat_received">#CED1CE</color>
+    <color name="chat_sent">#C7F5D2</color>
 </resources>

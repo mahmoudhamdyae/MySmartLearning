@@ -40,4 +40,13 @@
     <dimen name="dialog_button_margin">8dp</dimen>
     <dimen name="dialog_spinner_margin">8dp</dimen>
     <dimen name="dialog_image_margin">8dp</dimen>
+
+    <!-- Chat -->
+    <dimen name="message_margin">4dp</dimen>
+    <dimen name="message_padding">4dp</dimen>
+    <dimen name="message_text_margin">4dp</dimen>
+    <dimen name="message_radius">10dp</dimen>
+    <dimen name="chat_main_text_size">20sp</dimen>
+    <dimen name="chat_secondary_text_size">12sp</dimen>
+
 </resources>
