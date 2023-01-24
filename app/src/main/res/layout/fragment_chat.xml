@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/input_edit_text_hint"
+            android:text="@={viewModel.messageText}"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

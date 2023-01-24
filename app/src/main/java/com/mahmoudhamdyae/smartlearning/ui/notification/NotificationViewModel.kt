@@ -22,7 +22,7 @@ class NotificationViewModel(
 
     private fun getListOfNotifications() {
         _notifications.value = mutableListOf(
-            Notification(text = "textNotification", from = repository.getUid(), to = "fff")
+            Notification(text = "textNotification")
         )
     }
 

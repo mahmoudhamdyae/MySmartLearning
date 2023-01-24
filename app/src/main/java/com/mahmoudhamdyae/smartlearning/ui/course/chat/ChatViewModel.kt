@@ -12,6 +12,8 @@ class ChatViewModel(
     private val repository: FirebaseRepository
 ) : BaseViewModel() {
 
+    val messageText = MutableLiveData<String>()
+
     private val _messages = MutableLiveData<List<Message>>()
     val messages: LiveData<List<Message>>
         get() = _messages
