@@ -106,13 +106,13 @@
             android:name="isGroup"
             app:argType="boolean" />
         <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
+        <argument
             android:name="anotherUser"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.User"
             app:nullable="true"
             android:defaultValue="@null" />
-        <argument
-            android:name="user"
-            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
     </fragment>
     <fragment
         android:id="@+id/privateChatFragment"

@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/message_text_margin"
-                android:text="@{property.from}"
+                android:text="@{property.fromUserName}"
                 android:textColor="@color/text_secondary_color"
                 android:textSize="@dimen/chat_secondary_text_size"
                 app:layout_constraintStart_toStartOf="parent"

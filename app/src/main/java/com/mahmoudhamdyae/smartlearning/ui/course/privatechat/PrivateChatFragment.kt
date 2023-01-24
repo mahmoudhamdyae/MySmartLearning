@@ -57,7 +57,7 @@ class PrivateChatFragment: BaseFragment() {
 
         binding.usersList.layoutManager = GridLayoutManager(context, 1)
         binding.usersList.adapter = StudentsAdapter(StudentsAdapter.OnClickListener {
-            findNavController().navigate(PrivateChatFragmentDirections.actionPrivateChatFragmentToChatFragment(courseId, false, it, user))
+            findNavController().navigate(PrivateChatFragmentDirections.actionPrivateChatFragmentToChatFragment(courseId, false, user, it))
         })
     }
 }

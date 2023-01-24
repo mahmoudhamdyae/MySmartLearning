@@ -41,10 +41,10 @@ class ChatFragment: BaseFragment() {
 
         courseId = ChatFragmentArgs.fromBundle(requireArguments()).courseId!!
         isGroup = ChatFragmentArgs.fromBundle(requireArguments()).isGroup
+        user = ChatFragmentArgs.fromBundle(requireArguments()).user
         if (!isGroup) {
             anotherUser = ChatFragmentArgs.fromBundle(requireArguments()).anotherUser
         }
-        user = ChatFragmentArgs.fromBundle(requireArguments()).user
 
         if (isGroup) {
             viewModel.getListOfGroupMessages(courseId)
@@ -58,7 +58,7 @@ class ChatFragment: BaseFragment() {
 
         binding.messageList.layoutManager = GridLayoutManager(context, 1)
         binding.messageList.adapter = ChatAdapter(ChatAdapter.OnClickListener {
-        })
+        }, user!!.userId!!)
 
         binding.sendFab.setOnClickListener {
             viewModel.sendMessage(isGroup, courseId, user!!, anotherUser!!)

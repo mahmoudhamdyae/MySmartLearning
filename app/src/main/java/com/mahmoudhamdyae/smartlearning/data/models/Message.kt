@@ -5,8 +5,9 @@ import java.util.*
 
 data class Message(
     val message: String? = null,
-    val from: String? = null,
-    val to: String? = null,
+    val fromUserName: String? = null,
+    val fromUid: String? = null,
+    val toUserName: String? = null,
     val time: String =
         SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.getDefault()).format(Date())
 )

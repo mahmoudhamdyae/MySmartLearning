@@ -1,6 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.chat
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Message
 import com.mahmoudhamdyae.smartlearning.databinding.ChatItemBinding
 
-class ChatAdapter(private val onClickListener: OnClickListener) :
+class ChatAdapter(
+    private val onClickListener: OnClickListener,
+    private val userUid: String
+) :
     ListAdapter<Message, ChatAdapter.MessagePropertyViewHolder>(DiffCallback) {
 
     /**
@@ -30,19 +34,21 @@ class ChatAdapter(private val onClickListener: OnClickListener) :
      */
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MessagePropertyViewHolder {
-        return MessagePropertyViewHolder(
-            ChatItemBinding.inflate(
-                LayoutInflater.from(
-                    parent.context
-                )
-            )
-        )
+        val binding = ChatItemBinding.inflate(LayoutInflater.from(parent.context))
+//        if (binding.property!!.fromUid == userUid) {
+//            binding.messageReceived.visibility = View.GONE
+//            binding.myMessage.visibility = View.VISIBLE
+//        } else {
+//            binding.messageReceived.visibility = View.VISIBLE
+//            binding.myMessage.visibility = View.GONE
+//        }
+        return MessagePropertyViewHolder(binding)
     }
 
     /**
      * Replaces the contents of a view (invoked by the layout manager)
      */
-    override fun onBindViewHolder(holder: MessagePropertyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChatAdapter.MessagePropertyViewHolder, position: Int) {
         val user = getItem(position)
         holder.itemView.setOnClickListener {
             onClickListener.onClick(user)
