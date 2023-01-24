@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +21,7 @@ class ChatFragment: BaseFragment() {
     }
 
     private lateinit var courseId: String
+    private var isGroup = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +39,8 @@ class ChatFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         courseId = ChatFragmentArgs.fromBundle(requireArguments()).courseId!!
+        isGroup = ChatFragmentArgs.fromBundle(requireArguments()).isGroup
+//        Toast.makeText(context, isGroup.toString(), Toast.LENGTH_SHORT).show()
         viewModel.getListOfMessages()
 
         binding.backButton.setOnClickListener {

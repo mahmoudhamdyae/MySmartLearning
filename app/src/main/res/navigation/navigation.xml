@@ -102,6 +102,9 @@
             android:name="courseId"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="isGroup"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/privateChatFragment"

@@ -54,7 +54,7 @@ class CourseFragment: BaseFragment() {
         }
 
         binding.groupChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToChatFragment(courseId))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToChatFragment(courseId, true))
         }
 
         binding.privateChatCard.setOnClickListener {
