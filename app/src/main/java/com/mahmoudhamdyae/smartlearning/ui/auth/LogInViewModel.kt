@@ -3,6 +3,9 @@ package com.mahmoudhamdyae.smartlearning.ui.auth
 import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
@@ -53,8 +56,34 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         }
     }
 
+    private fun validateUserName(): Boolean {
+        var ret = true
+        viewModelScope.launch {
+            _status.value = STATUS.LOADING
+            repository.getAllStudents().addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (user in snapshot.children) {
+                        val userItem = user.getValue(User::class.java)
+                        if (userName.value == userItem?.userName) {
+                            ret = false
+                            _error.value = "Choose another user name"
+                            break
+                        }
+                    }
+                    _status.value = STATUS.DONE
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w("getUsers:Cancelled", "loadUsers:onCancelled", error.toException())
+                    _status.value = STATUS.ERROR
+                }
+            })
+        }
+        return ret
+    }
+
     fun signUp() {
-        if (validateTextsSignUp()) {
+        if (validateTextsSignUp() && validateUserName()) {
 
             viewModelScope.launch {
                 this@LogInViewModel._status.value = STATUS.LOADING
