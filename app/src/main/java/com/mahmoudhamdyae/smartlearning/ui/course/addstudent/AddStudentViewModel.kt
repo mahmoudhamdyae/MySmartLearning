@@ -19,10 +19,6 @@ class AddStudentViewModel(
     val students: LiveData<List<User>>
         get() = _students
 
-    init {
-        getListOfStudents()
-    }
-
     fun addStudentToCourse(user: User, courseId: String) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
@@ -53,7 +49,7 @@ class AddStudentViewModel(
         })
     }
 
-    private fun getListOfStudents() {
+    fun getListOfStudents(courseId: String) {
         try {
             viewModelScope.launch {
                 _status.value = STATUS.LOADING
@@ -67,6 +63,38 @@ class AddStudentViewModel(
                             }
                         }
                         _students.value = studentsList
+                        getListOfStudentsInCourse(courseId)
+                        _status.value = STATUS.DONE
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.w(
+                            "getStudents:Cancelled",
+                            "loadStudents:onCancelled",
+                            error.toException()
+                        )
+                        _status.value = STATUS.ERROR
+                    }
+                })
+            }
+        } catch (e: Exception) {
+            _error.value = e.message
+            _status.value = STATUS.ERROR
+        }
+    }
+
+    private fun getListOfStudentsInCourse(courseId: String) {
+        try {
+            viewModelScope.launch {
+                _status.value = STATUS.LOADING
+                repository.getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val allStudents: MutableList<User> = _students.value!!.toMutableList()
+                        for (student in snapshot.children) {
+                            val studentItem = student.getValue(User::class.java)
+                            allStudents.remove(studentItem)
+                        }
+                        _students.value = allStudents
                         _status.value = STATUS.DONE
                     }
 
