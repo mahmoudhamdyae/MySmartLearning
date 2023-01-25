@@ -74,7 +74,7 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child(Constants.STUDENTS)
     }
 
-    fun getAllStudents(): DatabaseReference = userDatabaseReference
+    fun getAllUsers(): DatabaseReference = userDatabaseReference
 
     fun getNoOfStudentsInCourse(courseId: String): DatabaseReference {
         return courseDatabaseReference.child(courseId).child("studentsNo")

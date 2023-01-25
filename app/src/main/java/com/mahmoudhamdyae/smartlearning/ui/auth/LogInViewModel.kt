@@ -56,53 +56,50 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         }
     }
 
-    private fun validateUserName(): Boolean {
-        var ret = true
-        viewModelScope.launch {
-            _status.value = STATUS.LOADING
-            repository.getAllStudents().addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (user in snapshot.children) {
-                        val userItem = user.getValue(User::class.java)
-                        if (userName.value == userItem?.userName) {
-                            ret = false
-                            _error.value = "Choose another user name"
-                            break
-                        }
-                    }
-                    _status.value = STATUS.DONE
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.w("getUsers:Cancelled", "loadUsers:onCancelled", error.toException())
-                    _status.value = STATUS.ERROR
-                }
-            })
-        }
-        return ret
-    }
-
     fun signUp() {
-        if (validateTextsSignUp() && validateUserName()) {
+        if (validateTextsSignUp()) {
 
             viewModelScope.launch {
-                this@LogInViewModel._status.value = STATUS.LOADING
-                repository.signUp(email.value!!, password.value!!)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            // Sign up success.
-                            Log.d("SignUp", "createUserWithEmail:success")
-                            saveUserInDatabase()
-                            saveProfilePicture()
-                            navigate()
-                            this@LogInViewModel._status.value = STATUS.DONE
-                        } else {
-                            // Sign up fails
-                            Log.w("SignUp", "createUserWithEmail:failure", task.exception)
-                            _error.value = task.exception?.message.toString()
-                            this@LogInViewModel._status.value = STATUS.ERROR
+                _status.value = STATUS.LOADING
+
+                repository.getAllUsers().addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var userNameRepeated = false
+
+                        for (user in snapshot.children) {
+                            val userItem = user.getValue(User::class.java)
+                            if (userName.value == userItem?.userName) {
+                                userNameRepeated = true
+                                _error.value = "Choose another user name"
+                                _status.value = STATUS.ERROR
+                            break
+                            }
+                        }
+
+                        if (!userNameRepeated) {
+                            repository.signUp(email.value!!, password.value!!)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        // Sign up success.
+                                        Log.d("SignUp", "createUserWithEmail:success")
+                                        saveUserInDatabase()
+                                        saveProfilePicture()
+                                        navigate()
+                                    } else {
+                                        // Sign up fails
+                                        Log.w("SignUp", "createUserWithEmail:failure", task.exception)
+                                        _error.value = task.exception?.message.toString()
+                                        _status.value = STATUS.ERROR
+                                    }
+                                }
                         }
                     }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.w("getUsers:Cancelled", "loadUsers:onCancelled", error.toException())
+                        _status.value = STATUS.ERROR
+                    }
+                })
             }
         }
     }
@@ -111,19 +108,19 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         if (validateTextsLogIn()) {
 
             viewModelScope.launch {
-                this@LogInViewModel._status.value = STATUS.LOADING
+                _status.value = STATUS.LOADING
                 repository.logIn(email.value!!, password.value!!)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             // Log in success.
                             Log.d("LogIn", "signInWithEmail:success")
                             navigate()
-                            this@LogInViewModel._status.value = STATUS.DONE
+                            _status.value = STATUS.DONE
                         } else {
                             // Log in fails.
                             Log.w("LogIn", "signInWithEmail:failure", task.exception)
                             _error.value = task.exception?.message.toString()
-                            this@LogInViewModel._status.value = STATUS.ERROR
+                            _status.value = STATUS.ERROR
                         }
                     }
             }
@@ -131,28 +128,24 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
     }
 
     private fun saveUserInDatabase() {
-        viewModelScope.launch {
-            val isTeacher = _isTeacher.value == IsTeacher.TEACHER
-            val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
+        val isTeacher = _isTeacher.value == IsTeacher.TEACHER
+        val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
 
-            onCompleteListener(repository.saveUserInDatabase(user))
-        }
+        onCompleteListener(repository.saveUserInDatabase(user))
     }
 
     private fun saveProfilePicture() {
-        viewModelScope.launch {
-            if (imageUri.value != null) {
-                this@LogInViewModel._status.value = STATUS.LOADING
-                repository.saveProfilePicture(imageUri.value!!.toUri())
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            this@LogInViewModel._status.value = STATUS.DONE
-                        } else {
-                            _error.value = task.exception?.message.toString()
-                            this@LogInViewModel._status.value = STATUS.ERROR
-                        }
+        if (imageUri.value != null) {
+            _status.value = STATUS.LOADING
+            repository.saveProfilePicture(imageUri.value!!.toUri())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        _status.value = STATUS.DONE
+                    } else {
+                        _error.value = task.exception?.message.toString()
+                        _status.value = STATUS.ERROR
                     }
-            }
+                }
         }
     }
 

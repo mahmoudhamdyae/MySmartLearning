@@ -53,7 +53,7 @@ class AddStudentViewModel(
         try {
             viewModelScope.launch {
                 _status.value = STATUS.LOADING
-                repository.getAllStudents().addValueEventListener(object : ValueEventListener {
+                repository.getAllUsers().addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val studentsList: MutableList<User> = mutableListOf()
                         for (student in snapshot.children) {
