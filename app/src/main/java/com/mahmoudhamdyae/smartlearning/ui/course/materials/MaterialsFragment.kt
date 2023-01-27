@@ -93,6 +93,7 @@ class MaterialsFragment: BaseFragment() {
     }
 
     private fun playMaterial(material: String) {
+        downloadMaterial(material)
 //        val file = File(requireContext().externalCacheDir, material)
 //        viewModel.getMaterial(courseId, material, file)
 //

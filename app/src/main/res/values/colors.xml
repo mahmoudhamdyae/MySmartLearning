@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="purple_200">#B39DDB</color>
+    <color name="purple_500">#673AB7</color>
+    <color name="purple_700">#512DA8</color>
+    <color name="teal_200">#9FA8DA</color>
+    <color name="teal_700">#303F9F</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="text_primary_color">#a176d9</color>
-    <color name="text_secondary_color">#B298D5</color>
-    <color name="error_text_color">#9A0606</color>
-    <color name="button_background">#3A2588</color>
-    <color name="fab_background">#5C380B</color>
+    <color name="text_primary_color">#673AB7</color>
+    <color name="text_secondary_color">#805D3BAF</color>
+    <color name="error_text_color">#B00020</color>
+    <color name="button_background">#3B0FB6</color>
+    <color name="fab_background">#7960BF</color>
     <color name="button_text">#FFFFFF</color>
-    <color name="icons_tint">#0D209E</color>
-    <color name="window_background">#3E7E57EA</color>
-    <color name="card_color">#dae7f2</color>
-    <color name="dialog_background">#836635</color>
+    <color name="icons_tint">#673AB7</color>
+    <color name="window_background">#EDE7F6</color>
+    <color name="card_color">#B39DDB</color>
+    <color name="dialog_background">#B39DDB</color>
 
-    <color name="auth_red">#990D3C</color>
+    <color name="auth_red">#B00020</color>
 
     <!-- Chat -->
     <color name="chat_received">#CED1CE</color>
