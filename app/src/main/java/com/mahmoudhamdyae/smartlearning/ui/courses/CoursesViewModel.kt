@@ -74,10 +74,11 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     fun delCourse(courseId: String) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
+            delCourseFromStudents(courseId)
             repository.delCourseFromCourses(courseId).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    delCourseFromStudents(courseId)
                     delMaterials(courseId)
+                    _status.value = STATUS.DONE
                 } else {
                     _status.value = STATUS.ERROR
                     _error.value = task.exception?.message
