@@ -62,13 +62,32 @@ class AddStudentViewModel(
                 repository.getAllUsers().addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val studentsList: MutableList<User> = mutableListOf()
-                        for (student in snapshot.children) {
-                            val studentItem = student.getValue(User::class.java)
-                            if (!studentItem!!.teacher) {
-                                studentsList.add(studentItem)
+                        for (user in snapshot.children) {
+                            val userItem = user.getValue(User::class.java)
+                            if (!userItem!!.teacher) {
+                                repository.getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                        var isStudentHere = false
+                                        for (student in dataSnapshot.children) {
+                                            val studentItem = student.getValue(User::class.java)
+                                            if (userItem.userId == studentItem!!.userId) {
+                                                isStudentHere = true
+                                                break
+                                            }
+                                        }
+                                        if (!isStudentHere) {
+                                            studentsList.add(userItem)
+                                        }
+                                        _students.value = studentsList
+                                        _status.value = STATUS.DONE
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        _status.value = STATUS.ERROR
+                                    }
+                                })
                             }
                         }
-                        getListOfStudentsInCourse(courseId, studentsList)
                     }
 
                     override fun onCancelled(error: DatabaseError) {

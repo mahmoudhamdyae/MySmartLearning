@@ -42,6 +42,54 @@ class PrivateChatViewModel(
         }
     }
 
+//    fun getListOfStudents(courseId: String) {
+//        try {
+//            viewModelScope.launch {
+//                _status.value = STATUS.LOADING
+//                repository.getAllUsers().addValueEventListener(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        val studentsList: MutableList<User> = mutableListOf()
+//                        for (user in snapshot.children) {
+//                            val userItem = user.getValue(User::class.java)
+//                            if (!userItem!!.teacher) {
+////                                studentsList.add(studentItem)
+//                                repository.getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
+//                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                                        for (student in dataSnapshot.children) {
+//                                            val studentItem = student.getValue(User::class.java)
+//                                            if (userItem.userId == studentItem!!.userId) {
+//                                                studentsList.add(studentItem)
+//                                            }
+////                                            studentsList.remove(studentItem)
+//                                        }
+//                                        _students.value = studentsList
+//                                        _status.value = STATUS.DONE
+//                                    }
+//
+//                                    override fun onCancelled(error: DatabaseError) {
+//                                        _status.value = STATUS.ERROR
+//                                    }
+//                                })
+//                            }
+//                        }
+//                    }
+//
+//                    override fun onCancelled(error: DatabaseError) {
+//                        Log.w(
+//                            "getStudents:Cancelled",
+//                            "loadStudents:onCancelled",
+//                            error.toException()
+//                        )
+//                        _status.value = STATUS.ERROR
+//                    }
+//                })
+//            }
+//        } catch (e: Exception) {
+//            _error.value = e.message
+//            _status.value = STATUS.ERROR
+//        }
+//    }
+
     fun getTeacher() {
     }
 
