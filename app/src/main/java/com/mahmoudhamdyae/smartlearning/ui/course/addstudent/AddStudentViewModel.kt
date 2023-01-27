@@ -20,13 +20,17 @@ class AddStudentViewModel(
     val students: LiveData<List<User>>
         get() = _students
 
+    private var _navigate = MutableLiveData(false)
+    val navigate: LiveData<Boolean>
+        get() = _navigate
+
     fun addStudentToCourse(user: User, course: Course) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
             repository.addStudentToCourse(user, course.id).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onCompleteListener(repository.addCourseToStudent(user, course))
-//                    addNoOfStudents(course.id)
+                    addNoOfStudents(course.id)
                 } else {
                     _status.value = STATUS.ERROR
                     _error.value = task.exception?.message
@@ -42,6 +46,7 @@ class AddStudentViewModel(
                 val noOfStudents = snapshot.getValue(Int::class.java)!! + 1
                 repository.updateNoOfStudents(courseId, noOfStudents)
                 _status.value = STATUS.DONE
+                navigate()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -87,7 +92,7 @@ class AddStudentViewModel(
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (student in snapshot.children) {
                     val studentItem = student.getValue(User::class.java)
-//                    allStudents.remove(studentItem)
+                    allStudents.remove(studentItem)
                 }
                 _students.value = allStudents
                 _status.value = STATUS.DONE
@@ -97,6 +102,14 @@ class AddStudentViewModel(
                 _status.value = STATUS.ERROR
             }
         })
+    }
+
+    private fun navigate() {
+        _navigate.value = true
+    }
+
+    fun finishNavigate() {
+        _navigate.value = false
     }
 }
 

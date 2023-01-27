@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentAddStudentBinding
+import com.mahmoudhamdyae.smartlearning.ui.auth.login.LogInFragmentDirections
 
 class AddStudentFragment: BaseFragment() {
 
@@ -35,6 +36,13 @@ class AddStudentFragment: BaseFragment() {
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
+        }
+
+        viewModel.navigate.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigateUp()
+                viewModel.finishNavigate()
+            }
         }
 
         val course = AddStudentFragmentArgs.fromBundle(requireArguments()).course
