@@ -32,15 +32,36 @@ class SearchViewModel(
                     val coursesList: MutableList<Course> = mutableListOf()
                     for (course in snapshot.children) {
                         val courseItem = course.getValue(Course::class.java)
-                        // todo remove user's courses
-                        coursesList.add(courseItem!!)
+                        repository.getUserCourses().addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                var isEnteredCourse = false
+                                for (userCourse in dataSnapshot.children) {
+                                    val userCourseItem = userCourse.getValue(Course::class.java)
+                                    if (courseItem!!.id == userCourseItem!!.id) {
+                                        isEnteredCourse = true
+                                        break
+                                    }
+                                }
+                                if (!isEnteredCourse) {
+                                    coursesList.add(courseItem!!)
+                                }
+                                _courses.value = coursesList
+                                _status.value = STATUS.DONE
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                _status.value = STATUS.ERROR
+                            }
+                        })
                     }
-                    _courses.value = coursesList
-                    _status.value = STATUS.DONE
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.w("getCourses:Cancelled", "loadCourses:onCancelled", error.toException())
+                    Log.w(
+                        "getStudents:Cancelled",
+                        "loadStudents:onCancelled",
+                        error.toException()
+                    )
                     _status.value = STATUS.ERROR
                 }
             })
