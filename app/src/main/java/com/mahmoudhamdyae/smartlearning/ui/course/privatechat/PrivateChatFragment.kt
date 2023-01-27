@@ -49,7 +49,6 @@ class PrivateChatFragment: BaseFragment() {
             }
         }
         viewModel.getListOfStudents(courseId)
-        viewModel.removeCurrentUser()
 
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
