@@ -33,7 +33,7 @@ class CourseFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val courseId = CourseFragmentArgs.fromBundle(requireArguments()).courseId
+        val course = CourseFragmentArgs.fromBundle(requireArguments()).course
         val user = CourseFragmentArgs.fromBundle(requireArguments()).user
 
         getUserType()
@@ -43,23 +43,23 @@ class CourseFragment: BaseFragment() {
         }
 
         binding.quizzesCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(courseId))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(course!!.id))
         }
 
         binding.addStudentCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToAddStudentFragment(courseId))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToAddStudentFragment(course!!))
         }
 
         binding.materialsCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToMaterialsFragment(courseId))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToMaterialsFragment(course!!.id))
         }
 
         binding.groupChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToChatFragment(courseId, true, user))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToChatFragment(course!!.id, true, user))
         }
 
         binding.privateChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(courseId, user))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(course!!.id, user))
         }
 
         binding.toolbar.setOnMenuItemClickListener {

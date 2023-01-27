@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
+import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
@@ -19,13 +20,13 @@ class AddStudentViewModel(
     val students: LiveData<List<User>>
         get() = _students
 
-    fun addStudentToCourse(user: User, courseId: String) {
+    fun addStudentToCourse(user: User, course: Course) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.addStudentToCourse(user, courseId).addOnCompleteListener { task ->
+            repository.addStudentToCourse(user, course.id).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    onCompleteListener(repository.addCourseToStudent(user, courseId))
-                    addNoOfStudents(courseId)
+                    onCompleteListener(repository.addCourseToStudent(user, course))
+//                    addNoOfStudents(course.id)
                 } else {
                     _status.value = STATUS.ERROR
                     _error.value = task.exception?.message
@@ -86,7 +87,7 @@ class AddStudentViewModel(
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (student in snapshot.children) {
                     val studentItem = student.getValue(User::class.java)
-                    allStudents.remove(studentItem)
+//                    allStudents.remove(studentItem)
                 }
                 _students.value = allStudents
                 _status.value = STATUS.DONE

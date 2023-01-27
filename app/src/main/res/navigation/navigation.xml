@@ -79,8 +79,8 @@
         android:label="AddStudentFragment"
         tools:layout="@layout/fragment_add_student">
         <argument
-            android:name="courseId"
-            app:argType="string"
+            android:name="course"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Course"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -156,8 +156,8 @@
             android:id="@+id/action_courseFragment_to_privateChatFragment"
             app:destination="@id/privateChatFragment" />
         <argument
-            android:name="courseId"
-            app:argType="string"
+            android:name="course"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Course"
             app:nullable="true" />
         <action
             android:id="@+id/action_courseFragment_to_chatFragment"

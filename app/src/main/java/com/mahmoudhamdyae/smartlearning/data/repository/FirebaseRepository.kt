@@ -66,8 +66,8 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child(Constants.STUDENTS).child(user.userId!!).setValue(user)
     }
 
-    fun addCourseToStudent(user: User, courseId: String): Task<Void> {
-        return userDatabaseReference.child(user.userId!!).child(Constants.COURSES).setValue(courseId)
+    fun addCourseToStudent(user: User, course: Course): Task<Void> {
+        return userDatabaseReference.child(user.userId!!).child(Constants.COURSES).child(course.id).setValue(course)
     }
 
     fun getStudentsOfCourse(courseId: String): DatabaseReference {
