@@ -3,7 +3,7 @@
     <dimen name="activity_padding">4dp</dimen>
     <dimen name="fragments_margin">4dp</dimen>
     <dimen name="card_margin">4dp</dimen>
-    <dimen name="card_padding">4dp</dimen>
+    <dimen name="card_padding">8dp</dimen>
     <dimen name="card_text_margin">4dp</dimen>
     <dimen name="card_corner_radius">16dp</dimen>
     <dimen name="icons_margin">4dp</dimen>

@@ -40,15 +40,38 @@
                     tools:text="Course Name" />
 
                 <TextView
-                    android:id="@+id/student_no"
+                    android:id="@+id/student_no_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/card_text_margin"
                     android:textColor="@color/text_secondary_color"
                     android:textSize="@dimen/text_secondary_size"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/course_name"
+                    android:text="@string/no_of_students" />
+
+                <TextView
+                    android:id="@+id/student_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_text_margin"
+                    android:textColor="@color/text_secondary_color"
+                    android:textSize="@dimen/text_secondary_size"
+                    android:text="@{`` + property.studentsNo}"
+                    app:layout_constraintStart_toEndOf="@+id/student_no_label"
                     app:layout_constraintTop_toBottomOf="@+id/course_name"
-                    tools:text="NO.Of Students : 0" />
+                    tools:text="0" />
+
+                <TextView
+                    android:id="@+id/year_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_text_margin"
+                    android:textColor="@color/text_secondary_color"
+                    android:textSize="@dimen/text_secondary_size"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/student_no_label"
+                    android:text="@string/year" />
 
                 <TextView
                     android:id="@+id/year"
@@ -58,9 +81,9 @@
                     android:text="@{property.year}"
                     android:textColor="@color/text_secondary_color"
                     android:textSize="@dimen/text_secondary_size"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/year_label"
                     app:layout_constraintTop_toBottomOf="@+id/student_no"
-                    tools:text="Year" />
+                    tools:text="1" />
 
                 <ImageView
                     android:id="@+id/delete_button"

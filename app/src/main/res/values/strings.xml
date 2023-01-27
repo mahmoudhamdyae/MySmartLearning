@@ -40,6 +40,9 @@
     <string name="course_delete_dialog_cancel">Cancel</string>
     <string name="add_new_course">Add New Course</string>
 
+    <!-- Courses Activity -->
+    <string name="no_of_students">No of students: </string>
+    <string name="year">Year: </string>
     <!-- Course Activity -->
     <string name="course_quizzes">Quizzes</string>
     <string name="course_add_student">Add student</string>
