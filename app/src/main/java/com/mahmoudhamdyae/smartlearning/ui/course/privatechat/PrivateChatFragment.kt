@@ -23,6 +23,7 @@ class PrivateChatFragment: BaseFragment() {
 
     private lateinit var courseId: String
     private lateinit var user: User
+    private lateinit var teacher: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,10 +43,11 @@ class PrivateChatFragment: BaseFragment() {
         getUserType()
 
         courseId = PrivateChatFragmentArgs.fromBundle(requireArguments()).courseId!!
+        teacher = PrivateChatFragmentArgs.fromBundle(requireArguments()).teacher
         user = PrivateChatFragmentArgs.fromBundle(requireArguments()).user
         viewModel.isTeacher.observe(viewLifecycleOwner) {
             if (it != IsTeacher.TEACHER) {
-                viewModel.getTeacher()
+                viewModel.getTeacher(teacher)
             }
         }
         viewModel.getListOfStudents(courseId)

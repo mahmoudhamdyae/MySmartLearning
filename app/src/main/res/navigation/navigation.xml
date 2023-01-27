@@ -129,6 +129,9 @@
         <argument
             android:name="user"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
+        <argument
+            android:name="teacher"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

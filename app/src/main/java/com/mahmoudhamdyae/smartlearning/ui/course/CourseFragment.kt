@@ -59,7 +59,7 @@ class CourseFragment: BaseFragment() {
         }
 
         binding.privateChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(course!!.id, user))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(course!!.id, user, course.teacher!!))
         }
 
         binding.toolbar.setOnMenuItemClickListener {
