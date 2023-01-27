@@ -62,7 +62,11 @@
         android:id="@+id/searchFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.search.SearchFragment"
         android:label="SearchFragment"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
+    </fragment>
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.QuizFragment"

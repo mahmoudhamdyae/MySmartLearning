@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
+import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
@@ -68,26 +69,30 @@ class SearchViewModel(
         }
     }
 
-    fun addCourse(course: Course) {
+    fun addCourse(course: Course, user: User) {
         viewModelScope.launch {
-            onCompleteListener(repository.addCourseToUser(course))
-            addNoOfStudents(course.id)
+            _status.value = STATUS.LOADING
+            repository.addCourseToUser(course).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    repository.addStudentToCourse(user, course.id).addOnCompleteListener { task2 ->
+                        if (task2.isSuccessful) {
+                            addNoOfStudents(course)
+                            _status.value = STATUS.DONE
+                        } else {
+                            _status.value = STATUS.ERROR
+                            _error.value = task.exception?.message
+                        }
+                    }
+                } else {
+                    _status.value = STATUS.ERROR
+                    _error.value = task.exception?.message
+                }
+            }
         }
     }
 
-    private fun addNoOfStudents(courseId: String) {
-        _status.value = STATUS.LOADING
-        repository.getNoOfStudentsInCourse(courseId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val noOfStudents = snapshot.getValue(Int::class.java)!! + 1
-                onCompleteListener(repository.updateNoOfStudents(courseId, noOfStudents))
-                _status.value = STATUS.DONE
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                _status.value = STATUS.ERROR
-            }
-        })
+    private fun addNoOfStudents(course: Course) {
+        repository.updateNoOfStudents(course.id, course.studentsNo + 1, course.teacher!!)
     }
 }
 

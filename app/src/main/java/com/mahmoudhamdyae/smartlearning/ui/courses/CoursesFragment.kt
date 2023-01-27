@@ -59,12 +59,12 @@ class CoursesFragment: BaseFragment() {
             viewModel.user.observe(viewLifecycleOwner) { user ->
                 findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(course, user!!))
             }
-        },  CoursesAdapter.OnDelClickListener { courseId ->
-            viewModel.delCourseFromUser(courseId)
+        },  CoursesAdapter.OnDelClickListener { course ->
+            viewModel.delCourseFromUser(course.id)
             if (isTeacher) {
-                viewModel.delCourse(courseId)
+                viewModel.delCourse(course.id)
             } else {
-                viewModel.decreaseNoOfStudents(courseId)
+                viewModel.decreaseNoOfStudents(course)
             }
         }, false)
 
@@ -181,7 +181,9 @@ class CoursesFragment: BaseFragment() {
     private fun studentActivity() {
         binding.addFab.setOnClickListener {
             // Navigate to search fragment
-            findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToSearchFragment())
+            viewModel.user.observe(viewLifecycleOwner) {
+                findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToSearchFragment(it!!))
+            }
         }
     }
 }

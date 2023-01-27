@@ -30,7 +30,8 @@ class AddStudentViewModel(
             repository.addStudentToCourse(user, course.id).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onCompleteListener(repository.addCourseToStudent(user, course))
-                    addNoOfStudents(course.id)
+                    addNoOfStudents(course)
+                    navigate()
                 } else {
                     _status.value = STATUS.ERROR
                     _error.value = task.exception?.message
@@ -39,20 +40,8 @@ class AddStudentViewModel(
         }
     }
 
-    private fun addNoOfStudents(courseId: String) {
-        _status.value = STATUS.LOADING
-        repository.getNoOfStudentsInCourse(courseId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val noOfStudents = snapshot.getValue(Int::class.java)!! + 1
-                repository.updateNoOfStudents(courseId, noOfStudents)
-                _status.value = STATUS.DONE
-                navigate()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                _status.value = STATUS.ERROR
-            }
-        })
+    private fun addNoOfStudents(course: Course) {
+        repository.updateNoOfStudents(course.id, course.studentsNo + 1, course.teacher!!)
     }
 
     fun getListOfStudents(courseId: String) {
@@ -104,23 +93,6 @@ class AddStudentViewModel(
             _error.value = e.message
             _status.value = STATUS.ERROR
         }
-    }
-
-    private fun getListOfStudentsInCourse(courseId: String, allStudents: MutableList<User>) {
-        repository.getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (student in snapshot.children) {
-                    val studentItem = student.getValue(User::class.java)
-                    allStudents.remove(studentItem)
-                }
-                _students.value = allStudents
-                _status.value = STATUS.DONE
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                _status.value = STATUS.ERROR
-            }
-        })
     }
 
     private fun navigate() {

@@ -80,10 +80,23 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child("studentsNo")
     }
 
-    fun updateNoOfStudents(courseId: String, noOfStudents: Int): Task<Void> {
+    fun updateNoOfStudents(courseId: String, noOfStudents: Int, teacher: User) {
         val updates: MutableMap<String, Any> = HashMap()
         updates["studentsNo"] = noOfStudents
-        return courseDatabaseReference.child(courseId).updateChildren(updates)
+        courseDatabaseReference.child(courseId).updateChildren(updates).addOnSuccessListener {
+            userDatabaseReference.child(teacher.userId!!).child(Constants.COURSES).child(courseId).updateChildren(updates)
+            getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (student in snapshot.children) {
+                        val studentItem = student.getValue(User::class.java)
+                        userDatabaseReference.child(studentItem!!.userId!!).child(Constants.COURSES).child(courseId).updateChildren(updates)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w("getStudents:Cancelled", "loadStudents:onCancelled", error.toException())
+                }
+            })
+        }
     }
 
     // Courses

@@ -39,7 +39,7 @@ class CoursesAdapter(
             binding.deleteButton.visibility = View.GONE
         }
         binding.deleteButton.setOnClickListener {
-            onDelClickListener.onDelClick(binding.property!!.id)
+            onDelClickListener.onDelClick(binding.property!!)
         }
         return CoursePropertyViewHolder(binding)
     }
@@ -78,7 +78,7 @@ class CoursesAdapter(
         fun onClick(course: Course) = clickListener(course)
     }
 
-    class OnDelClickListener(val clickListener: (courseId: String) -> Unit) {
-        fun onDelClick(courseId: String) = clickListener(courseId)
+    class OnDelClickListener(val clickListener: (course: Course) -> Unit) {
+        fun onDelClick(course: Course) = clickListener(course)
     }
 }

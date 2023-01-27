@@ -101,20 +101,9 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         repository.delMaterialsStorage(courseId)
     }
 
-    fun decreaseNoOfStudents(courseId: String) {
+    fun decreaseNoOfStudents(course: Course) {
         viewModelScope.launch {
-            _status.value = STATUS.LOADING
-            repository.getNoOfStudentsInCourse(courseId).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val noOfStudents = snapshot.getValue(Int::class.java)!! - 1
-                    onCompleteListener(repository.updateNoOfStudents(courseId, noOfStudents))
-                    _status.value = STATUS.DONE
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    _status.value = STATUS.ERROR
-                }
-            })
+            repository.updateNoOfStudents(course.id, course.studentsNo - 1, course.teacher!!)
         }
     }
 }
