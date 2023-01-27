@@ -32,12 +32,12 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
 
     fun addCourse(course: Course) {
         viewModelScope.launch {
-            this@CoursesViewModel._status.value = STATUS.LOADING
+            _status.value = STATUS.LOADING
             repository.addCourseToCourses(course).addOnCompleteListener { courseTask ->
                 if (courseTask.isSuccessful) {
                     onCompleteListener(repository.addCourseToUser(course))
                 } else {
-                    this@CoursesViewModel._status.value = STATUS.ERROR
+                    _status.value = STATUS.ERROR
                     _error.value = courseTask.exception?.message
                 }
             }

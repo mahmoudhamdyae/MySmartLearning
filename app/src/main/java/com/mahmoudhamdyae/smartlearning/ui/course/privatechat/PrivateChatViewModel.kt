@@ -31,7 +31,6 @@ class PrivateChatViewModel(
                         if (repository.getUid() != studentItem?.userId) {
                             studentsList.add(studentItem!!)
                         }
-                        // todo add teacher if it is student
                     }
                     _students.value = studentsList
                     _status.value = STATUS.DONE

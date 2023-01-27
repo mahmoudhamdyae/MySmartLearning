@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Course
+import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
@@ -165,7 +166,11 @@ class CoursesFragment: BaseFragment() {
         view.findViewById<Button>(R.id.save_button).setOnClickListener {
             val courseName = view.findViewById<EditText>(R.id.course_name_edit_text).text.toString()
             val courseYear = yearSpinner.selectedItem.toString()
-            val course = Course(courseName = courseName, year = courseYear)
+            var teacher = User()
+            viewModel.user.observe(viewLifecycleOwner) {
+                teacher = it!!
+            }
+            val course = Course(courseName = courseName, year = courseYear, teacher = teacher)
             viewModel.addCourse(course)
             builder.dismiss()
         }
