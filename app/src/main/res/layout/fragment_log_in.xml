@@ -23,12 +23,12 @@
                 android:id="@+id/main_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/smart_learning_label_margin"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/text_primary_color"
                 android:textSize="@dimen/smart_learning_label_size"
                 android:textStyle="bold"
-                android:layout_margin="@dimen/smart_learning_label_margin"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -45,10 +45,10 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:layout_marginBottom="@dimen/edit_text_margin"
                 android:layout_marginStart="@dimen/edit_text_margin"
+                android:layout_marginTop="35dp"
                 android:layout_marginEnd="@dimen/edit_text_margin"
+                android:layout_marginBottom="@dimen/edit_text_margin"
                 app:errorEnabled="true"
                 app:layout_constraintTop_toBottomOf="@+id/sub_text">
 
@@ -71,8 +71,8 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true"
                 android:layout_margin="@dimen/edit_text_margin"
+                app:errorEnabled="true"
                 app:layout_constraintTop_toBottomOf="@+id/email"
                 app:passwordToggleEnabled="true">
 
@@ -96,10 +96,11 @@
                 android:id="@+id/log_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/button_margin"
                 android:background="@drawable/button_background"
                 android:text="@string/login_login_button"
+                android:textColor="@color/button_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="@dimen/button_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/password" />
 
@@ -107,16 +108,17 @@
                 android:id="@+id/sign_up_linear_Layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_margin="@dimen/button_margin"
-                app:layout_constraintTop_toBottomOf="@id/log_in_button"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" >
+                app:layout_constraintTop_toBottomOf="@id/log_in_button">
 
                 <TextView
                     android:id="@+id/sign_up_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/create_account_margin"
                     android:text="@string/don_t_have_an_account"
                     android:textColor="@color/text_primary_color" />
 
@@ -124,6 +126,7 @@
                     android:id="@+id/sign_up_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/create_account_margin"
                     android:text="@string/login_create_account"
                     android:textColor="@color/auth_red" />
             </LinearLayout>

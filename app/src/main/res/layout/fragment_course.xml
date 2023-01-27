@@ -27,10 +27,10 @@
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_arrow_back_ios_24"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="@dimen/toolbar_margin"
-            android:contentDescription="@string/back_button_content_description" />
+            android:contentDescription="@string/back_button_content_description"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
             android:id="@+id/quizzes_card"
@@ -51,7 +51,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="@dimen/card_text_margin"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/card_text_margin"
+                android:layout_marginTop="@dimen/card_text_margin"
+                android:layout_marginEnd="@dimen/card_text_margin"
+                android:layout_marginBottom="@dimen/card_text_margin"
                 android:text="@string/course_quizzes"
                 android:textColor="@color/text_primary_color"
                 android:textSize="@dimen/course_card_text_size" />
@@ -78,6 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/card_text_margin"
                 android:text="@string/course_add_student"
                 android:textColor="@color/text_primary_color"
@@ -105,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/card_text_margin"
                 android:text="@string/course_materials"
                 android:textColor="@color/text_primary_color"
@@ -131,6 +137,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/card_text_margin"
                 android:text="@string/course_chat"
                 android:textColor="@color/text_primary_color"
@@ -157,6 +164,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/card_text_margin"
                 android:text="@string/course_private_chat"
                 android:textColor="@color/text_primary_color"

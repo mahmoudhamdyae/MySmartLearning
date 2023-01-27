@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCourseBinding
 
 class CourseFragment: BaseFragment() {
@@ -65,7 +67,7 @@ class CourseFragment: BaseFragment() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.course_details -> {
-                    createDialog()
+                    createDialog(course!!)
                     true
                 }
                 else -> false
@@ -73,10 +75,15 @@ class CourseFragment: BaseFragment() {
         }
     }
 
-    private fun createDialog() {
+    private fun createDialog(course: Course) {
         val builder = AlertDialog.Builder(requireContext(), R.style.Theme_SmartLearning).create()
         val dialogView = layoutInflater.inflate(R.layout.course_details_dialog, null)
         builder.setView(dialogView)
+
+        dialogView.findViewById<TextView>(R.id.course_name)!!.text = course.courseName
+        dialogView.findViewById<TextView>(R.id.teacher_name)!!.text = course.teacher!!.userName
+        dialogView.findViewById<TextView>(R.id.year)!!.text = course.year
+        dialogView.findViewById<TextView>(R.id.number_of_students)!!.text = course.studentsNo.toString()
 
         builder.setCanceledOnTouchOutside(true)
         builder.show()
