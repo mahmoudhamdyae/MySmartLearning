@@ -66,19 +66,11 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child(Constants.STUDENTS).child(user.userId!!).setValue(user)
     }
 
-    fun addCourseToStudent(user: User, course: Course): Task<Void> {
-        return userDatabaseReference.child(user.userId!!).child(Constants.COURSES).child(course.id).setValue(course)
-    }
-
     fun getStudentsOfCourse(courseId: String): DatabaseReference {
         return courseDatabaseReference.child(courseId).child(Constants.STUDENTS)
     }
 
     fun getAllUsers(): DatabaseReference = userDatabaseReference
-
-    fun getNoOfStudentsInCourse(courseId: String): DatabaseReference {
-        return courseDatabaseReference.child(courseId).child("studentsNo")
-    }
 
     fun updateNoOfStudents(courseId: String, noOfStudents: Int, teacher: User) {
         val updates: MutableMap<String, Any> = HashMap()
@@ -105,8 +97,8 @@ class FirebaseRepository {
         return courseDatabaseReference.child(course.id).setValue(course)
     }
 
-    fun addCourseToUser(course: Course): Task<Void> {
-        return userDatabaseReference.child(getUid()).child(Constants.COURSES).child(course.id).setValue(course)
+    fun addCourseToUser(userId: String, course: Course): Task<Void> {
+        return userDatabaseReference.child(userId).child(Constants.COURSES).child(course.id).setValue(course)
     }
 
     fun getUserCourses(): DatabaseReference {

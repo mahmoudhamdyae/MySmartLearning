@@ -35,7 +35,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
             _status.value = STATUS.LOADING
             repository.addCourseToCourses(course).addOnCompleteListener { courseTask ->
                 if (courseTask.isSuccessful) {
-                    onCompleteListener(repository.addCourseToUser(course))
+                    onCompleteListener(repository.addCourseToUser(repository.getUid(), course))
                 } else {
                     _status.value = STATUS.ERROR
                     _error.value = courseTask.exception?.message
