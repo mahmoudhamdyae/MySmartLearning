@@ -16,6 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/message_received"
+            style="@style/SecondaryChatTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/message_margin"
@@ -28,37 +29,29 @@
                 android:id="@+id/another_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/message_text_margin"
                 android:text="@{property.fromUserName}"
-                android:textColor="@color/text_secondary_color"
-                android:textSize="@dimen/chat_secondary_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Receiver name" />
 
             <TextView
                 android:id="@+id/another_text"
+                style="@style/MainChatTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/another_name"
-                android:layout_margin="@dimen/message_text_margin"
                 android:text="@{property.message}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/text_primary_color"
-                android:textSize="@dimen/chat_main_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/another_name"
                 tools:text="message Received" />
 
             <TextView
                 android:id="@+id/another_time"
+                style="@style/SecondaryChatTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/another_text"
-                android:layout_margin="@dimen/message_text_margin"
                 android:text="@{property.time}"
-                android:textColor="@color/text_secondary_color"
-                android:textSize="@dimen/chat_secondary_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/another_text"
                 tools:text="message time" />
@@ -77,26 +70,21 @@
 
             <TextView
                 android:id="@+id/my_text"
+                style="@style/MainChatTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/message_text_margin"
                 android:text="@{property.message}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/text_primary_color"
-                android:textSize="@dimen/chat_main_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="message sent" />
 
             <TextView
                 android:id="@+id/my_date"
+                style="@style/SecondaryChatTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/my_text"
-                android:layout_margin="@dimen/message_text_margin"
                 android:text="@{property.time}"
-                android:textColor="@color/text_secondary_color"
-                android:textSize="@dimen/chat_secondary_text_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/my_text"
                 tools:text="time message" />

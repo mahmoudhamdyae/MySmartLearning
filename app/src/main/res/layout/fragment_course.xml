@@ -12,7 +12,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/fragments_margin"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
@@ -20,155 +19,159 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/toolbar_margin"
-            android:src="@drawable/baseline_arrow_back_ios_24"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="?attr/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:logo="@drawable/baseline_arrow_back_ios_24" />
 
-        <ImageView
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/toolbar_margin"
-            android:contentDescription="@string/back_button_content_description"
-            android:src="@drawable/baseline_arrow_back_ios_24"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RelativeLayout
-            android:id="@+id/quizzes_card"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/course_card_height"
-            android:layout_margin="@dimen/card_margin"
-            android:background="@drawable/course_background"
-            android:padding="@dimen/card_padding">
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-            <ImageView
-                android:layout_width="@dimen/course_card_image_width"
-                android:layout_height="@dimen/course_card_image_height"
-                android:layout_margin="@dimen/icons_margin"
-                android:contentDescription="@string/quiz_item_content_description"
-                android:src="@drawable/quiz" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/card_text_margin"
-                android:layout_marginTop="@dimen/card_text_margin"
-                android:layout_marginEnd="@dimen/card_text_margin"
-                android:layout_marginBottom="@dimen/card_text_margin"
-                android:text="@string/course_quizzes"
-                android:textColor="@color/text_primary_color"
-                android:textSize="@dimen/course_card_text_size" />
-        </RelativeLayout>
+                android:layout_margin="@dimen/fragments_margin"
+                android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/add_student_card"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/course_card_height"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/card_margin"
-            android:background="@drawable/course_background"
-            android:padding="@dimen/card_padding"
-            app:visibleIfTeacher="@{viewModel.isTeacher}">
+                <RelativeLayout
+                    android:id="@+id/quizzes_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/course_card_height"
+                    android:layout_margin="@dimen/card_margin"
+                    android:background="@drawable/course_background"
+                    android:padding="@dimen/card_padding">
 
-            <ImageView
-                android:layout_width="@dimen/course_card_image_width"
-                android:layout_height="@dimen/course_card_image_height"
-                android:layout_margin="@dimen/icons_margin"
-                android:contentDescription="@string/add_student_item_content_description"
-                android:src="@drawable/add_student" />
+                    <ImageView
+                        android:layout_width="@dimen/course_card_image_width"
+                        android:layout_height="@dimen/course_card_image_height"
+                        android:layout_margin="@dimen/icons_margin"
+                        android:contentDescription="@string/quiz_item_content_description"
+                        android:src="@drawable/quiz" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/card_text_margin"
-                android:text="@string/course_add_student"
-                android:textColor="@color/text_primary_color"
-                android:textSize="@dimen/course_card_text_size" />
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/card_text_margin"
+                        android:layout_marginTop="@dimen/card_text_margin"
+                        android:layout_marginEnd="@dimen/card_text_margin"
+                        android:layout_marginBottom="@dimen/card_text_margin"
+                        android:text="@string/course_quizzes"
+                        android:textColor="@color/text_primary_color"
+                        android:textSize="@dimen/course_card_text_size" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/materials_card"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/course_card_height"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/card_margin"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/course_background"
-            android:padding="@dimen/card_padding">
+                <RelativeLayout
+                    android:id="@+id/add_student_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/course_card_height"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/card_margin"
+                    android:background="@drawable/course_background"
+                    android:padding="@dimen/card_padding"
+                    app:layout_constraintTop_toBottomOf="@id/quizzes_card"
+                    app:visibleIfTeacher="@{viewModel.isTeacher}">
 
-            <ImageView
-                android:layout_width="@dimen/course_card_image_width"
-                android:layout_height="@dimen/course_card_image_height"
-                android:layout_margin="@dimen/icons_margin"
-                android:contentDescription="@string/materials_item_content_description"
-                android:src="@drawable/material" />
+                    <ImageView
+                        android:layout_width="@dimen/course_card_image_width"
+                        android:layout_height="@dimen/course_card_image_height"
+                        android:layout_margin="@dimen/icons_margin"
+                        android:contentDescription="@string/add_student_item_content_description"
+                        android:src="@drawable/add_student" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/card_text_margin"
-                android:text="@string/course_materials"
-                android:textColor="@color/text_primary_color"
-                android:textSize="@dimen/course_card_text_size" />
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/card_text_margin"
+                        android:text="@string/course_add_student"
+                        android:textColor="@color/text_primary_color"
+                        android:textSize="@dimen/course_card_text_size" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/group_chat_card"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/course_card_height"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/card_margin"
-            android:background="@drawable/course_background"
-            android:padding="@dimen/card_padding">
+                <RelativeLayout
+                    android:id="@+id/materials_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/course_card_height"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/card_margin"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/course_background"
+                    android:padding="@dimen/card_padding"
+                    app:layout_constraintTop_toBottomOf="@id/add_student_card">
 
-            <ImageView
-                android:layout_width="@dimen/course_card_image_width"
-                android:layout_height="@dimen/course_card_image_height"
-                android:layout_margin="@dimen/icons_margin"
-                android:contentDescription="@string/group_chat_item_content_description"
-                android:src="@drawable/group_chat" />
+                    <ImageView
+                        android:layout_width="@dimen/course_card_image_width"
+                        android:layout_height="@dimen/course_card_image_height"
+                        android:layout_margin="@dimen/icons_margin"
+                        android:contentDescription="@string/materials_item_content_description"
+                        android:src="@drawable/material" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/card_text_margin"
-                android:text="@string/course_chat"
-                android:textColor="@color/text_primary_color"
-                android:textSize="@dimen/course_card_text_size" />
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/card_text_margin"
+                        android:text="@string/course_materials"
+                        android:textColor="@color/text_primary_color"
+                        android:textSize="@dimen/course_card_text_size" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/private_chat_card"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/course_card_height"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/card_margin"
-            android:background="@drawable/course_background"
-            android:padding="@dimen/card_padding">
+                <RelativeLayout
+                    android:id="@+id/group_chat_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/course_card_height"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/card_margin"
+                    android:background="@drawable/course_background"
+                    android:padding="@dimen/card_padding"
+                    app:layout_constraintTop_toBottomOf="@id/materials_card">
 
-            <ImageView
-                android:layout_width="@dimen/course_card_image_width"
-                android:layout_height="@dimen/course_card_image_height"
-                android:layout_margin="@dimen/icons_margin"
-                android:contentDescription="@string/private_chat_item_content_description"
-                android:src="@drawable/private_chat" />
+                    <ImageView
+                        android:layout_width="@dimen/course_card_image_width"
+                        android:layout_height="@dimen/course_card_image_height"
+                        android:layout_margin="@dimen/icons_margin"
+                        android:contentDescription="@string/group_chat_item_content_description"
+                        android:src="@drawable/group_chat" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/card_text_margin"
-                android:text="@string/course_private_chat"
-                android:textColor="@color/text_primary_color"
-                android:textSize="@dimen/course_card_text_size" />
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/card_text_margin"
+                        android:text="@string/course_chat"
+                        android:textColor="@color/text_primary_color"
+                        android:textSize="@dimen/course_card_text_size" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/private_chat_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/course_card_height"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/card_margin"
+                    android:background="@drawable/course_background"
+                    android:padding="@dimen/card_padding"
+                    app:layout_constraintTop_toBottomOf="@id/group_chat_card">
+
+                    <ImageView
+                        android:layout_width="@dimen/course_card_image_width"
+                        android:layout_height="@dimen/course_card_image_height"
+                        android:layout_margin="@dimen/icons_margin"
+                        android:contentDescription="@string/private_chat_item_content_description"
+                        android:src="@drawable/private_chat" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="@dimen/card_text_margin"
+                        android:text="@string/course_private_chat"
+                        android:textColor="@color/text_primary_color"
+                        android:textSize="@dimen/course_card_text_size" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 </layout>

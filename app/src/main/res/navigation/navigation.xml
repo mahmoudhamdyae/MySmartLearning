@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/coursesFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.courses.CoursesFragment"
-        android:label="MainFragment"
+        android:label="@string/main_label"
         tools:layout="@layout/fragment_courses">
         <action
             android:id="@+id/action_coursesFragment_to_logInFragment"
@@ -61,8 +61,8 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.search.SearchFragment"
-        android:label="SearchFragment"
-        tools:layout="@layout/fragment_search" >
+        android:label="@string/courses_label"
+        tools:layout="@layout/fragment_search">
         <argument
             android:name="user"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.QuizFragment"
-        android:label="QuizFragment"
+        android:label="@string/quizzes_label"
         tools:layout="@layout/fragment_quiz">
         <argument
             android:name="courseId"
@@ -80,7 +80,7 @@
     <fragment
         android:id="@+id/addStudentFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.addstudent.AddStudentFragment"
-        android:label="AddStudentFragment"
+        android:label="@string/add_student_label"
         tools:layout="@layout/fragment_add_student">
         <argument
             android:name="course"
@@ -90,7 +90,7 @@
     <fragment
         android:id="@+id/materialsFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsFragment"
-        android:label="MaterialsFragment"
+        android:label="@string/materials_label"
         tools:layout="@layout/fragment_materials">
         <argument
             android:name="courseId"
@@ -103,8 +103,8 @@
         android:label="GroupChatFragment"
         tools:layout="@layout/fragment_chat">
         <argument
-            android:name="courseId"
-            app:argType="string"
+            android:name="course"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Course"
             app:nullable="true" />
         <argument
             android:name="isGroup"
@@ -114,9 +114,9 @@
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
         <argument
             android:name="anotherUser"
+            android:defaultValue="@null"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.User"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/privateChatFragment"
@@ -124,8 +124,8 @@
         android:label="PrivateChatFragment"
         tools:layout="@layout/fragment_private_chat">
         <argument
-            android:name="courseId"
-            app:argType="string"
+            android:name="course"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Course"
             app:nullable="true" />
         <action
             android:id="@+id/action_privateChatFragment_to_chatFragment"
@@ -140,7 +140,7 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.profile.ProfileFragment"
-        android:label="ProfileFragment"
+        android:label="@string/my_profile_label"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/courseFragment"
@@ -187,8 +187,8 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.notification.NotificationFragment"
-        android:label="NotificationFragment"
-        tools:layout="@layout/fragment_notification" >
+        android:label="@string/notifications_label"
+        tools:layout="@layout/fragment_notification">
         <action
             android:id="@+id/action_notificationFragment_to_courseFragment"
             app:destination="@id/courseFragment" />

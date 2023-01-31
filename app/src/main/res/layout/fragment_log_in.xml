@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fragments_margin">
 
+            <!--android:textColor="@color/text_primary_color"-->
             <TextView
                 android:id="@+id/main_text"
                 android:layout_width="match_parent"
@@ -26,7 +27,7 @@
                 android:layout_margin="@dimen/smart_learning_label_margin"
                 android:gravity="center"
                 android:text="@string/app_name"
-                android:textColor="@color/text_primary_color"
+
                 android:textSize="@dimen/smart_learning_label_size"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,9 +63,7 @@
                     android:hint="@string/login_email_edit_text_hint"
                     android:inputType="textEmailAddress"
                     android:padding="@dimen/edit_text_padding"
-                    android:text="@={viewModel.email}"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/edit_text_size" />
+                    android:text="@={viewModel.email}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -87,19 +86,17 @@
                     android:padding="@dimen/edit_text_padding"
                     android:singleLine="true"
                     android:text="@={viewModel.password}"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/edit_text_size"
                     tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/log_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/button_margin"
-                android:background="@drawable/button_background"
+
                 android:text="@string/login_login_button"
-                android:textColor="@color/button_text"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/password" />

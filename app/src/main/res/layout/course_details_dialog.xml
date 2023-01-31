@@ -30,111 +30,95 @@
                     android:layout_margin="@dimen/dialog_image_margin"
                     android:contentDescription="@string/details_image_content_description"
                     android:src="@drawable/course_details"
-                    android:textSize="@dimen/text_primary_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/course_details_head"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_margin="@dimen/dialog_text_margin"
                     android:layout_toEndOf="@+id/image"
                     android:gravity="center_vertical"
                     android:text="@string/course_details_head"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/text_primary_size"
                     app:layout_constraintStart_toEndOf="@+id/image"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/course_name_text"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dialog_text_margin"
                     android:text="@string/course_details_course_name"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/text_primary_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/course_details_head" />
 
                 <TextView
                     android:id="@+id/course_name"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dialog_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_primary_size"
+                    app:layout_constraintBottom_toBottomOf="@id/course_name_text"
                     app:layout_constraintStart_toEndOf="@+id/course_name_text"
-                    app:layout_constraintTop_toBottomOf="@+id/course_details_head"
+                    app:layout_constraintTop_toTopOf="@+id/course_name_text"
                     tools:text="math" />
 
                 <TextView
-
                     android:id="@+id/teacher_name_text"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dialog_text_margin"
                     android:text="@string/course_details_teacher_name"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/text_primary_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/course_name_text" />
 
                 <TextView
                     android:id="@+id/teacher_name"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dialog_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_primary_size"
+                    app:layout_constraintBottom_toBottomOf="@id/teacher_name_text"
                     app:layout_constraintStart_toEndOf="@+id/teacher_name_text"
-                    app:layout_constraintTop_toBottomOf="@+id/course_name"
+                    app:layout_constraintTop_toTopOf="@id/teacher_name_text"
                     tools:text="amr" />
 
                 <TextView
                     android:id="@+id/year_text"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dialog_text_margin"
                     android:text="@string/course_details_year"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/text_primary_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/teacher_name_text" />
 
                 <TextView
                     android:id="@+id/year"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dialog_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_primary_size"
+                    app:layout_constraintBottom_toBottomOf="@id/year_text"
                     app:layout_constraintStart_toEndOf="@+id/year_text"
-                    app:layout_constraintTop_toBottomOf="@+id/teacher_name_text"
+                    app:layout_constraintTop_toTopOf="@id/year_text"
                     tools:text="3" />
 
                 <TextView
                     android:id="@+id/number_of_students_text"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dialog_text_margin"
                     android:text="@string/course_details_number_of_students"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/text_primary_size"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/year_text" />
 
                 <TextView
                     android:id="@+id/number_of_students"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dialog_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_primary_size"
+                    app:layout_constraintBottom_toBottomOf="@id/number_of_students_text"
                     app:layout_constraintStart_toEndOf="@+id/number_of_students_text"
-                    app:layout_constraintTop_toBottomOf="@+id/year"
+                    app:layout_constraintTop_toTopOf="@id/number_of_students_text"
                     tools:text="115" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

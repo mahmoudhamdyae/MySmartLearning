@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentChatBinding
@@ -19,7 +20,7 @@ class ChatFragment: BaseFragment() {
         ChatViewModelFactory(FirebaseRepository())
     }
 
-    private lateinit var courseId: String
+    private lateinit var course: Course
     private var isGroup = true
     private var anotherUser: User? = User()
     private var user: User? = User()
@@ -39,7 +40,7 @@ class ChatFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        courseId = ChatFragmentArgs.fromBundle(requireArguments()).courseId!!
+        course = ChatFragmentArgs.fromBundle(requireArguments()).course!!
         isGroup = ChatFragmentArgs.fromBundle(requireArguments()).isGroup
         user = ChatFragmentArgs.fromBundle(requireArguments()).user
         if (!isGroup) {
@@ -47,12 +48,14 @@ class ChatFragment: BaseFragment() {
         }
 
         if (isGroup) {
-            viewModel.getListOfGroupMessages(courseId)
+            binding.toolbar.title = course.courseName
+            viewModel.getListOfGroupMessages(course.id)
         } else {
+            binding.toolbar.title = anotherUser!!.userName
             viewModel.getListOfPrivateMessages(user!!, anotherUser!!)
         }
 
-        binding.backButton.setOnClickListener {
+        binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
 
@@ -61,7 +64,7 @@ class ChatFragment: BaseFragment() {
         }, user!!.userId!!)
 
         binding.sendFab.setOnClickListener {
-            viewModel.sendMessage(isGroup, courseId, user!!, anotherUser!!)
+            viewModel.sendMessage(isGroup, course.id, user!!, anotherUser!!)
         }
     }
 }

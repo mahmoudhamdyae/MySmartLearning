@@ -43,7 +43,7 @@ class SearchFragment: BaseFragment() {
         }, CoursesAdapter.OnDelClickListener {
         }, true)
 
-        binding.backButton.setOnClickListener {
+        binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
     }

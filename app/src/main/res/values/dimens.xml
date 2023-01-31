@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="activity_padding">4dp</dimen>
-    <dimen name="fragments_margin">4dp</dimen>
+    <dimen name="fragments_margin">8dp</dimen>
     <dimen name="card_margin">4dp</dimen>
     <dimen name="card_padding">8dp</dimen>
     <dimen name="card_text_margin">4dp</dimen>
@@ -9,6 +8,7 @@
     <dimen name="icons_margin">4dp</dimen>
     <dimen name="button_radius">16dp</dimen>
     <dimen name="toolbar_margin">8dp</dimen>
+    <dimen name="profile_picture_margin_in_students">8dp</dimen>
 
     <!-- Course Card -->
     <dimen name="course_card_height">60dp</dimen>
@@ -49,5 +49,9 @@
     <dimen name="message_radius">10dp</dimen>
     <dimen name="chat_main_text_size">20sp</dimen>
     <dimen name="chat_secondary_text_size">12sp</dimen>
+    <dimen name="chat_edit_text_margin">8dp</dimen>
+    <dimen name="chat_fab_margin">8dp</dimen>
+    <dimen name="messages_top_padding">60dp</dimen>
+    <dimen name="messages_bottom_padding">4dp</dimen>
 
 </resources>

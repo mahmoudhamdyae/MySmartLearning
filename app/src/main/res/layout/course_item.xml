@@ -14,12 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--app:cardBackgroundColor="@color/card_color"-->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_margin"
-            android:padding="@dimen/card_padding"
-            app:cardBackgroundColor="@color/card_color"
+            style="@style/CardStyle"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,35 +27,28 @@
 
                 <TextView
                     android:id="@+id/course_name"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
                     android:text="@{property.courseName}"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/text_primary_size"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Course Name" />
 
                 <TextView
                     android:id="@+id/student_no_label"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_secondary_size"
+                    android:text="@string/no_of_students"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/course_name"
-                    android:text="@string/no_of_students" />
+                    app:layout_constraintTop_toBottomOf="@id/course_name" />
 
                 <TextView
                     android:id="@+id/student_no"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_secondary_size"
                     android:text="@{`` + property.studentsNo}"
                     app:layout_constraintStart_toEndOf="@+id/student_no_label"
                     app:layout_constraintTop_toBottomOf="@+id/course_name"
@@ -64,23 +56,20 @@
 
                 <TextView
                     android:id="@+id/year_label"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_secondary_size"
+                    android:text="@string/year"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/student_no_label"
-                    android:text="@string/year" />
+                    app:layout_constraintTop_toBottomOf="@id/student_no_label" />
 
                 <TextView
                     android:id="@+id/year"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/card_text_margin"
                     android:text="@{property.year}"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_secondary_size"
                     app:layout_constraintStart_toEndOf="@id/year_label"
                     app:layout_constraintTop_toBottomOf="@+id/student_no"
                     tools:text="1" />

@@ -33,7 +33,7 @@ class QuizFragment: BaseFragment() {
 
         getUserType()
 
-        binding.backButton.setOnClickListener {
+        binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
 

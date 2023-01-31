@@ -15,22 +15,20 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
+            style="@style/CardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_margin"
-            android:padding="@dimen/card_padding"
-            app:cardBackgroundColor="@color/card_color"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="@dimen/profile_picture_margin_in_students">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:layout_margin="@dimen/icons_margin"
                     android:src="@drawable/default_image"
                     app:layout_constraintEnd_toStartOf="@+id/email"
                     app:layout_constraintStart_toStartOf="parent"
@@ -38,24 +36,28 @@
 
                 <TextView
                     android:id="@+id/user_name"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
+                    android:layout_marginStart="@dimen/profile_picture_margin_in_students"
+                    android:paddingStart="@dimen/profile_picture_margin_in_students"
+                    android:paddingEnd="@dimen/profile_picture_margin_in_students"
                     android:text="@{property.userName}"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/text_primary_size"
+                    app:layout_constraintBottom_toTopOf="@id/email"
                     app:layout_constraintStart_toEndOf="@+id/profile_image"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Ex : Amr" />
 
                 <TextView
                     android:id="@+id/email"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
+                    android:layout_marginStart="@dimen/profile_picture_margin_in_students"
+                    android:paddingStart="@dimen/profile_picture_margin_in_students"
+                    android:paddingEnd="@dimen/profile_picture_margin_in_students"
                     android:text="@{property.email}"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_secondary_size"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_image"
                     app:layout_constraintStart_toEndOf="@+id/profile_image"
                     app:layout_constraintTop_toBottomOf="@+id/user_name"
                     tools:text="Ex: amr@gmail.com" />

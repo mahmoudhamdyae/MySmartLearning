@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentPrivateChatBinding
@@ -21,7 +22,7 @@ class PrivateChatFragment: BaseFragment() {
         PrivateChatViewModelFactory(FirebaseRepository())
     }
 
-    private lateinit var courseId: String
+    private lateinit var course: Course
     private lateinit var user: User
     private lateinit var teacher: User
 
@@ -42,7 +43,7 @@ class PrivateChatFragment: BaseFragment() {
 
         getUserType()
 
-        courseId = PrivateChatFragmentArgs.fromBundle(requireArguments()).courseId!!
+        course = PrivateChatFragmentArgs.fromBundle(requireArguments()).course!!
         teacher = PrivateChatFragmentArgs.fromBundle(requireArguments()).teacher
         user = PrivateChatFragmentArgs.fromBundle(requireArguments()).user
         viewModel.isTeacher.observe(viewLifecycleOwner) {
@@ -50,15 +51,15 @@ class PrivateChatFragment: BaseFragment() {
                 viewModel.getTeacher(teacher)
             }
         }
-        viewModel.getListOfStudents(courseId)
+        viewModel.getListOfStudents(course.id)
 
-        binding.backButton.setOnClickListener {
+        binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
 
         binding.usersList.layoutManager = GridLayoutManager(context, 1)
         binding.usersList.adapter = StudentsAdapter(StudentsAdapter.OnClickListener {
-            findNavController().navigate(PrivateChatFragmentDirections.actionPrivateChatFragmentToChatFragment(courseId, false, user, it))
+            findNavController().navigate(PrivateChatFragmentDirections.actionPrivateChatFragmentToChatFragment(course, false, user, it))
         })
     }
 }

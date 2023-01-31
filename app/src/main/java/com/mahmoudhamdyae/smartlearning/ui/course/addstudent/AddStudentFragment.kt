@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentAddStudentBinding
-import com.mahmoudhamdyae.smartlearning.ui.auth.login.LogInFragmentDirections
 
 class AddStudentFragment: BaseFragment() {
 
@@ -34,7 +33,7 @@ class AddStudentFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backButton.setOnClickListener {
+        binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
 

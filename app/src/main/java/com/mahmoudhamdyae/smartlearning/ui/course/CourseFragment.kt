@@ -40,34 +40,35 @@ class CourseFragment: BaseFragment() {
 
         getUserType()
 
-        binding.backButton.setOnClickListener {
+        binding.toolbar.title = course!!.courseName
+        binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
 
         binding.quizzesCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(course!!.id))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(course.id))
         }
 
         binding.addStudentCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToAddStudentFragment(course!!))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToAddStudentFragment(course))
         }
 
         binding.materialsCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToMaterialsFragment(course!!.id))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToMaterialsFragment(course.id))
         }
 
         binding.groupChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToChatFragment(course!!.id, true, user))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToChatFragment(course, true, user))
         }
 
         binding.privateChatCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(course!!.id, user, course.teacher!!))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToPrivateChatFragment(course, user, course.teacher!!))
         }
 
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.course_details -> {
-                    createDialog(course!!)
+                    createDialog(course)
                     true
                 }
                 else -> false

@@ -10,70 +10,77 @@
             type="com.mahmoudhamdyae.smartlearning.ui.course.materials.MaterialsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/fragments_margin">
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/toolbar_margin"
-            android:contentDescription="@string/back_button_content_description"
-            android:src="@drawable/baseline_arrow_back_ios_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/materials_list"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/back_button"
-            app:materialsData="@{viewModel.materials}"
-            tools:listitem="@layout/material_item" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/fab_background"
-            android:contentDescription="@string/add_fab_content_description"
-            android:src="@drawable/ic_baseline_add_24"
-            app:layout_constraintBottom_toTopOf="@id/horizontal_progress_bar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:visibleIfTeacher="@{viewModel.isTeacher}" />
-
-        <ProgressBar
-            android:id="@+id/horizontal_progress_bar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:progress="25"
-            tools:visibility="visible" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="@dimen/toolbar_margin"
+            android:background="?attr/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"
-            app:visibilityOfLoading="@{viewModel.status}" />
+            app:logo="@drawable/baseline_arrow_back_ios_24"
+            app:title="@string/materials_label" />
 
-        <TextView
-            android:id="@+id/empty_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="empty"
-            app:bindEmptyView="@{viewModel.materials}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/fragments_margin">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/materials_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:materialsData="@{viewModel.materials}"
+                tools:listitem="@layout/material_item" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/fab_background"
+                android:contentDescription="@string/add_fab_content_description"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintBottom_toTopOf="@id/horizontal_progress_bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:visibleIfTeacher="@{viewModel.isTeacher}" />
+
+            <ProgressBar
+                android:id="@+id/horizontal_progress_bar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:progress="25"
+                tools:visibility="visible" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:visibilityOfLoading="@{viewModel.status}" />
+
+            <TextView
+                android:id="@+id/empty_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="empty"
+                app:bindEmptyView="@{viewModel.materials}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 </layout>

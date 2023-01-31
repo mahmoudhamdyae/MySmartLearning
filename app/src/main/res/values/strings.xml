@@ -74,6 +74,16 @@
     <!-- Chat Activity -->
     <string name="input_edit_text_hint">Type a message</string>
 
+    <!-- Screens Labels -->
+    <string name="main_label">Smart Learning</string>
+    <string name="courses_label">Courses</string>
+    <string name="add_student_label">Add Student</string>
+    <string name="quizzes_label">Quizzes</string>
+    <string name="materials_label">Materials</string>
+    <string name="notifications_label">Notifications</string>
+    <string name="my_profile_label">My Profile</string>
+    <string name="private_chat_label">Course Members</string>
+
     <!-- Content Descriptions -->
     <string name="add_fab_content_description">Add</string>
     <string name="delete_button_content_description">Delete</string>
