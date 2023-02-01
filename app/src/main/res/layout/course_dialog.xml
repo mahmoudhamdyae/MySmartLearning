@@ -24,7 +24,7 @@
                 style="@style/MainTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_new_course"
+                android:text="@string/course_dialog_add_new_course"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

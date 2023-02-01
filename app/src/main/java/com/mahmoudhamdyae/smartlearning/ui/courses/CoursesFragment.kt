@@ -24,7 +24,6 @@ import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 
-
 class CoursesFragment: BaseFragment() {
 
     private lateinit var binding: FragmentCoursesBinding
@@ -60,13 +59,7 @@ class CoursesFragment: BaseFragment() {
                 findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(course, user!!))
             }
         },  CoursesAdapter.OnDelClickListener { course ->
-            if (isTeacher) {
-                viewModel.delCourse(course.id)
-            } else {
-                viewModel.decreaseNoOfStudents(course)
-                viewModel.delStudentFromCourse(course.id)
-            }
-            viewModel.delCourseFromUser(course.id)
+            delCourse(course)
         }, false)
 
         binding.toolbar.setOnMenuItemClickListener {
@@ -93,6 +86,30 @@ class CoursesFragment: BaseFragment() {
         databaseReference = FirebaseDatabase.getInstance().reference
 
         observeAuthenticationState()
+    }
+
+    private fun delCourse(course: Course) {
+        // Create Dialog
+        val builder = AlertDialog.Builder(
+            requireContext()
+        )
+        builder.setMessage(getString(R.string.course_delete_dialog_msg))
+        builder.setPositiveButton(R.string.course_delete_dialog_delete) { _, _ ->
+            // User clicked the "Delete" button, so delete the Course.
+            if (isTeacher) {
+                viewModel.delCourse(course.id)
+            } else {
+                viewModel.decreaseNoOfStudents(course)
+                viewModel.delStudentFromCourse(course.id)
+            }
+            viewModel.delCourseFromUser(course.id)
+        }
+        builder.setNegativeButton(R.string.course_delete_dialog_cancel) { dialog, _ ->
+                // User clicked the "Cancel" button, so dismiss the dialog
+                dialog?.dismiss()
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
     /**

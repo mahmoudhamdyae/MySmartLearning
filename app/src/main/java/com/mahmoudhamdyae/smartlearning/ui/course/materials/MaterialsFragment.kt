@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -121,7 +122,21 @@ class MaterialsFragment: BaseFragment() {
     }
 
     private fun delMaterial(material: String) {
-        viewModel.delMaterial(courseId, material)
+        // Create Dialog
+        val builder = AlertDialog.Builder(
+            requireContext()
+        )
+        builder.setMessage(getString(R.string.material_delete_dialog_msg))
+        builder.setPositiveButton(R.string.material_delete_dialog_delete) { _, _ ->
+            // User clicked the "Delete" button, so delete the Course.
+            viewModel.delMaterial(courseId, material)
+        }
+        builder.setNegativeButton(R.string.material_delete_dialog_cancel) { dialog, _ ->
+            // User clicked the "Cancel" button, so dismiss the dialog
+            dialog?.dismiss()
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
     @Deprecated("Deprecated in Java")
