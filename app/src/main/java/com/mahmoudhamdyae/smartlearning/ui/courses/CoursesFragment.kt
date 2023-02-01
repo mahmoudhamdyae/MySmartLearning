@@ -60,12 +60,13 @@ class CoursesFragment: BaseFragment() {
                 findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(course, user!!))
             }
         },  CoursesAdapter.OnDelClickListener { course ->
-            viewModel.delCourseFromUser(course.id)
             if (isTeacher) {
                 viewModel.delCourse(course.id)
             } else {
                 viewModel.decreaseNoOfStudents(course)
+                viewModel.delStudentFromCourse(course.id)
             }
+            viewModel.delCourseFromUser(course.id)
         }, false)
 
         binding.toolbar.setOnMenuItemClickListener {

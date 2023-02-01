@@ -97,6 +97,19 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         }
     }
 
+    fun delStudentFromCourse(courseId: String) {
+        viewModelScope.launch {
+            repository.delStudentFromCourse(repository.getUid(), courseId).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _status.value = STATUS.DONE
+                } else {
+                    _status.value = STATUS.ERROR
+                    _error.value = task.exception?.message
+                }
+            }
+        }
+    }
+
     private fun delMaterials(courseId: String) {
         repository.delMaterialsStorage(courseId)
     }

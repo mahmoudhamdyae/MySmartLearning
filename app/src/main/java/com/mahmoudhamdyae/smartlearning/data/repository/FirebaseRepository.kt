@@ -108,6 +108,9 @@ class FirebaseRepository {
     fun delCourseFromCourses(courseId: String): Task<Void> {
         return courseDatabaseReference.child(courseId).removeValue()
     }
+    fun delStudentFromCourse(uid: String, courseId: String): Task<Void> {
+        return courseDatabaseReference.child(courseId).child(Constants.STUDENTS).child(uid).removeValue()
+    }
 
     fun delCourseFromStudents(courseId: String) {
         getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
