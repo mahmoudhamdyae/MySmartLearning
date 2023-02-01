@@ -1,10 +1,8 @@
 package com.mahmoudhamdyae.smartlearning.utils
 
 import android.view.View
-import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
 import com.mahmoudhamdyae.smartlearning.data.models.*
 import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.chat.ChatAdapter
@@ -62,8 +60,6 @@ fun visibilityOfProgressBar(view: View, status: STATUS?) {
 fun visibilityEmptyView(view: View, status: STATUS?) {
     if (status == STATUS.LOADING) {
         view.visibility = View.GONE
-    } else {
-//        view.visibility = View.VISIBLE
     }
 }
 
