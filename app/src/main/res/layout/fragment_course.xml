@@ -34,131 +34,114 @@
                 android:layout_margin="@dimen/fragments_margin"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/quizzes_card"
+                    style="@style/CardStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/course_card_height"
-                    android:layout_margin="@dimen/card_margin"
-                    android:background="@drawable/course_background"
-                    android:padding="@dimen/card_padding">
+                    android:layout_height="@dimen/course_card_height">
 
                     <ImageView
                         android:layout_width="@dimen/course_card_image_width"
                         android:layout_height="@dimen/course_card_image_height"
-                        android:layout_margin="@dimen/icons_margin"
+                        android:layout_margin="@dimen/course_fragment_icons_margin"
                         android:contentDescription="@string/quiz_item_content_description"
                         android:src="@drawable/quiz" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
                         android:layout_marginStart="@dimen/card_text_margin"
                         android:layout_marginTop="@dimen/card_text_margin"
                         android:layout_marginEnd="@dimen/card_text_margin"
                         android:layout_marginBottom="@dimen/card_text_margin"
+                        android:gravity="center"
                         android:text="@string/course_quizzes"
-                        android:textColor="@color/text_primary_color"
                         android:textSize="@dimen/course_card_text_size" />
-                </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                <RelativeLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/add_student_card"
+                    style="@style/CardStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/course_card_height"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/card_margin"
-                    android:background="@drawable/course_background"
-                    android:padding="@dimen/card_padding"
-                    app:layout_constraintTop_toBottomOf="@id/quizzes_card"
                     app:visibleIfTeacher="@{viewModel.isTeacher}">
 
                     <ImageView
                         android:layout_width="@dimen/course_card_image_width"
                         android:layout_height="@dimen/course_card_image_height"
-                        android:layout_margin="@dimen/icons_margin"
+                        android:layout_margin="@dimen/course_fragment_icons_margin"
                         android:contentDescription="@string/add_student_item_content_description"
                         android:src="@drawable/add_student" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_margin="@dimen/card_text_margin"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:text="@string/course_add_student"
-                        android:textColor="@color/text_primary_color"
                         android:textSize="@dimen/course_card_text_size" />
-                </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                <RelativeLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/materials_card"
+                    style="@style/CardStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/course_card_height"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/card_margin"
-                    android:layout_marginBottom="20dp"
                     android:background="@drawable/course_background"
-                    android:padding="@dimen/card_padding"
                     app:layout_constraintTop_toBottomOf="@id/add_student_card">
 
                     <ImageView
                         android:layout_width="@dimen/course_card_image_width"
                         android:layout_height="@dimen/course_card_image_height"
-                        android:layout_margin="@dimen/icons_margin"
+                        android:layout_margin="@dimen/course_fragment_icons_margin"
                         android:contentDescription="@string/materials_item_content_description"
                         android:src="@drawable/material" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
                         android:layout_margin="@dimen/card_text_margin"
+                        android:gravity="center"
                         android:text="@string/course_materials"
-                        android:textColor="@color/text_primary_color"
                         android:textSize="@dimen/course_card_text_size" />
-                </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                <RelativeLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/group_chat_card"
+                    style="@style/CardStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/course_card_height"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/card_margin"
-                    android:background="@drawable/course_background"
-                    android:padding="@dimen/card_padding"
                     app:layout_constraintTop_toBottomOf="@id/materials_card">
 
                     <ImageView
                         android:layout_width="@dimen/course_card_image_width"
                         android:layout_height="@dimen/course_card_image_height"
-                        android:layout_margin="@dimen/icons_margin"
+                        android:layout_margin="@dimen/course_fragment_icons_margin"
                         android:contentDescription="@string/group_chat_item_content_description"
                         android:src="@drawable/group_chat" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_margin="@dimen/card_text_margin"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:text="@string/course_chat"
-                        android:textColor="@color/text_primary_color"
                         android:textSize="@dimen/course_card_text_size" />
-                </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                <RelativeLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/private_chat_card"
+                    style="@style/CardStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/course_card_height"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/card_margin"
-                    android:background="@drawable/course_background"
-                    android:padding="@dimen/card_padding"
                     app:layout_constraintTop_toBottomOf="@id/group_chat_card">
 
                     <ImageView
                         android:layout_width="@dimen/course_card_image_width"
                         android:layout_height="@dimen/course_card_image_height"
-                        android:layout_margin="@dimen/icons_margin"
+                        android:layout_margin="@dimen/course_fragment_icons_margin"
                         android:contentDescription="@string/private_chat_item_content_description"
                         android:src="@drawable/private_chat" />
 
@@ -166,11 +149,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_margin="@dimen/card_text_margin"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:text="@string/course_private_chat"
-                        android:textColor="@color/text_primary_color"
                         android:textSize="@dimen/course_card_text_size" />
-                </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

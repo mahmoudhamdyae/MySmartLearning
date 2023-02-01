@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CardStyle" parent="Widget.Material3.CardView.Elevated">
+    <style name="CardStyle" parent="Widget.Material3.CardView.Filled">
         <item name="android:layout_margin">@dimen/card_margin</item>
         <item name="android:padding">@dimen/card_padding</item>
-        <item name="cardBackgroundColor">@color/card_color</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="elevation">@dimen/cardview_default_elevation</item>
     </style>
 
     <style name="MainTextViewStyle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">@dimen/text_primary_size</item>
-        <item name="android:textColor">@color/text_primary_color</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:layout_margin">@dimen/card_text_margin</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
     <style name="SecondaryTextViewStyle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">@dimen/text_secondary_size</item>
-        <item name="android:textColor">@color/text_secondary_color</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:layout_margin">@dimen/card_text_margin</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
     <style name="MainChatTextViewStyle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">@dimen/chat_main_text_size</item>
-        <item name="android:textColor">@color/text_primary_color</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:layout_margin">@dimen/message_margin</item>
     </style>
 
     <style name="SecondaryChatTextViewStyle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">@dimen/chat_secondary_text_size</item>
-        <item name="android:textColor">@color/text_secondary_color</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:layout_margin">@dimen/message_margin</item>
     </style>
 </resources>
