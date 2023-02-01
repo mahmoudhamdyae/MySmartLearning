@@ -40,6 +40,8 @@
     <!-- Courses Activity -->
     <string name="no_of_students">No of students: </string>
     <string name="year">Year: </string>
+    <string name="teacher_name">Teacher Name: </string>
+
     <!-- Course Activity -->
     <string name="course_quizzes">Quizzes</string>
     <string name="course_add_student">Add student</string>

@@ -37,11 +37,13 @@ class SearchFragment: BaseFragment() {
         val user = SearchFragmentArgs.fromBundle(requireArguments()).user
 
         binding.coursesList.layoutManager = GridLayoutManager(requireContext(), 1)
-        binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
+        val adapter = CoursesAdapter(CoursesAdapter.OnClickListener {
             viewModel.addCourse(it, user)
             findNavController().navigateUp()
         }, CoursesAdapter.OnDelClickListener {
-        }, true)
+        })
+        adapter.setVisibility(isTeacher2 = false, search2 = true)
+        binding.coursesList.adapter = adapter
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()

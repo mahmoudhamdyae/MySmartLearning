@@ -22,7 +22,11 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     val user: LiveData<User?>
         get() = _user
 
-    fun getUserData() {
+    init {
+        getUserData()
+    }
+
+    private fun getUserData() {
         try {
             viewModelScope.launch {
                 _user = repository.getUserData()

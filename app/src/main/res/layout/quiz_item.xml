@@ -15,9 +15,9 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
+            style="@style/CardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CardStyle"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,20 +26,20 @@
 
                 <TextView
                     android:id="@+id/quiz_no"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/card_text_margin"
                     android:text="@string/quiz_activity_quiz_number"
-                    style="@style/MainTextViewStyle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/quiz_name"
+                    style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/card_text_margin"
-                    style="@style/MainTextViewStyle"
                     app:layout_constraintStart_toEndOf="@id/quiz_no"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Quiz Name" />
@@ -72,9 +72,9 @@
                     android:id="@+id/checked_image"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_margin="@dimen/icons_margin"
                     android:layout_toStartOf="@id/solved_or_not"
                     android:contentDescription="@string/quiz_solved_content_description"
+                    android:padding="@dimen/icons_padding"
                     android:src="@drawable/checked"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/quiz_date" />
@@ -105,8 +105,8 @@
                     android:id="@+id/delete_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/icons_margin"
                     android:contentDescription="@string/delete_button_content_description"
+                    android:padding="@dimen/icons_padding"
                     android:src="@drawable/ic_baseline_delete_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

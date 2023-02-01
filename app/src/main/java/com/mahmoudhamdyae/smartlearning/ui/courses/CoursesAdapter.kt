@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,10 @@ import com.mahmoudhamdyae.smartlearning.databinding.CourseItemBinding
 class CoursesAdapter(
     private val onClickListener: OnClickListener,
     private val onDelClickListener: OnDelClickListener,
-    private val search: Boolean
 ) : ListAdapter<Course, CoursesAdapter.CoursePropertyViewHolder>(DiffCallback) {
+
+    private var search: Boolean = false
+    private var isTeacher: Boolean = false
 
     /**
      * The CoursePropertyViewHolder constructor takes the binding variable from the associated
@@ -29,6 +32,13 @@ class CoursesAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun setVisibility(isTeacher2: Boolean, search2: Boolean) {
+        search = search2
+        isTeacher = isTeacher2
+        notifyDataSetChanged()
+    }
+
     /**
      * Create new [RecyclerView] item views (invoked by the layout manager)
      */
@@ -37,6 +47,13 @@ class CoursesAdapter(
         val binding = CourseItemBinding.inflate(LayoutInflater.from(parent.context))
         if (search) {
             binding.deleteButton.visibility = View.GONE
+        }
+        if (isTeacher) {
+            binding.teacherNameLabel.visibility = View.GONE
+            binding.teacherName.visibility = View.GONE
+        } else {
+            binding.studentNoLabel.visibility = View.GONE
+            binding.studentNo.visibility = View.GONE
         }
         binding.deleteButton.setOnClickListener {
             onDelClickListener.onDelClick(binding.property!!)

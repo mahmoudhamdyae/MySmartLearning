@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -54,13 +51,18 @@ class CoursesFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.coursesList.layoutManager = GridLayoutManager(context, 1)
-        binding.coursesList.adapter = CoursesAdapter(CoursesAdapter.OnClickListener { course ->
+        val adapter = CoursesAdapter(CoursesAdapter.OnClickListener { course ->
             viewModel.user.observe(viewLifecycleOwner) { user ->
                 findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(course, user!!))
             }
         },  CoursesAdapter.OnDelClickListener { course ->
             delCourse(course)
-        }, false)
+        })
+        binding.coursesList.adapter = adapter
+
+        viewModel.user.observe(viewLifecycleOwner) { user ->
+            adapter.setVisibility(user!!.teacher, false)
+        }
 
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -125,8 +127,6 @@ class CoursesFragment: BaseFragment() {
     }
 
     private fun saveUserLocally() {
-        // Get user from Firebase and save it in user LiveData object
-        viewModel.getUserData()
         // Observe User Livedata
         viewModel.user.observe(viewLifecycleOwner) {
             isTeacher = if (it!!.teacher) {

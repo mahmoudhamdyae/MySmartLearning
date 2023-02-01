@@ -16,9 +16,9 @@
 
         <!--app:cardBackgroundColor="@color/card_color"-->
         <androidx.cardview.widget.CardView
+            style="@style/CardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CardStyle"
             app:cardCornerRadius="@dimen/card_corner_radius">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,12 +74,31 @@
                     app:layout_constraintTop_toBottomOf="@+id/student_no"
                     tools:text="1" />
 
+                <TextView
+                    android:id="@+id/teacher_name_label"
+                    style="@style/SecondaryTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/teacher_name"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/teacher_name" />
+
+                <TextView
+                    android:id="@+id/teacher_name"
+                    style="@style/SecondaryTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{property.teacher.userName}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Teacher Name" />
+
                 <ImageView
                     android:id="@+id/delete_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/icons_margin"
                     android:contentDescription="@string/delete_button_content_description"
+                    android:padding="@dimen/icons_padding"
                     android:src="@drawable/ic_baseline_delete_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
