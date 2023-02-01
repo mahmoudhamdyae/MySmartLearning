@@ -5,7 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.data.models.User
+import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.StudentItemBinding
 
 class StudentsAdapter(private val onClickListener: OnClickListener) :
@@ -19,6 +23,16 @@ class StudentsAdapter(private val onClickListener: OnClickListener) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
             binding.property = user
+            val repository = FirebaseRepository()
+            repository.getProfilePicture(user.userId!!).addOnSuccessListener {
+                Glide.with(binding.profileImage.context)
+                    .load(it)
+                    .apply(
+                        RequestOptions()
+                            .placeholder(R.drawable.loading_animation)
+                            .error(R.drawable.ic_broken_image))
+                    .into(binding.profileImage)
+            }
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()

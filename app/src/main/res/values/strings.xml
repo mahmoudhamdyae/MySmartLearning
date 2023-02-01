@@ -72,6 +72,10 @@
 
     <!-- Chat Activity -->
     <string name="input_edit_text_hint">Type a message</string>
+
+    <!-- Profile Activity -->
+    <string name="account_type_teacher">Teacher Account</string>
+    <string name="account_type_student">Student Account</string>
     
     <!-- Dialogs -->
     <string name="course_delete_dialog_msg">Are you sure you want to delete this course ?</string>

@@ -56,4 +56,8 @@
     <dimen name="messages_top_padding">60dp</dimen>
     <dimen name="messages_bottom_padding">4dp</dimen>
 
+    <!-- Profile -->
+    <dimen name="back_button_margin">16dp</dimen>
+    <dimen name="fragment_profile_picture_margin">16dp</dimen>
+
 </resources>

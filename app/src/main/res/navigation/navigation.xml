@@ -141,7 +141,11 @@
         android:id="@+id/profileFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.profile.ProfileFragment"
         android:label="@string/my_profile_label"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
+    </fragment>
     <fragment
         android:id="@+id/courseFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.CourseFragment"

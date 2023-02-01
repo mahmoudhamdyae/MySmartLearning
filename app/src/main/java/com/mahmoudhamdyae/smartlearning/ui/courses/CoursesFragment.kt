@@ -71,7 +71,9 @@ class CoursesFragment: BaseFragment() {
                     true
                 }
                 R.id.profile -> {
-                    findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToProfileFragment())
+                    viewModel.user.observe(viewLifecycleOwner) { user ->
+                        findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToProfileFragment(user!!))
+                    }
                     true
                 }
                 R.id.sign_out -> {

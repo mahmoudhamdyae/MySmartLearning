@@ -60,6 +60,10 @@ class FirebaseRepository {
         return user
     }
 
+    fun getProfilePicture(uid: String): Task<Uri> {
+        return mStorageRef.child(Constants.IMAGES).child("$uid.jpg").downloadUrl
+    }
+
     // Users
 
     fun addStudentToCourse(user: User, courseId: String): Task<Void> {
