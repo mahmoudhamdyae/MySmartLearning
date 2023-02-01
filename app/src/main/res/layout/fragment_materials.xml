@@ -46,19 +46,9 @@
                 android:background="@color/fab_background"
                 android:contentDescription="@string/add_fab_content_description"
                 android:src="@drawable/ic_baseline_add_24"
-                app:layout_constraintBottom_toTopOf="@id/horizontal_progress_bar"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:visibleIfTeacher="@{viewModel.isTeacher}" />
-
-            <ProgressBar
-                android:id="@+id/horizontal_progress_bar"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:progress="25"
-                tools:visibility="visible" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/progress_bar"

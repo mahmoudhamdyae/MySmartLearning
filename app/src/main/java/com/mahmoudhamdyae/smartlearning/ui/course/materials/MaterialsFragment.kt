@@ -19,7 +19,6 @@ import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
-import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import com.mahmoudhamdyae.smartlearning.utils.getFileName
 import java.io.File
 
@@ -77,17 +76,6 @@ class MaterialsFragment: BaseFragment() {
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
-        }
-
-        viewModel.status.observe(viewLifecycleOwner) {
-            if (it == STATUS.LOADING) {
-                binding.horizontalProgressBar.visibility = View.VISIBLE
-            } else {
-                binding.horizontalProgressBar.visibility = View.GONE
-            }
-        }
-        viewModel.progressDialog.observe(viewLifecycleOwner) {
-            binding.horizontalProgressBar.progress = it.toInt()
         }
     }
 

@@ -20,10 +20,6 @@ class MaterialsViewModel(
     val materials: LiveData<List<String>>
         get() = _materials
 
-    private val _progressDialog = MutableLiveData<Double>()
-    val progressDialog: LiveData<Double>
-        get() = _progressDialog
-
     fun addMaterial(file: Uri, name: String?, courseId: String) {
         this._status.value = STATUS.LOADING
         repository.addMaterialStorage(file, name!!, courseId).addOnCompleteListener { taskStorage ->
@@ -33,8 +29,6 @@ class MaterialsViewModel(
                 this._status.value = STATUS.ERROR
                 _error.value = taskStorage.exception?.message
             }
-        }.addOnProgressListener {
-            _progressDialog.value = 100.0 * it.bytesTransferred / it.totalByteCount
         }
     }
 
