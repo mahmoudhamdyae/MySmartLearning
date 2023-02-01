@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.mahmoudhamdyae.smartlearning.data.models.*
 import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.chat.ChatAdapter
@@ -49,11 +50,20 @@ fun bindChatRecyclerView(recyclerView: RecyclerView, data: List<Message>?) {
 }
 
 @BindingAdapter("visibilityOfLoading")
-fun visibilityOfProgressBar(progressBar: ProgressBar, status: STATUS?) {
+fun visibilityOfProgressBar(view: View, status: STATUS?) {
     if (status == STATUS.LOADING) {
-        progressBar.visibility = View.VISIBLE
+        view.visibility = View.VISIBLE
     } else {
-        progressBar.visibility = View.GONE
+        view.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("visibilityIfDone")
+fun visibilityEmptyView(view: View, status: STATUS?) {
+    if (status == STATUS.LOADING) {
+        view.visibility = View.GONE
+    } else {
+//        view.visibility = View.VISIBLE
     }
 }
 
@@ -68,7 +78,10 @@ fun visibleIfTeacher(view: View, isTeacher: IsTeacher?) {
 
 @BindingAdapter("bindEmptyView")
 fun bindEmptyView(view: View, data: List<Any>?) {
-    if (data.isNullOrEmpty()) {
+    if (data == null) {
+        view.visibility = View.GONE
+    }
+    else if (data.isEmpty()) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.GONE
