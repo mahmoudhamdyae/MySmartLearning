@@ -32,11 +32,9 @@ class CoursesAdapter(
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setVisibility(isTeacher2: Boolean, search2: Boolean) {
         search = search2
         isTeacher = isTeacher2
-        notifyDataSetChanged()
     }
 
     /**
