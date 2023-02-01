@@ -102,10 +102,13 @@ class MaterialsFragment: BaseFragment() {
     private fun downloadMaterial(material: String) {
         val rootPath = File(Environment.getExternalStorageDirectory(), "Download")
         val localFile = File(rootPath, material)
-        if (localFile.exists()) {
-            Toast.makeText(context, getString(R.string.the_file_is_already_exist_toast), Toast.LENGTH_SHORT).show()
-        } else {
-            viewModel.getMaterial(courseId, material, localFile)
+        viewModel.getMaterial(courseId, material, localFile)
+        viewModel.notification.observe(viewLifecycleOwner) {
+            if (it) {
+                createNotification()
+                Toast.makeText(context, "Downloaded to Downloads", Toast.LENGTH_SHORT).show()
+                viewModel.makeNotificationFalse()
+            }
         }
     }
 
@@ -125,6 +128,9 @@ class MaterialsFragment: BaseFragment() {
         }
         val alertDialog = builder.create()
         alertDialog.show()
+    }
+
+    private fun createNotification() {
     }
 
     @Deprecated("Deprecated in Java")

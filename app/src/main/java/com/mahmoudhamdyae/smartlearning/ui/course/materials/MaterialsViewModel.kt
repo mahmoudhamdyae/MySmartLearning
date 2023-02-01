@@ -20,6 +20,10 @@ class MaterialsViewModel(
     val materials: LiveData<List<String>>
         get() = _materials
 
+    private val _notification = MutableLiveData<Boolean>(false)
+    val notification: LiveData<Boolean>
+        get() = _notification
+
     fun addMaterial(file: Uri, name: String?, courseId: String) {
         this._status.value = STATUS.LOADING
         repository.addMaterialStorage(file, name!!, courseId).addOnCompleteListener { taskStorage ->
@@ -98,12 +102,17 @@ class MaterialsViewModel(
             repository.getMaterial(courseId, name, localFile).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _status.value = STATUS.DONE
+                    _notification.value = true
                 } else {
                     _status.value = STATUS.ERROR
                     _error.value = task.exception!!.message
                 }
             }
         }
+    }
+
+    fun makeNotificationFalse() {
+        _notification.value = false
     }
 }
 
