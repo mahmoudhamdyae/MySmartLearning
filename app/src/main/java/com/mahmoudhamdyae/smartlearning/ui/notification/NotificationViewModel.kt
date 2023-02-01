@@ -1,12 +1,10 @@
 package com.mahmoudhamdyae.smartlearning.ui.notification
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Notification
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import kotlinx.coroutines.launch
 
 class NotificationViewModel(
     private val repository: FirebaseRepository
@@ -21,9 +19,8 @@ class NotificationViewModel(
     }
 
     private fun getListOfNotifications() {
-        _notifications.value = mutableListOf(
-            Notification(text = "textNotification")
-        )
+        viewModelScope.launch {
+        }
     }
 
     fun setNotificationRead() {
