@@ -30,6 +30,7 @@ class AddStudentViewModel(
             repository.addStudentToCourse(user, course.id).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onCompleteListener(repository.addCourseToUser(user.userId!!, course))
+                    course.studentsNo += 1
                     addNoOfStudents(course)
                     navigate()
                 } else {
@@ -41,7 +42,7 @@ class AddStudentViewModel(
     }
 
     private fun addNoOfStudents(course: Course) {
-        repository.updateNoOfStudents(course.id, course.studentsNo + 1, course.teacher!!)
+        repository.updateNoOfStudents(course.id, course.studentsNo, course.teacher!!)
     }
 
     fun getListOfStudents(courseId: String) {
