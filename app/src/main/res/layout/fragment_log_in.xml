@@ -19,18 +19,18 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fragments_margin">
 
-            <!--android:textColor="@color/text_primary_color"-->
             <TextView
                 android:id="@+id/main_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/smart_learning_label_margin"
-                android:gravity="center"
                 android:text="@string/app_name"
-
                 android:textSize="@dimen/smart_learning_label_size"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="?attr/colorPrimary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:id="@+id/sub_text"

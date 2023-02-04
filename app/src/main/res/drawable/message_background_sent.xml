@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/chat_sent" />
+            <solid android:color="@color/material_dynamic_primary40" />
             <corners android:radius="@dimen/message_radius" />
 
         </shape>
