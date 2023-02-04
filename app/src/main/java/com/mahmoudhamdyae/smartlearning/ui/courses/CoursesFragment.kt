@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -94,27 +93,25 @@ class CoursesFragment: BaseFragment() {
     }
 
     private fun delCourse(course: Course) {
-        // Create Dialog
-        val builder = AlertDialog.Builder(
-            requireContext()
-        )
-        builder.setMessage(getString(R.string.course_delete_dialog_msg))
-        builder.setPositiveButton(R.string.course_delete_dialog_delete) { _, _ ->
-            // User clicked the "Delete" button, so delete the Course.
-            if (isTeacher) {
-                viewModel.delCourse(course.id)
-            } else {
-                viewModel.decreaseNoOfStudents(course)
-                viewModel.delStudentFromCourse(course.id)
+        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+        materialAlertDialogBuilder
+            .setMessage(getString(R.string.course_delete_dialog_msg))
+            // Delete Button
+            .setPositiveButton(R.string.course_delete_dialog_delete) { dialog, _ ->
+                if (isTeacher) {
+                    viewModel.delCourse(course.id)
+                } else {
+                    viewModel.decreaseNoOfStudents(course)
+                    viewModel.delStudentFromCourse(course.id)
+                }
+                viewModel.delCourseFromUser(course.id)
+                dialog.dismiss()
             }
-            viewModel.delCourseFromUser(course.id)
-        }
-        builder.setNegativeButton(R.string.course_delete_dialog_cancel) { dialog, _ ->
-                // User clicked the "Cancel" button, so dismiss the dialog
-                dialog?.dismiss()
-        }
-        val alertDialog = builder.create()
-        alertDialog.show()
+            // Cancel Button
+            .setNegativeButton(R.string.course_delete_dialog_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     /**
