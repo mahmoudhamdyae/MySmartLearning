@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="auth_red">@android:color/holo_red_dark</color>
+    <color name="auth_red">@android:color/holo_red_light</color>
 
     <!-- Chat -->
     <color name="chat_received">#4FB39DDB</color>
