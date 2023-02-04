@@ -20,6 +20,10 @@ abstract class BaseViewModel: ViewModel() {
     val error: LiveData<String>
         get() = _error
 
+    protected var _toast = MutableLiveData<Int>()
+    val toast: LiveData<Int>
+        get() = _toast
+
     protected val _status = MutableLiveData<STATUS>()
     val status: LiveData<STATUS>
         get() = this._status

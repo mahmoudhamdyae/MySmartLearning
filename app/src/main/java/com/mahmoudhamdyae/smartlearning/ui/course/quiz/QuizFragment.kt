@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
@@ -41,9 +43,28 @@ class QuizFragment: BaseFragment() {
         })
         viewModel.isTeacher.observe(viewLifecycleOwner) {
             adapter.setIsTeacher(it == IsTeacher.TEACHER)
+            if (it == IsTeacher.TEACHER) {
+                binding.addFab.setOnClickListener {
+                    addQuiz()
+                }
+            }
         }
 
         binding.quizzesList.layoutManager = GridLayoutManager(context, 1)
         binding.quizzesList.adapter = adapter
+    }
+
+    private fun addQuiz() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setIcon(R.drawable.ic_launcher_foreground)
+            .setTitle(R.string.add_quiz_dialog_title)
+            .setMessage(R.string.add_quiz_dialog_edit_text_hint)
+            .setPositiveButton(R.string.add_quiz_dialog_positive_button) { _, _ ->
+                findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment())
+            }
+            .setNegativeButton(R.string.add_quiz_dialog_negative_button) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

@@ -22,6 +22,10 @@ abstract class BaseFragment: Fragment() {
         viewModel.error.observe(viewLifecycleOwner) {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
+
+        viewModel.toast.observe(viewLifecycleOwner) {
+            Toast.makeText(context, getString(it), Toast.LENGTH_SHORT).show()
+        }
     }
 
     protected fun getUserType() {

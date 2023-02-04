@@ -20,7 +20,7 @@ class MaterialsViewModel(
     val materials: LiveData<List<String>>
         get() = _materials
 
-    private val _notification = MutableLiveData<Boolean>(false)
+    private val _notification = MutableLiveData(false)
     val notification: LiveData<Boolean>
         get() = _notification
 

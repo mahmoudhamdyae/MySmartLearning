@@ -19,15 +19,6 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dialog_padding">
 
-            <TextView
-                android:id="@+id/add_new_course_label"
-                style="@style/MainTextViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/course_dialog_add_new_course"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <EditText
                 android:id="@+id/course_name_edit_text"
                 android:layout_width="match_parent"
@@ -38,9 +29,8 @@
                 android:inputType="text"
                 android:text="@={viewModel.courseName}"
                 android:textColorHint="@color/text_primary_color"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_new_course_label"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -62,26 +52,6 @@
                 android:layout_marginBottom="@dimen/dialog_spinner_margin"
                 android:textColor="@color/text_primary_color"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/year_text_view" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dialog_button_margin"
-                android:text="@string/course_dialog_save_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/year_text_view" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancel_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dialog_button_margin"
-                android:text="@string/course_dialog_cancel_button"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/year_text_view" />
 

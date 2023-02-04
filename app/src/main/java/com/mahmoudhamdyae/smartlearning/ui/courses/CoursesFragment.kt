@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -123,6 +124,7 @@ class CoursesFragment: BaseFragment() {
         if (mAUth.currentUser == null) {
             navigateToLoginScreen()
         } else {
+            viewModel.getUserData()
             saveUserLocally()
             viewModel.getListOfCourses()
         }
@@ -159,16 +161,9 @@ class CoursesFragment: BaseFragment() {
     }
 
     private fun createDialog() {
-
-        val builder = AlertDialog.Builder(requireContext(), R.style.Theme_SmartLearning).create()
-        val view = layoutInflater.inflate(R.layout.course_dialog,null)
-        builder.setView(view)
-
-        // Cancel Button
-        view.findViewById<Button>(R.id.cancel_button).setOnClickListener {
-            builder.dismiss()
-        }
-
+        val customAlertDialogView = LayoutInflater.from(context)
+            .inflate(R.layout.course_dialog, null, false)
+        val courseNameEditText = customAlertDialogView.findViewById<EditText>(R.id.course_name_edit_text)
         // Year Spinner
         val yearList: MutableList<String> = ArrayList()
         yearList.add("1")
@@ -179,23 +174,30 @@ class CoursesFragment: BaseFragment() {
             android.R.layout.simple_spinner_dropdown_item,
             yearList
         )
-        val yearSpinner = view.findViewById<Spinner>(R.id.year)
+        val yearSpinner = customAlertDialogView.findViewById<Spinner>(R.id.year)
         yearSpinner.adapter = yearAdapter
 
-        // Save button
-        view.findViewById<Button>(R.id.save_button).setOnClickListener {
-            val courseName = view.findViewById<EditText>(R.id.course_name_edit_text).text.toString()
-            val courseYear = yearSpinner.selectedItem.toString()
-            var teacher = User()
-            viewModel.user.observe(viewLifecycleOwner) {
-                teacher = it!!
+        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+        materialAlertDialogBuilder.setView(customAlertDialogView)
+            .setTitle(R.string.course_dialog_add_new_course)
+                // Save Button
+            .setPositiveButton(R.string.course_dialog_save_button) { dialog, _ ->
+                val courseName  = courseNameEditText.text.toString()
+                val courseYear = yearSpinner.selectedItem.toString()
+                var teacher = User()
+                viewModel.user.observe(viewLifecycleOwner) {
+                    teacher = it!!
+                }
+                val course = Course(courseName = courseName, year = courseYear, teacher = teacher)
+                viewModel.addCourse(course)
+                dialog.dismiss()
             }
-            val course = Course(courseName = courseName, year = courseYear, teacher = teacher)
-            viewModel.addCourse(course)
-            builder.dismiss()
-        }
-        builder.setCanceledOnTouchOutside(false)
-        builder.show()
+                // Cancel Button
+            .setNegativeButton(R.string.course_dialog_cancel_button) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
     }
 
     private fun studentActivity() {

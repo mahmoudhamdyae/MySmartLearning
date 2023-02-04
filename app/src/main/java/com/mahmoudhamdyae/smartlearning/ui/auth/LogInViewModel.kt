@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
@@ -28,16 +29,16 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
 
     private fun validateTextsSignUp(): Boolean {
         return if (userName.value.isNullOrEmpty()) {
-            _error.value = "User Name Can\'t be empty"
+            _toast.value = R.string.auth_user_name_empty_toast
             false
         } else if (email.value.isNullOrEmpty()) {
-            _error.value = "Email Can\'t be empty"
+            _toast.value = R.string.auth_email_empty_toast
             false
         } else if (password.value.isNullOrEmpty()) {
-            _error.value = "Password Can\'t be empty"
+            _toast.value = R.string.auth_password_empty_toast
             false
         }  else if (_isTeacher.value == IsTeacher.NOTSET) {
-            _error.value = "Please, choose your account type"
+            _toast.value = R.string.auth_type_not_chosen_text_toast
             false
         } else {
             true
@@ -46,10 +47,10 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
 
     private fun validateTextsLogIn(): Boolean {
         return if (email.value.isNullOrEmpty()) {
-            _error.value = "Email Can\'t be empty"
+            _toast.value = R.string.auth_email_empty_toast
             false
         } else if (password.value.isNullOrEmpty()) {
-            _error.value = "Password Can\'t be empty"
+            _toast.value = R.string.auth_password_empty_toast
             false
         } else {
             true
@@ -70,7 +71,7 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
                             val userItem = user.getValue(User::class.java)
                             if (userName.value == userItem?.userName) {
                                 userNameRepeated = true
-                                _error.value = "Choose another user name"
+                                _toast.value = R.string.sign_up_choose_another_user_name_toast
                                 _status.value = STATUS.ERROR
                             break
                             }

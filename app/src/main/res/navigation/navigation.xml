@@ -76,6 +76,9 @@
             android:name="courseId"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_quizFragment_to_addQuizFragment"
+            app:destination="@id/addQuizFragment" />
     </fragment>
     <fragment
         android:id="@+id/addStudentFragment"
@@ -141,7 +144,7 @@
         android:id="@+id/profileFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.profile.ProfileFragment"
         android:label="@string/my_profile_label"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <argument
             android:name="user"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
@@ -212,4 +215,9 @@
             android:id="@+id/action_notificationFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addQuizFragment"
+        android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.addquiz.AddQuizFragment"
+        android:label="@string/add_quiz_label"
+        tools:layout="@layout/fragment_quiz_add" />
 </navigation>

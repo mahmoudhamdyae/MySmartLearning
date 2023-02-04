@@ -1,9 +1,11 @@
 package com.mahmoudhamdyae.smartlearning.data.models
 
-import java.util.UUID
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class Quiz(
-    val number: Int? = null,
-    val date: String? = null,
+    val name: String? = null,
+    val date: String? =
+        SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.getDefault()).format(Date()),
     val id: String? = UUID.randomUUID().toString()
 )
