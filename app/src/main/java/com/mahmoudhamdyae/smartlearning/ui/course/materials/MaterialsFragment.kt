@@ -1,20 +1,29 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.materials
 
+import android.Manifest
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity.RESULT_OK
 import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Environment
+import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
@@ -22,6 +31,7 @@ import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.getFileName
 import java.io.File
+
 
 @Suppress("DEPRECATION")
 class MaterialsFragment: BaseFragment() {
@@ -78,37 +88,73 @@ class MaterialsFragment: BaseFragment() {
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.snackBar.observe(viewLifecycleOwner) {
+            Snackbar.make(requireView(), getString(it), Snackbar.LENGTH_SHORT)
+                .setAction(R.string.snack_bar_button) {
+                    openPDF()
+                }
+                .show()
+        }
+
+        verifyStoragePermission()
     }
 
     private fun playMaterial(material: String) {
         downloadMaterial(material)
-//        val file = File(requireContext().externalCacheDir, material)
-//        viewModel.getMaterial(courseId, material, file)
-//
-//        try {
-//            val intent = Intent(Intent.ACTION_VIEW)
-//            intent.setDataAndType(Uri.fromFile(file), "application/pdf")
-//            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-//            requireContext().startActivity(intent)
-//        } catch (e: ActivityNotFoundException) {
-//            // No program to open pdf is installed
-//            Toast.makeText(context, R.string.there_is_no_app_to_read_pdf, Toast.LENGTH_SHORT).show()
-//        } catch (e: Exception) {
-//            binding.emptyView.visibility = View.VISIBLE
-//            binding.emptyView.text = e.message.toString()
-//            Toast.makeText(context, e.message.toString(), Toast.LENGTH_SHORT).show()
-//        }
+        openPDF()
     }
 
     private fun downloadMaterial(material: String) {
         val rootPath = File(Environment.getExternalStorageDirectory(), "Download")
         val localFile = File(rootPath, material)
         viewModel.getMaterial(courseId, material, localFile)
-        viewModel.notification.observe(viewLifecycleOwner) {
-            if (it) {
-                Toast.makeText(context, "Downloaded to Downloads", Toast.LENGTH_SHORT).show()
-                viewModel.makeNotificationFalse()
+    }
+
+    private fun verifyStoragePermission() {
+        val permission = ActivityCompat.checkSelfPermission(requireActivity(), WRITE_EXTERNAL_STORAGE)
+
+        // Surrounded with if statement for Android R to get access of complete file.
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager() && permission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    PERMISSION_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+                )
+
+                // Abruptly we will ask for permission once the application is launched for sake demo.
+                val intent = Intent()
+                intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+                val uri = Uri.fromParts("package", requireActivity().packageName, null)
+                intent.data = uri
+                startActivity(intent)
             }
+        }
+    }
+
+    private fun openPDF() {
+
+        // Get the File location and file name.
+        val file = File(Environment.getExternalStorageDirectory(), "Download/My Resume.pdf")
+
+        // Get the URI Path of file.
+        val uriPdfPath: Uri = FileProvider.getUriForFile(
+            requireContext(),
+            requireActivity().applicationContext.packageName + ".provider",
+            file
+        )
+
+        // Start Intent to View PDF from the Installed Applications.
+        val pdfOpenIntent = Intent(Intent.ACTION_VIEW)
+        pdfOpenIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        pdfOpenIntent.clipData = ClipData.newRawUri("", uriPdfPath)
+        pdfOpenIntent.setDataAndType(uriPdfPath, "application/pdf")
+        pdfOpenIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        try {
+            startActivity(pdfOpenIntent)
+        } catch (activityNotFoundException: ActivityNotFoundException) {
+            Toast.makeText(context, "There is no app to load corresponding PDF", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -144,5 +190,11 @@ class MaterialsFragment: BaseFragment() {
 
     companion object {
         private const val PICK_FILE = 1
+        private const val REQUEST_EXTERNAL_STORAGE = 1
+        private val PERMISSION_STORAGE = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
     }
+
 }

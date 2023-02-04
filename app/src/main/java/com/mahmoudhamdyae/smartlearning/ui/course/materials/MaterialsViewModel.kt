@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
@@ -20,9 +21,9 @@ class MaterialsViewModel(
     val materials: LiveData<List<String>>
         get() = _materials
 
-    private val _notification = MutableLiveData(false)
-    val notification: LiveData<Boolean>
-        get() = _notification
+    private var _snackBar = MutableLiveData<Int>()
+    val snackBar: LiveData<Int>
+        get() = _snackBar
 
     fun addMaterial(file: Uri, name: String?, courseId: String) {
         this._status.value = STATUS.LOADING
@@ -102,17 +103,13 @@ class MaterialsViewModel(
             repository.getMaterial(courseId, name, localFile).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _status.value = STATUS.DONE
-                    _notification.value = true
+                    _snackBar.value = R.string.downloaded_toast
                 } else {
                     _status.value = STATUS.ERROR
                     _error.value = task.exception!!.message
                 }
             }
         }
-    }
-
-    fun makeNotificationFalse() {
-        _notification.value = false
     }
 }
 
