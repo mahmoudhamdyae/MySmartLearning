@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -78,6 +79,10 @@ class CourseFragment: BaseFragment() {
     private fun createDialog(course: Course) {
         val customAlertDialogView = LayoutInflater.from(context)
             .inflate(R.layout.course_details_dialog, null, false)
+        customAlertDialogView.findViewById<TextView>(R.id.course_name).text = course.courseName
+        customAlertDialogView.findViewById<TextView>(R.id.teacher_name).text = course.teacher?.userName
+        customAlertDialogView.findViewById<TextView>(R.id.year).text = course.year
+        customAlertDialogView.findViewById<TextView>(R.id.number_of_students).text = course.studentsNo.toString()
 
         MaterialAlertDialogBuilder(requireContext())
             .setView(customAlertDialogView)
