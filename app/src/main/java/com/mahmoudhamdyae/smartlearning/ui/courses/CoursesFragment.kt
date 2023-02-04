@@ -32,6 +32,7 @@ class CoursesFragment: BaseFragment() {
     private lateinit var databaseReference: DatabaseReference
 
     private var isTeacher = false
+    private lateinit var adapter: CoursesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +52,7 @@ class CoursesFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.coursesList.layoutManager = GridLayoutManager(context, 1)
-        val adapter = CoursesAdapter(CoursesAdapter.OnClickListener { course ->
+        adapter = CoursesAdapter(CoursesAdapter.OnClickListener { course ->
             viewModel.user.observe(viewLifecycleOwner) { user ->
                 findNavController().navigate(CoursesFragmentDirections.actionCoursesFragmentToCourseFragment(course, user!!))
             }
@@ -60,9 +61,10 @@ class CoursesFragment: BaseFragment() {
         })
         binding.coursesList.adapter = adapter
 
-        viewModel.user.observe(viewLifecycleOwner) { user ->
-            adapter.setVisibility(user!!.teacher, false)
-        }
+//        viewModel.user.observe(viewLifecycleOwner) { user ->
+//            Toast.makeText(context, user?.teacher.toString(), Toast.LENGTH_SHORT).show()
+//            adapter.setVisibility(user!!.teacher, false)
+//        }
 
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -122,6 +124,9 @@ class CoursesFragment: BaseFragment() {
             navigateToLoginScreen()
         } else {
             viewModel.getUserData()
+            viewModel.user.observe(viewLifecycleOwner) { user ->
+                adapter.setVisibility(user!!.teacher, false)
+            }
             saveUserLocally()
             viewModel.getListOfCourses()
         }
