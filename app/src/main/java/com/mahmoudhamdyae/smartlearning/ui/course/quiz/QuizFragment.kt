@@ -56,7 +56,7 @@ class QuizFragment: BaseFragment() {
 
     private fun addQuiz() {
         MaterialAlertDialogBuilder(requireContext())
-            .setIcon(R.drawable.ic_launcher_foreground)
+            .setIcon(R.drawable.quiz)
             .setTitle(R.string.add_quiz_dialog_title)
             .setMessage(R.string.add_quiz_dialog_edit_text_hint)
             .setPositiveButton(R.string.add_quiz_dialog_positive_button) { _, _ ->

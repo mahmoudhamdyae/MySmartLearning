@@ -36,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/app_name"
-                android:textColor="@color/text_primary_color"
                 android:textSize="@dimen/smart_learning_label_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,11 +44,10 @@
 
             <TextView
                 android:id="@+id/sub_text"
+                style="@style/SecondaryTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_up_under_app_name_intro"
-                android:textColor="@color/text_secondary_color"
-                android:textSize="@dimen/text_secondary_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/main_text" />
@@ -58,8 +56,8 @@
                 android:id="@+id/choose_profile_picture_text"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/profile_picture_height"
-                android:gravity="center_vertical"
                 android:layout_margin="@dimen/profile_picture_margin"
+                android:gravity="center_vertical"
                 android:text="@string/sign_up_choose_profile_image"
                 android:textColor="@color/auth_red"
                 android:textSize="@dimen/text_secondary_size"
@@ -93,10 +91,7 @@
                     android:hint="@string/sign_up_user_name_edit_text_hint"
                     android:inputType="textPersonName"
                     android:padding="@dimen/edit_text_padding"
-                    android:text="@={viewModel.userName}"
-                    android:textColor="@color/text_primary_color"
-                    android:textColorHint="@color/text_primary_color"
-                    android:textSize="@dimen/edit_text_size" />
+                    android:text="@={viewModel.userName}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -115,9 +110,7 @@
                     android:hint="@string/sign_up_email_edit_text_hint"
                     android:inputType="textEmailAddress"
                     android:padding="@dimen/edit_text_padding"
-                    android:text="@={viewModel.email}"
-                    android:textColor="@color/text_primary_color"
-                    android:textSize="@dimen/edit_text_size" />
+                    android:text="@={viewModel.email}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -139,9 +132,6 @@
                     android:padding="@dimen/edit_text_padding"
                     android:singleLine="true"
                     android:text="@={viewModel.password}"
-                    android:textColor="@color/text_primary_color"
-                    android:textColorHint="@color/text_primary_color"
-                    android:textSize="@dimen/edit_text_size"
                     app:errorEnabled="true" />
             </com.google.android.material.textfield.TextInputLayout>
 

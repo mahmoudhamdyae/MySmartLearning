@@ -42,7 +42,6 @@
                 android:id="@+id/add_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/fab_background"
                 android:contentDescription="@string/add_fab_content_description"
                 android:src="@drawable/ic_baseline_add_24"
                 app:layout_constraintBottom_toBottomOf="parent"

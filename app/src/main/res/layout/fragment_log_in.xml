@@ -34,12 +34,11 @@
 
             <TextView
                 android:id="@+id/sub_text"
+                style="@style/SecondaryTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/login_under_app_name_intro"
-                android:textColor="@color/text_secondary_color"
-                android:textSize="@dimen/text_secondary_size"
                 app:layout_constraintTop_toBottomOf="@id/main_text" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -114,8 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/create_account_margin"
-                    android:text="@string/don_t_have_an_account"
-                    android:textColor="@color/text_primary_color" />
+                    android:text="@string/don_t_have_an_account" />
 
                 <TextView
                     android:id="@+id/sign_up_text"

@@ -28,19 +28,17 @@
                 android:hint="@string/course_dialog_name_edit_text_hint"
                 android:inputType="text"
                 android:text="@={viewModel.courseName}"
-                android:textColorHint="@color/text_primary_color"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="LabelFor" />
 
             <TextView
                 android:id="@+id/year_text_view"
+                style="@style/SecondaryTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dialog_text_margin"
                 android:text="@string/course_dialog_year_text_view"
-                android:textColor="@color/text_primary_color"
-                android:textSize="@dimen/text_secondary_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/course_name_edit_text" />
@@ -50,7 +48,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dialog_spinner_margin"
-                android:textColor="@color/text_primary_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/year_text_view" />

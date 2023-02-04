@@ -132,4 +132,6 @@
     <string name="back_button_content_description">Back</string>
     <string name="details_image_content_description">Details</string>
     <string name="quiz_finish_button_content_description">Finish</string>
+
+    <string name="ok">OK</string>
 </resources>

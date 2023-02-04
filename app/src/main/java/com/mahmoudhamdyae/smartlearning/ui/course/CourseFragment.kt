@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Course
@@ -77,16 +76,16 @@ class CourseFragment: BaseFragment() {
     }
 
     private fun createDialog(course: Course) {
-        val builder = AlertDialog.Builder(requireContext(), R.style.Theme_SmartLearning).create()
-        val dialogView = layoutInflater.inflate(R.layout.course_details_dialog, null)
-        builder.setView(dialogView)
+        val customAlertDialogView = LayoutInflater.from(context)
+            .inflate(R.layout.course_details_dialog, null, false)
 
-        dialogView.findViewById<TextView>(R.id.course_name)!!.text = course.courseName
-        dialogView.findViewById<TextView>(R.id.teacher_name)!!.text = course.teacher!!.userName
-        dialogView.findViewById<TextView>(R.id.year)!!.text = course.year
-        dialogView.findViewById<TextView>(R.id.number_of_students)!!.text = course.studentsNo.toString()
-
-        builder.setCanceledOnTouchOutside(true)
-        builder.show()
+        MaterialAlertDialogBuilder(requireContext())
+            .setView(customAlertDialogView)
+            .setIcon(R.drawable.course_details)
+            .setTitle(R.string.course_details_head)
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

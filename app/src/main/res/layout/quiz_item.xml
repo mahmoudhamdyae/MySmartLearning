@@ -46,12 +46,11 @@
 
                 <TextView
                     android:id="@+id/quiz_date"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/card_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_secondary_size"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/quiz_no"
                     tools:text="Tue Mar 12 16:46:37 " />
@@ -81,22 +80,20 @@
 
                 <TextView
                     android:id="@+id/degree_text"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/card_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_secondary_size"
                     app:layout_constraintEnd_toStartOf="@id/degree"
                     app:layout_constraintTop_toTopOf="@id/degree"
                     tools:text="degree here wen solved" />
 
                 <TextView
                     android:id="@+id/degree"
+                    style="@style/SecondaryTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/card_text_margin"
-                    android:textColor="@color/text_secondary_color"
-                    android:textSize="@dimen/text_secondary_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/solved_or_not"
                     tools:text="Degree" />

@@ -174,8 +174,8 @@ class CoursesFragment: BaseFragment() {
         val yearSpinner = customAlertDialogView.findViewById<Spinner>(R.id.year)
         yearSpinner.adapter = yearAdapter
 
-        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
-        materialAlertDialogBuilder.setView(customAlertDialogView)
+        MaterialAlertDialogBuilder(requireContext())
+            .setView(customAlertDialogView)
             .setTitle(R.string.course_dialog_add_new_course)
                 // Save Button
             .setPositiveButton(R.string.course_dialog_save_button) { dialog, _ ->
