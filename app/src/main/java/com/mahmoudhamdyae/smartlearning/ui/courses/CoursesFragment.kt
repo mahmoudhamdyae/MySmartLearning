@@ -95,7 +95,7 @@ class CoursesFragment: BaseFragment() {
     private fun delCourse(course: Course) {
         val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
         materialAlertDialogBuilder
-            .setMessage(getString(R.string.course_delete_dialog_msg))
+            .setMessage(R.string.course_delete_dialog_msg)
             // Delete Button
             .setPositiveButton(R.string.course_delete_dialog_delete) { dialog, _ ->
                 if (isTeacher) {

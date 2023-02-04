@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
@@ -105,7 +106,6 @@ class MaterialsFragment: BaseFragment() {
         viewModel.getMaterial(courseId, material, localFile)
         viewModel.notification.observe(viewLifecycleOwner) {
             if (it) {
-                createNotification()
                 Toast.makeText(context, "Downloaded to Downloads", Toast.LENGTH_SHORT).show()
                 viewModel.makeNotificationFalse()
             }
@@ -113,24 +113,19 @@ class MaterialsFragment: BaseFragment() {
     }
 
     private fun delMaterial(material: String) {
-        // Create Dialog
-        val builder = AlertDialog.Builder(
-            requireContext()
-        )
-        builder.setMessage(getString(R.string.material_delete_dialog_msg))
-        builder.setPositiveButton(R.string.material_delete_dialog_delete) { _, _ ->
-            // User clicked the "Delete" button, so delete the Course.
-            viewModel.delMaterial(courseId, material)
-        }
-        builder.setNegativeButton(R.string.material_delete_dialog_cancel) { dialog, _ ->
-            // User clicked the "Cancel" button, so dismiss the dialog
-            dialog?.dismiss()
-        }
-        val alertDialog = builder.create()
-        alertDialog.show()
-    }
-
-    private fun createNotification() {
+        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+        materialAlertDialogBuilder
+            .setMessage(R.string.material_delete_dialog_msg)
+            // Delete Button
+            .setPositiveButton(R.string.material_delete_dialog_delete) { dialog, _ ->
+                viewModel.delMaterial(courseId, material)
+                dialog.dismiss()
+            }
+            // Cancel Button
+            .setNegativeButton(R.string.material_delete_dialog_cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     @Deprecated("Deprecated in Java")
