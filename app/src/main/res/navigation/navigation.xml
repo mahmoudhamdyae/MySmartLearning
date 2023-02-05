@@ -225,7 +225,11 @@
         android:id="@+id/addQuizFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.addquiz.AddQuizFragment"
         android:label="@string/add_quiz_label"
-        tools:layout="@layout/fragment_quiz_add" />
+        tools:layout="@layout/fragment_quiz_add" >
+        <argument
+            android:name="quiz"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Quiz" />
+    </fragment>
     <fragment
         android:id="@+id/answerQuizFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.answerquiz.AnswerQuizFragment"

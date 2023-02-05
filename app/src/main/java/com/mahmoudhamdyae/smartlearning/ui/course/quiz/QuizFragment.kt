@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
@@ -75,7 +76,8 @@ class QuizFragment: BaseFragment() {
             .setTitle(R.string.add_quiz_dialog_title)
             .setPositiveButton(R.string.add_quiz_dialog_positive_button) { _, _ ->
                 val quizName = editText.text.toString()
-                findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment())
+                val quiz = Quiz(quizName)
+                findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment(quiz))
             }
             .setNegativeButton(R.string.add_quiz_dialog_negative_button) { dialog, _ ->
                 dialog.dismiss()
