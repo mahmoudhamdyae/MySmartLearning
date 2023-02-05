@@ -79,6 +79,12 @@
         <action
             android:id="@+id/action_quizFragment_to_addQuizFragment"
             app:destination="@id/addQuizFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_answerQuizFragment"
+            app:destination="@id/answerQuizFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_quizDetailsFragment"
+            app:destination="@id/quizDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addStudentFragment"
@@ -220,4 +226,18 @@
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.addquiz.AddQuizFragment"
         android:label="@string/add_quiz_label"
         tools:layout="@layout/fragment_quiz_add" />
+    <fragment
+        android:id="@+id/answerQuizFragment"
+        android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.answerquiz.AnswerQuizFragment"
+        android:label="@string/answer_quiz_label"
+        tools:layout="@layout/fragment_quiz_answer" />
+    <fragment
+        android:id="@+id/quizDetailsFragment"
+        android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.quizdetails.QuizDetailsFragment"
+        android:label="@string/quiz_details_label"
+        tools:layout="@layout/fragment_quiz_details" >
+        <argument
+            android:name="quiz"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Quiz" />
+    </fragment>
 </navigation>

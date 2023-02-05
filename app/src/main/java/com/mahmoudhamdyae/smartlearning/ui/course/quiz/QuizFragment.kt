@@ -42,7 +42,14 @@ class QuizFragment: BaseFragment() {
             findNavController().navigateUp()
         }
 
-        val adapter = QuizAdapter(QuizAdapter.OnClickListener {
+        val adapter = QuizAdapter(QuizAdapter.OnClickListener { quiz ->
+            viewModel.isTeacher.observe(viewLifecycleOwner) {
+                if (it == IsTeacher.TEACHER) {
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz))
+                } else {
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment())
+                }
+            }
         })
         viewModel.isTeacher.observe(viewLifecycleOwner) {
             adapter.setIsTeacher(it == IsTeacher.TEACHER)

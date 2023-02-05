@@ -68,6 +68,10 @@
     <string name="quiz_not_solved">Not Solved</string>
     <!-- Quiz Answer -->
     <string name="quiz_next_question_button">Next Question</string>
+    <!-- Quiz Details Activity -->
+    <string name="quiz_details_modify_quiz_button">Modify quiz</string>
+    <string name="quiz_modify_add_question_button">Add Question</string>
+    <string name="quiz_details_students_degrees">Degrees of students who solved the quiz</string>
 
     <!-- Add Quiz Dialog -->
     <string name="add_quiz_dialog_title">Add Quiz</string>
@@ -115,6 +119,8 @@
     <string name="add_student_label">Add Student</string>
     <string name="quizzes_label">Quizzes</string>
     <string name="add_quiz_label">Add Quiz</string>
+    <string name="answer_quiz_label">Answer Quiz</string>
+    <string name="quiz_details_label">Quiz Details</string>
     <string name="materials_label">Materials</string>
     <string name="notifications_label">Notifications</string>
     <string name="my_profile_label">My Profile</string>
