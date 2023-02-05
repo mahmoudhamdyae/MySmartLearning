@@ -17,6 +17,7 @@ class AddQuizViewModel(
 
     var quiz = Quiz()
 
+    val num = MutableLiveData(1)
     val question = MutableLiveData<String>()
     val option1 = MutableLiveData<String>()
     val option2 = MutableLiveData<String>()
@@ -42,17 +43,17 @@ class AddQuizViewModel(
     }
 
     private fun addQuestion() {
-        val question = Question(1, question.value, option1.value,
+        val question = Question(num.value, question.value, option1.value,
             option2.value, option3.value, option4.value, answer.value!!)
         quiz.questions?.add(question)
         _error.value = "${quiz.questions}"
-        viewModelScope.launch {
-        }
     }
 
     fun finish() {
         if (validateTexts()) {
             addQuestion()
+        }
+        viewModelScope.launch {
         }
     }
 
