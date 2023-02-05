@@ -39,6 +39,12 @@ class QuizViewModel(
             })
         }
     }
+
+    fun delQuiz(courseId: String, quizId: String) {
+        viewModelScope.launch {
+            onCompleteListener(repository.delQuiz(courseId, quizId))
+        }
+    }
 }
 
 @Suppress("UNCHECKED_CAST")

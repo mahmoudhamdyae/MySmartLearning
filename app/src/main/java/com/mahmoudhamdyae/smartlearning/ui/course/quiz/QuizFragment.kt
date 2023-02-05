@@ -59,7 +59,7 @@ class QuizFragment: BaseFragment() {
                 }
             }
         }, QuizAdapter.OnDelClickListener {
-            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+            viewModel.delQuiz(courseId, it.id!!)
         })
         viewModel.isTeacher.observe(viewLifecycleOwner) {
             adapter.setIsTeacher(it == IsTeacher.TEACHER)
