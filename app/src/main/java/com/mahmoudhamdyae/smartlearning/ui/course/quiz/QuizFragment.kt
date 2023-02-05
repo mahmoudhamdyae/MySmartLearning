@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 
 class QuizFragment: BaseFragment() {
 
     private lateinit var binding: FragmentQuizBinding
-    override val viewModel: QuizViewModel by viewModels()
+    override val viewModel: QuizViewModel by viewModels {
+        QuizViewModelFactory(FirebaseRepository())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

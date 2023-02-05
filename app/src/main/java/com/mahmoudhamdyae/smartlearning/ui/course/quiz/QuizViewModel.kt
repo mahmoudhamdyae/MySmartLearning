@@ -1,13 +1,14 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
+import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import kotlinx.coroutines.launch
 
-class QuizViewModel : BaseViewModel() {
+class QuizViewModel(
+    private val repository: FirebaseRepository
+) : BaseViewModel() {
 
     private val _quizzes = MutableLiveData<List<Quiz>>()
     val quizzes: LiveData<List<Quiz>>
@@ -21,4 +22,12 @@ class QuizViewModel : BaseViewModel() {
         viewModelScope.launch {
         }
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+class QuizViewModelFactory (
+    private val repository: FirebaseRepository
+) : ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel> create(modelClass: Class<T>) =
+        (QuizViewModel(repository) as T)
 }

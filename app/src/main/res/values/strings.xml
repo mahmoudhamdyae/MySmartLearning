@@ -66,6 +66,8 @@
     <!-- Quiz Adapter For Student -->
     <string name="quiz_solved">Solved</string>
     <string name="quiz_not_solved">Not Solved</string>
+    <!-- Quiz Answer -->
+    <string name="quiz_next_question_button">Next Question</string>
 
     <!-- Add Quiz Dialog -->
     <string name="add_quiz_dialog_title">Add Quiz</string>
