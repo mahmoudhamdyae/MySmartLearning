@@ -59,12 +59,18 @@ class AddQuizViewModel(
         _questionAdded.value = true
     }
 
-    fun finish(courseId: String) {
+    fun finish(courseId: String): Boolean {
         if (validateTexts()) {
             addQuestion()
         }
-        viewModelScope.launch {
-            repository.saveQuiz(courseId, quiz)
+        return if (quiz.questions!!.isNotEmpty()) {
+            viewModelScope.launch {
+                onCompleteListener(repository.saveQuiz(courseId, quiz))
+            }
+            true
+        } else {
+            _toast.value = R.string.add_quiz_empty_questions_toast
+            false
         }
     }
 

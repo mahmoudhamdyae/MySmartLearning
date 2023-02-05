@@ -72,7 +72,8 @@ class AddQuizFragment: BaseFragment() {
     }
 
     private fun finish() {
-        viewModel.finish(courseId)
-        findNavController().navigateUp()
+        if (viewModel.finish(courseId)) {
+            findNavController().navigateUp()
+        }
     }
 }
