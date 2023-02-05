@@ -53,7 +53,7 @@ class QuizFragment: BaseFragment() {
         val adapter = QuizAdapter(QuizAdapter.OnClickListener { quiz ->
             viewModel.isTeacher.observe(viewLifecycleOwner) {
                 if (it == IsTeacher.TEACHER) {
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz))
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz, courseId))
                 } else {
                     findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment())
                 }
@@ -88,7 +88,7 @@ class QuizFragment: BaseFragment() {
                     Toast.makeText(context, R.string.quiz_name_edit_text_empty, Toast.LENGTH_SHORT).show()
                 } else {
                     val quiz = Quiz(quizName)
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment(quiz, courseId))
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment(quiz, courseId, 0))
                 }
             }
             .setNegativeButton(R.string.add_quiz_dialog_negative_button) { dialog, _ ->

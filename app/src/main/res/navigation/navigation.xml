@@ -232,6 +232,9 @@
         <argument
             android:name="courseId"
             app:argType="string" />
+        <argument
+            android:name="addType"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/answerQuizFragment"
@@ -246,5 +249,11 @@
         <argument
             android:name="quiz"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.Quiz" />
+        <action
+            android:id="@+id/action_quizDetailsFragment_to_addQuizFragment"
+            app:destination="@id/addQuizFragment" />
+        <argument
+            android:name="courseId"
+            app:argType="string" />
     </fragment>
 </navigation>

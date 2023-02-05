@@ -12,6 +12,7 @@ import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizAddBinding
+import com.mahmoudhamdyae.smartlearning.ui.course.quiz.quizdetails.QuizDetailsFragmentArgs
 
 class AddQuizFragment: BaseFragment() {
 
@@ -37,8 +38,17 @@ class AddQuizFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val addType = AddQuizFragmentArgs.fromBundle(requireArguments()).addType
         val quiz = AddQuizFragmentArgs.fromBundle(requireArguments()).quiz
         courseId = AddQuizFragmentArgs.fromBundle(requireArguments()).courseId
+
+        if (addType == 0) { // Add Quiz
+            viewModel.num.value = 1
+        } else if (addType == 1) { // Modify Quiz
+        } else { // Add Question
+            viewModel.num.value = quiz.questions?.size?.plus(1)
+        }
+
         viewModel.setValueOfQuiz(quiz)
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->

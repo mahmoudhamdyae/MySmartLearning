@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizDetailsBinding
@@ -26,5 +27,20 @@ class QuizDetailsFragment: BaseFragment() {
         binding.viewModel = viewModel
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val quiz = QuizDetailsFragmentArgs.fromBundle(requireArguments()).quiz
+        val courseId = QuizDetailsFragmentArgs.fromBundle(requireArguments()).courseId
+
+        binding.quizModifyButton.setOnClickListener {
+            findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, courseId, 1))
+        }
+
+        binding.addQuestionButton.setOnClickListener {
+            findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, courseId, 2))
+        }
     }
 }

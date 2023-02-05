@@ -14,7 +14,7 @@ class AddQuizViewModel(
 
     var quiz = Quiz()
 
-    val num = MutableLiveData(1)
+    val num = MutableLiveData<Int>()
     val question = MutableLiveData<String>()
     val option1 = MutableLiveData<String>()
     val option2 = MutableLiveData<String>()
@@ -57,6 +57,9 @@ class AddQuizViewModel(
         answer.value = 0
 
         _questionAdded.value = true
+    }
+
+    private fun modifyquestion() {
     }
 
     fun finish(courseId: String): Boolean {
