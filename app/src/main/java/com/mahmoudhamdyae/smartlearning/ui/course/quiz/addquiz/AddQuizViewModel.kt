@@ -6,29 +6,31 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
+import com.mahmoudhamdyae.smartlearning.data.models.Question
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
-import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import kotlinx.coroutines.launch
 
 class AddQuizViewModel(
     private val repository: FirebaseRepository
 ): BaseViewModel() {
 
-    private var quiz = Quiz()
+    var quiz = Quiz()
 
     val question = MutableLiveData<String>()
-    val answer1 = MutableLiveData<String>()
-    val answer2 = MutableLiveData<String>()
-    val answer3 = MutableLiveData<String>()
-    val answer4 = MutableLiveData<String>()
+    val option1 = MutableLiveData<String>()
+    val option2 = MutableLiveData<String>()
+    val option3 = MutableLiveData<String>()
+    val option4 = MutableLiveData<String>()
+    val answer = MutableLiveData(0)
 
     private fun validateTexts(): Boolean {
         return !(question.value.isNullOrEmpty()
-                || answer1.value.isNullOrEmpty()
-                || answer2.value.isNullOrEmpty()
-                || answer3.value.isNullOrEmpty()
-                || answer4.value.isNullOrEmpty())
+                || option1.value.isNullOrEmpty()
+                || option2.value.isNullOrEmpty()
+                || option3.value.isNullOrEmpty()
+                || option4.value.isNullOrEmpty()
+                || answer.value == 0)
     }
 
     fun validateAndAddQuestion() {
@@ -40,6 +42,10 @@ class AddQuizViewModel(
     }
 
     private fun addQuestion() {
+        val question = Question(1, question.value, option1.value,
+            option2.value, option3.value, option4.value, answer.value!!)
+        quiz.questions?.add(question)
+        _error.value = "${quiz.questions}"
         viewModelScope.launch {
         }
     }
@@ -50,7 +56,7 @@ class AddQuizViewModel(
         }
     }
 
-    fun getQuiz(quiz2: Quiz) {
+    fun setValueOfQuiz(quiz2: Quiz) {
         quiz = quiz2
     }
 }

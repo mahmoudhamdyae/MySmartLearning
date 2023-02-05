@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
@@ -35,13 +34,17 @@ class AddQuizFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val quiz = AddQuizFragmentArgs.fromBundle(requireArguments()).quiz
-        viewModel.getQuiz(quiz)
+        viewModel.setValueOfQuiz(quiz)
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.option1_radio_button) {
+                viewModel.answer.value = 1
             } else if (checkedId == R.id.option2_radio_button) {
+                viewModel.answer.value = 2
             } else if (checkedId == R.id.option3_radio_button) {
+                viewModel.answer.value = 3
             } else { // option 4
+                viewModel.answer.value = 4
             }
         }
 
