@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.databinding.QuizItemBinding
 
-class QuizAdapter(private val onClickListener: OnClickListener) :
+class QuizAdapter(
+    private val onClickListener: OnClickListener,
+    private val onDelClickListener: OnDelClickListener
+) :
     ListAdapter<Quiz, QuizAdapter.QuizzesPropertyViewHolder>(DiffCallback) {
 
     private var isTeacher = true
@@ -43,13 +46,11 @@ class QuizAdapter(private val onClickListener: OnClickListener) :
      * Create new [RecyclerView] item views (invoked by the layout manager)
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizzesPropertyViewHolder {
-        return QuizzesPropertyViewHolder(
-            QuizItemBinding.inflate(
-                LayoutInflater.from(
-                    parent.context
-                )
-            )
-        )
+        val binding = QuizItemBinding.inflate(LayoutInflater.from(parent.context))
+        binding.deleteButton.setOnClickListener {
+            onDelClickListener.onDelClick(binding.property!!)
+        }
+        return QuizzesPropertyViewHolder(binding)
     }
 
     /**
@@ -84,5 +85,9 @@ class QuizAdapter(private val onClickListener: OnClickListener) :
      */
     class OnClickListener(val clickListener: (quiz: Quiz) -> Unit) {
         fun onClick(quiz: Quiz) = clickListener(quiz)
+    }
+
+    class OnDelClickListener(val clickListener: (quiz: Quiz) -> Unit) {
+        fun onDelClick(quiz: Quiz) = clickListener(quiz)
     }
 }

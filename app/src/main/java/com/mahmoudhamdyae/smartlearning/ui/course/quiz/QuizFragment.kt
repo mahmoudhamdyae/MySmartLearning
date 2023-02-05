@@ -58,6 +58,8 @@ class QuizFragment: BaseFragment() {
                     findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment())
                 }
             }
+        }, QuizAdapter.OnDelClickListener {
+            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
         })
         viewModel.isTeacher.observe(viewLifecycleOwner) {
             adapter.setIsTeacher(it == IsTeacher.TEACHER)

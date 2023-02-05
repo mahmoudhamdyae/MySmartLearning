@@ -25,22 +25,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/quiz_no"
-                    style="@style/MainTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
-                    android:text="@string/quiz_activity_quiz_number"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
                     android:id="@+id/quiz_name"
                     style="@style/MainTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/card_text_margin"
-                    app:layout_constraintStart_toEndOf="@id/quiz_no"
+                    android:text="@{property.name}"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Quiz Name" />
 
@@ -52,7 +43,7 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/card_text_margin"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/quiz_no"
+                    app:layout_constraintTop_toBottomOf="@id/quiz_name"
                     tools:text="Tue Mar 12 16:46:37 " />
 
                 <TextView
