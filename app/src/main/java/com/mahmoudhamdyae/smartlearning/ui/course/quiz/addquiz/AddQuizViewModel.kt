@@ -43,17 +43,26 @@ class AddQuizViewModel(
     }
 
     private fun addQuestion() {
-        val question = Question(num.value, question.value, option1.value,
+        val questionInQuiz = Question(num.value, question.value, option1.value,
             option2.value, option3.value, option4.value, answer.value!!)
-        quiz.questions?.add(question)
+        quiz.questions?.add(questionInQuiz)
         _error.value = "${quiz.questions}"
+
+        num.value = num.value?.plus(1)
+        question.value = ""
+        option1.value = ""
+        option2.value = ""
+        option3.value = ""
+        option4.value = ""
+        answer.value = 0
     }
 
-    fun finish() {
+    fun finish(courseId: String) {
         if (validateTexts()) {
             addQuestion()
         }
         viewModelScope.launch {
+            repository.saveQuiz(courseId, quiz)
         }
     }
 

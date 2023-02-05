@@ -63,6 +63,7 @@
 
     <!-- Quiz Activity -->
     <string name="quiz_activity_quiz_number">Quiz Number : </string>
+    <string name="quiz_name_edit_text_empty">Please, Write the quiz name</string>
     <!-- Quiz Adapter For Student -->
     <string name="quiz_solved">Solved</string>
     <string name="quiz_not_solved">Not Solved</string>

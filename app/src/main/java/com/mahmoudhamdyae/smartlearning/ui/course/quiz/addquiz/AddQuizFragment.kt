@@ -18,6 +18,8 @@ class AddQuizFragment: BaseFragment() {
         AddQuizViewModelFactory(FirebaseRepository())
     }
 
+    private lateinit var courseId: String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,6 +36,7 @@ class AddQuizFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val quiz = AddQuizFragmentArgs.fromBundle(requireArguments()).quiz
+        courseId = AddQuizFragmentArgs.fromBundle(requireArguments()).courseId!!
         viewModel.setValueOfQuiz(quiz)
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -62,7 +65,7 @@ class AddQuizFragment: BaseFragment() {
     }
 
     private fun finish() {
-        viewModel.finish()
+        viewModel.finish(courseId)
         findNavController().navigateUp()
     }
 }

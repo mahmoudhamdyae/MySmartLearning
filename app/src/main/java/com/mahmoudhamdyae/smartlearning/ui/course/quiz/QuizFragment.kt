@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +24,8 @@ class QuizFragment: BaseFragment() {
         QuizViewModelFactory(FirebaseRepository())
     }
 
+    private lateinit var courseId: String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +42,8 @@ class QuizFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getUserType()
+
+        courseId = QuizFragmentArgs.fromBundle(requireArguments()).courseId!!
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
@@ -74,10 +79,14 @@ class QuizFragment: BaseFragment() {
             .setView(editText)
             .setIcon(R.drawable.quiz)
             .setTitle(R.string.add_quiz_dialog_title)
-            .setPositiveButton(R.string.add_quiz_dialog_positive_button) { _, _ ->
+            .setPositiveButton(R.string.add_quiz_dialog_positive_button) { dialog, _ ->
                 val quizName = editText.text.toString()
-                val quiz = Quiz(quizName)
-                findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment(quiz))
+                if (quizName.isEmpty()) {
+                    Toast.makeText(context, R.string.quiz_name_edit_text_empty, Toast.LENGTH_SHORT).show()
+                } else {
+                    val quiz = Quiz(quizName)
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment(quiz, courseId))
+                }
             }
             .setNegativeButton(R.string.add_quiz_dialog_negative_button) { dialog, _ ->
                 dialog.dismiss()

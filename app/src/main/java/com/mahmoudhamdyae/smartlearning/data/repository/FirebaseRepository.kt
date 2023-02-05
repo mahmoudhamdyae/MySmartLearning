@@ -13,6 +13,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.Message
+import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 import java.io.File
@@ -167,6 +168,10 @@ class FirebaseRepository {
     }
 
     // Quizzes
+
+    fun saveQuiz(courseId: String, quiz: Quiz): Task<Void> {
+        return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quiz.id!!).setValue(quiz)
+    }
 
     // Chats
 
