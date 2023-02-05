@@ -79,6 +79,10 @@
     <string name="add_quiz_dialog_edit_text_hint">Quiz Name</string>
     <string name="add_quiz_dialog_negative_button">Cancel</string>
     <string name="add_quiz_dialog_positive_button">Add</string>
+    <!-- Confirm Discard Dialog -->
+    <string name="discard_message">Discard changes?</string>
+    <string name="discard_yes">Discard</string>
+    <string name="discard_no">Cancel</string>
 
     <!-- Add Quiz Activity -->
     <string name="add_quiz_question_number_text_view">Question number: </string>

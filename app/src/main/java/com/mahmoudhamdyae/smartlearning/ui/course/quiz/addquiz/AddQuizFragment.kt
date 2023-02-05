@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
@@ -65,6 +67,15 @@ class AddQuizFragment: BaseFragment() {
         binding.finishButton.setOnClickListener {
             finish()
         }
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Handle the back button event
+                    confirmDiscard()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun addAnotherQuestion() {
@@ -75,5 +86,17 @@ class AddQuizFragment: BaseFragment() {
         if (viewModel.finish(courseId)) {
             findNavController().navigateUp()
         }
+    }
+
+    private fun confirmDiscard() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(R.string.discard_message)
+            .setPositiveButton(R.string.discard_yes) { _, _ ->
+                findNavController().navigateUp()
+            }
+            .setNegativeButton(R.string.discard_no) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }
