@@ -173,6 +173,10 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quiz.id!!).setValue(quiz)
     }
 
+    fun getQuizzes(courseId: String): DatabaseReference {
+        return courseDatabaseReference.child(courseId).child(Constants.Quizzes)
+    }
+
     // Chats
 
     fun sendMessageGroup(courseId: String, message: Message): Task<Void> {

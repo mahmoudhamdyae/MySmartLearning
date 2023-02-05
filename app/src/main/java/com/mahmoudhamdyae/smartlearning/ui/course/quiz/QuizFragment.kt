@@ -44,6 +44,7 @@ class QuizFragment: BaseFragment() {
         getUserType()
 
         courseId = QuizFragmentArgs.fromBundle(requireArguments()).courseId!!
+        viewModel.getListOfQuizzes(courseId)
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()

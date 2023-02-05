@@ -12,14 +12,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/fragments_margin">
 
         <TextView
             android:id="@+id/text_view"
             style="@style/MainTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:text="@string/add_quiz_question_number_text_view"
             app:layout_constraintEnd_toStartOf="@id/question_number"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,9 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/question_number"
             android:hint="@string/add_quiz_question_hint"
-            android:text="@={viewModel.question}"
             android:importantForAutofill="no"
             android:inputType="text"
+            android:text="@={viewModel.question}"
             app:layout_constraintTop_toBottomOf="@id/question_number" />
 
         <EditText
@@ -54,31 +54,31 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/question"
             android:hint="@string/add_quiz_option_1_hint"
-            android:text="@={viewModel.option1}"
             android:importantForAutofill="no"
             android:inputType="text"
+            android:text="@={viewModel.option1}"
             app:layout_constraintTop_toBottomOf="@id/question" />
 
         <EditText
             android:id="@+id/option2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewModel.option2}"
             android:layout_below="@+id/option1"
             android:hint="@string/add_quiz_option_2_hint"
             android:importantForAutofill="no"
             android:inputType="text"
+            android:text="@={viewModel.option2}"
             app:layout_constraintTop_toBottomOf="@id/option1" />
 
         <EditText
             android:id="@+id/option3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@={viewModel.option3}"
             android:layout_below="@+id/option2"
             android:hint="@string/add_quiz_option_3_hint"
             android:importantForAutofill="no"
             android:inputType="text"
+            android:text="@={viewModel.option3}"
             app:layout_constraintTop_toBottomOf="@id/option2" />
 
         <EditText
@@ -87,9 +87,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/option3"
             android:hint="@string/add_quiz_option_4_hint"
-            android:text="@={viewModel.option4}"
             android:importantForAutofill="no"
             android:inputType="text"
+            android:text="@={viewModel.option4}"
             app:layout_constraintTop_toBottomOf="@id/option3" />
 
         <TextView
