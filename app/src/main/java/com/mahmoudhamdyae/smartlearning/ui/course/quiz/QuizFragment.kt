@@ -79,7 +79,7 @@ class QuizFragment: BaseFragment() {
             .setView(editText)
             .setIcon(R.drawable.quiz)
             .setTitle(R.string.add_quiz_dialog_title)
-            .setPositiveButton(R.string.add_quiz_dialog_positive_button) { dialog, _ ->
+            .setPositiveButton(R.string.add_quiz_dialog_positive_button) { _, _ ->
                 val quizName = editText.text.toString()
                 if (quizName.isEmpty()) {
                     Toast.makeText(context, R.string.quiz_name_edit_text_empty, Toast.LENGTH_SHORT).show()

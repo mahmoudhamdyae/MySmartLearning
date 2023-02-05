@@ -1,9 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz.addquiz
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Question
@@ -24,6 +21,10 @@ class AddQuizViewModel(
     val option3 = MutableLiveData<String>()
     val option4 = MutableLiveData<String>()
     val answer = MutableLiveData(0)
+
+    private val _questionAdded = MutableLiveData(false)
+    val questionAdded: LiveData<Boolean>
+        get() = _questionAdded
 
     private fun validateTexts(): Boolean {
         return !(question.value.isNullOrEmpty()
@@ -46,7 +47,6 @@ class AddQuizViewModel(
         val questionInQuiz = Question(num.value, question.value, option1.value,
             option2.value, option3.value, option4.value, answer.value!!)
         quiz.questions?.add(questionInQuiz)
-        _error.value = "${quiz.questions}"
 
         num.value = num.value?.plus(1)
         question.value = ""
@@ -55,6 +55,8 @@ class AddQuizViewModel(
         option3.value = ""
         option4.value = ""
         answer.value = 0
+
+        _questionAdded.value = true
     }
 
     fun finish(courseId: String) {
@@ -68,6 +70,10 @@ class AddQuizViewModel(
 
     fun setValueOfQuiz(quiz2: Quiz) {
         quiz = quiz2
+    }
+
+    fun addedQuestion() {
+        _questionAdded.value = false
     }
 }
 
