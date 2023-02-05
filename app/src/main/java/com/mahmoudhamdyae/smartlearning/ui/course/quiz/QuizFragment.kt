@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -65,11 +66,15 @@ class QuizFragment: BaseFragment() {
     }
 
     private fun addQuiz() {
+        val editText = EditText(context)
+        editText.setPadding(16, 0, 16, 0)
+        editText.setHint(R.string.add_quiz_dialog_edit_text_hint)
         MaterialAlertDialogBuilder(requireContext())
+            .setView(editText)
             .setIcon(R.drawable.quiz)
             .setTitle(R.string.add_quiz_dialog_title)
-            .setMessage(R.string.add_quiz_dialog_edit_text_hint)
             .setPositiveButton(R.string.add_quiz_dialog_positive_button) { _, _ ->
+                val quizName = editText.text.toString()
                 findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment())
             }
             .setNegativeButton(R.string.add_quiz_dialog_negative_button) { dialog, _ ->
