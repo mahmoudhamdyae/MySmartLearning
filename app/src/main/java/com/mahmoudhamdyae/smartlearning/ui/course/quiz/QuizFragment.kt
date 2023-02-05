@@ -59,7 +59,7 @@ class QuizFragment: BaseFragment() {
                 }
             }
         }, QuizAdapter.OnDelClickListener {
-            viewModel.delQuiz(courseId, it.id!!)
+            delQuiz(it.id!!)
         })
         viewModel.isTeacher.observe(viewLifecycleOwner) {
             adapter.setIsTeacher(it == IsTeacher.TEACHER)
@@ -92,6 +92,22 @@ class QuizFragment: BaseFragment() {
                 }
             }
             .setNegativeButton(R.string.add_quiz_dialog_negative_button) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun delQuiz(quizId: String) {
+        val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+        materialAlertDialogBuilder
+            .setMessage(R.string.quiz_delete_dialog_msg)
+            // Delete Button
+            .setPositiveButton(R.string.quiz_delete_dialog_delete) { dialog, _ ->
+                viewModel.delQuiz(courseId, quizId)
+                dialog.dismiss()
+            }
+            // Cancel Button
+            .setNegativeButton(R.string.quiz_delete_dialog_cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

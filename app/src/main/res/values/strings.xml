@@ -118,6 +118,9 @@
     <string name="material_delete_dialog_msg">Are you sure you want to delete this material ?</string>
     <string name="material_delete_dialog_delete">Delete</string>
     <string name="material_delete_dialog_cancel">Cancel</string>
+    <string name="quiz_delete_dialog_msg">Are you sure you want to delete this quiz ?</string>
+    <string name="quiz_delete_dialog_delete">Delete</string>
+    <string name="quiz_delete_dialog_cancel">Cancel</string>
 
     <!-- Screens Labels -->
     <string name="main_label">Smart Learning</string>

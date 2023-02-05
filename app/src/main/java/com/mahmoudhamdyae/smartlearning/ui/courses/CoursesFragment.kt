@@ -61,11 +61,6 @@ class CoursesFragment: BaseFragment() {
         })
         binding.coursesList.adapter = adapter
 
-//        viewModel.user.observe(viewLifecycleOwner) { user ->
-//            Toast.makeText(context, user?.teacher.toString(), Toast.LENGTH_SHORT).show()
-//            adapter.setVisibility(user!!.teacher, false)
-//        }
-
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.notification_item -> {
