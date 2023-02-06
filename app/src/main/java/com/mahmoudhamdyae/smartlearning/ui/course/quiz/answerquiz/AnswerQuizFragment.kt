@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -65,7 +66,11 @@ class AnswerQuizFragment: BaseFragment() {
 
         viewModel.navigateUp.observe(viewLifecycleOwner) {
             if (it) {
-                // todo Show Degree
+//                viewModel.degree.observe(viewLifecycleOwner) { degree ->
+//                    Toast.makeText(context, degree.toString(), Toast.LENGTH_SHORT).show()
+//                    val newDegree = 100 * (degree / quiz.questions.size)
+//                    Toast.makeText(context, (100 * (2 / 3)).toString(), Toast.LENGTH_SHORT).show()
+//                }
                 findNavController().navigateUp()
                 viewModel.finishNavigating()
             }
@@ -88,6 +93,11 @@ class AnswerQuizFragment: BaseFragment() {
     }
 
     private fun onAnswer(answer: Int, view: View) {
+        binding.option1.isClickable = false
+        binding.option2.isClickable = false
+        binding.option3.isClickable = false
+        binding.option4.isClickable = false
+
         if (viewModel.onAnswer(answer)) {
             view.background = ContextCompat.getDrawable(requireContext(), R.color.green)
         } else {
@@ -120,6 +130,11 @@ class AnswerQuizFragment: BaseFragment() {
         binding.option2.background = ContextCompat.getDrawable(requireContext(), R.color.grey)
         binding.option3.background = ContextCompat.getDrawable(requireContext(), R.color.grey)
         binding.option4.background = ContextCompat.getDrawable(requireContext(), R.color.grey)
+
+        binding.option1.isClickable = true
+        binding.option2.isClickable = true
+        binding.option3.isClickable = true
+        binding.option4.isClickable = true
     }
 
     private fun confirmDiscard() {

@@ -32,6 +32,10 @@ class AnswerQuizViewModel(
     val navigateUp: LiveData<Boolean>
         get() = _navigateUp
 
+    private val _degree = MutableLiveData(0)
+    val degree: LiveData<Int>
+        get() = _degree
+
     private fun putValues(question2: Question) {
         question.value = question2.question!!
         option1.value = question2.option1!!
@@ -42,7 +46,10 @@ class AnswerQuizViewModel(
     }
 
     fun onAnswer(answer2: Int): Boolean {
-        return answer.value == answer2
+        return if (answer.value == answer2) {
+            _degree.value = _degree.value?.plus(1)
+            true
+        } else false
     }
 
     fun setNextQuestion() {
