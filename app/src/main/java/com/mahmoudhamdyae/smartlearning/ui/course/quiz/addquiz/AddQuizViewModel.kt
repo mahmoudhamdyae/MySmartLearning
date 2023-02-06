@@ -24,10 +24,6 @@ class AddQuizViewModel(
     val option4 = MutableLiveData<String>()
     val answer = MutableLiveData(0)
 
-    private val _questionAdded = MutableLiveData(false)
-    val questionAdded: LiveData<Boolean>
-        get() = _questionAdded
-
     private val _navigateUp = MutableLiveData(false)
     val navigateUp: LiveData<Boolean>
         get() = _navigateUp
@@ -59,14 +55,8 @@ class AddQuizViewModel(
         quiz.questions.add(questionInQuiz)
 
         _num.value = _num.value?.plus(1)
-        question.value = ""
-        option1.value = ""
-        option2.value = ""
-        option3.value = ""
-        option4.value = ""
-        answer.value = 0
-
-        _questionAdded.value = true
+        val question = Question(_num.value, "", "", "", "", "", 0)
+        putValuesToEditTexts(question)
     }
 
     fun validateAndUpdateQuestion(courseId: String) {
@@ -137,10 +127,6 @@ class AddQuizViewModel(
 
     fun setValueOfQuiz(quiz2: Quiz) {
         quiz = quiz2
-    }
-
-    fun addedQuestion() {
-        _questionAdded.value = false
     }
 }
 

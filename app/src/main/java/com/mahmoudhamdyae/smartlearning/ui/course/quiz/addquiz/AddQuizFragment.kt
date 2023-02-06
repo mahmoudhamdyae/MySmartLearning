@@ -67,21 +67,23 @@ class AddQuizFragment: BaseFragment() {
         viewModel.setValueOfQuiz(quiz)
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            viewModel.answer.value = when (checkedId) {
-                R.id.option1_radio_button -> 1
-                R.id.option2_radio_button -> 2
-                R.id.option3_radio_button -> 3
-                else -> 4
+            when (checkedId) {
+                R.id.option1_radio_button -> viewModel.answer.value = 1
+                R.id.option2_radio_button -> viewModel.answer.value = 2
+                R.id.option3_radio_button -> viewModel.answer.value = 3
+                R.id.option4_radio_button -> viewModel.answer.value = 4
             }
         }
 
-        viewModel.questionAdded.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.option1RadioButton.isChecked = false
-                binding.option2RadioButton.isChecked = false
-                binding.option3RadioButton.isChecked = false
-                binding.option4RadioButton.isChecked = false
-                viewModel.addedQuestion()
+        viewModel.answer.observe(viewLifecycleOwner) {
+            when (it) {
+                1 -> binding.option1RadioButton.isChecked = true
+                2 -> binding.option2RadioButton.isChecked = true
+                3 -> binding.option3RadioButton.isChecked = true
+                4 -> binding.option4RadioButton.isChecked = true
+                else -> {
+                    binding.radioGroup.clearCheck()
+                }
             }
         }
 
