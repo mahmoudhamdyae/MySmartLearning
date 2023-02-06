@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -45,20 +46,21 @@ class AnswerQuizFragment: BaseFragment() {
         viewModel.setValueOfQuiz(quiz)
 
         binding.option1.setOnClickListener {
-            onAnswer(1)
+            onAnswer(1, it)
         }
         binding.option2.setOnClickListener {
-            onAnswer(2)
+            onAnswer(2, it)
         }
         binding.option3.setOnClickListener {
-            onAnswer(3)
+            onAnswer(3, it)
         }
         binding.option4.setOnClickListener {
-            onAnswer(4)
+            onAnswer(4, it)
         }
 
         binding.nextQuestionButton.setOnClickListener {
             nextQuestion()
+            it.visibility = View.GONE
         }
 
         viewModel.navigateUp.observe(viewLifecycleOwner) {
@@ -78,10 +80,34 @@ class AnswerQuizFragment: BaseFragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-    private fun onAnswer(answer: Int) {
+    private fun onAnswer(answer: Int, view: View) {
+        if (viewModel.onAnswer(answer)) {
+            view.background = ContextCompat.getDrawable(requireContext(), R.color.green)
+        } else {
+            view.background = ContextCompat.getDrawable(requireContext(), R.color.red)
+            viewModel.answer.observe(viewLifecycleOwner) {
+                when (it) {
+                    1 -> {
+                        binding.option1.background = ContextCompat.getDrawable(requireContext(), R.color.green)
+                    }
+                    2 -> {
+                        binding.option2.background = ContextCompat.getDrawable(requireContext(), R.color.green)
+                    }
+                    3 -> {
+                        binding.option3.background = ContextCompat.getDrawable(requireContext(), R.color.green)
+                    }
+                    4 -> {
+                        binding.option4.background = ContextCompat.getDrawable(requireContext(), R.color.green)
+                    }
+                }
+            }
+        }
+
+        binding.nextQuestionButton.visibility = View.VISIBLE
     }
 
     private fun nextQuestion() {
+        viewModel.setNextQuestion()
     }
 
     private fun confirmDiscard() {
