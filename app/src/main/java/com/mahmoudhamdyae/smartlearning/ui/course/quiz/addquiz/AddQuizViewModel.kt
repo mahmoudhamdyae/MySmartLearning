@@ -14,7 +14,9 @@ class AddQuizViewModel(
 
     var quiz = Quiz()
 
-    val num = MutableLiveData<Int>()
+    private val _num = MutableLiveData<Int>()
+    val num: LiveData<Int>
+        get() = _num
     val question = MutableLiveData<String>()
     val option1 = MutableLiveData<String>()
     val option2 = MutableLiveData<String>()
@@ -25,6 +27,10 @@ class AddQuizViewModel(
     private val _questionAdded = MutableLiveData(false)
     val questionAdded: LiveData<Boolean>
         get() = _questionAdded
+
+    private val _navigateUp = MutableLiveData(false)
+    val navigateUp: LiveData<Boolean>
+        get() = _navigateUp
 
     private fun validateTexts(): Boolean {
         return !(question.value.isNullOrEmpty()
@@ -44,11 +50,11 @@ class AddQuizViewModel(
     }
 
     private fun addQuestion() {
-        val questionInQuiz = Question(num.value, question.value, option1.value,
+        val questionInQuiz = Question(_num.value, question.value, option1.value,
             option2.value, option3.value, option4.value, answer.value!!)
-        quiz.questions?.add(questionInQuiz)
+        quiz.questions.add(questionInQuiz)
 
-        num.value = num.value?.plus(1)
+        _num.value = _num.value?.plus(1)
         question.value = ""
         option1.value = ""
         option2.value = ""
@@ -59,22 +65,60 @@ class AddQuizViewModel(
         _questionAdded.value = true
     }
 
-    private fun modifyquestion() {
+    fun validateAndUpdateQuestion(courseId: String) {
+        if (validateTexts()) {
+            updateQuestion(courseId)
+        } else {
+            _toast.value = R.string.add_quiz_empty_fields_toast
+        }
     }
 
-    fun finish(courseId: String): Boolean {
+    fun putValuesToEditTexts(question2: Question) {
+        question.value = question2.question!!
+        option1.value = question2.option1!!
+        option2.value = question2.option2!!
+        option3.value = question2.option3!!
+        option4.value = question2.option4!!
+        answer.value = question2.answer
+    }
+
+    private fun updateQuestion(courseId: String) {
+        val questionInQuiz = Question(_num.value, question.value, option1.value,
+            option2.value, option3.value, option4.value, answer.value!!)
+        quiz.questions[_num.value!! - 1] = questionInQuiz
+        viewModelScope.launch {
+            onCompleteListener(repository.updateQuestion(courseId, quiz.id, _num.value!! - 1, questionInQuiz))
+        }
+
+        if (_num.value!! >= quiz.questions.size) {
+            _navigateUp.value = true
+            _toast.value = R.string.add_quiz_no_questions_to_modify
+        } else {
+            _num.value = _num.value?.plus(1)
+            putValuesToEditTexts(quiz.questions[_num.value!! - 1])
+        }
+    }
+
+    fun finishAdd(courseId: String) {
         if (validateTexts()) {
             addQuestion()
         }
-        return if (quiz.questions!!.isNotEmpty()) {
+        if (quiz.questions.isNotEmpty()) {
             viewModelScope.launch {
                 onCompleteListener(repository.saveQuiz(courseId, quiz))
             }
-            true
+            _navigateUp.value = true
         } else {
             _toast.value = R.string.add_quiz_empty_questions_toast
-            false
         }
+    }
+
+    fun setNumValue(num2: Int) {
+        _num.value = num2
+    }
+
+    fun finishNavigating() {
+        _navigateUp.value = false
     }
 
     fun setValueOfQuiz(quiz2: Quiz) {

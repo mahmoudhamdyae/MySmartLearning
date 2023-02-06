@@ -11,10 +11,7 @@ import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.mahmoudhamdyae.smartlearning.data.models.Course
-import com.mahmoudhamdyae.smartlearning.data.models.Message
-import com.mahmoudhamdyae.smartlearning.data.models.Quiz
-import com.mahmoudhamdyae.smartlearning.data.models.User
+import com.mahmoudhamdyae.smartlearning.data.models.*
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 import java.io.File
 
@@ -171,6 +168,15 @@ class FirebaseRepository {
 
     fun saveQuiz(courseId: String, quiz: Quiz): Task<Void> {
         return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quiz.id!!).setValue(quiz)
+    }
+
+    fun updateQuestion(courseId: String, quizId: String, questionNo: Int, question: Question): Task<Void> {
+        val questionValues = question.toMap()
+        val childUpdates = hashMapOf<String, Any>(
+            "/${Constants.QUESTIONS}/${questionNo}" to questionValues
+        )
+        return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quizId)
+            .updateChildren(childUpdates)
     }
 
     fun getQuizzes(courseId: String): DatabaseReference {

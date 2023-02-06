@@ -8,8 +8,8 @@ import java.util.*
 @Parcelize
 data class Quiz(
     val name: String? = null,
-    val questions: MutableList<Question>? = mutableListOf(),
-    val date: String? =
+    val questions: MutableList<Question> = mutableListOf(),
+    val date: String =
         SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.getDefault()).format(Date()),
-    val id: String? = UUID.randomUUID().toString()
+    val id: String = UUID.randomUUID().toString()
 ): Parcelable

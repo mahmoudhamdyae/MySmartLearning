@@ -12,4 +12,17 @@ data class Question(
     val option3: String? = null,
     val option4: String? = null,
     val answer: Int = 0
-): Parcelable
+): Parcelable {
+
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "number" to number,
+            "question" to question,
+            "option1" to option1,
+            "option2" to option2,
+            "option3" to option3,
+            "option4" to option4,
+            "answer" to answer
+        )
+    }
+}

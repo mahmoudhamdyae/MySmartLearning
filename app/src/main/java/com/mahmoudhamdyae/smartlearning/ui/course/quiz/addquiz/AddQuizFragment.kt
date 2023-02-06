@@ -10,9 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizAddBinding
-import com.mahmoudhamdyae.smartlearning.ui.course.quiz.quizdetails.QuizDetailsFragmentArgs
 
 class AddQuizFragment: BaseFragment() {
 
@@ -21,6 +21,8 @@ class AddQuizFragment: BaseFragment() {
         AddQuizViewModelFactory(FirebaseRepository())
     }
 
+    private var addType: Int = 0
+    private lateinit var quiz: Quiz
     private lateinit var courseId: String
 
     override fun onCreateView(
@@ -38,15 +40,28 @@ class AddQuizFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val addType = AddQuizFragmentArgs.fromBundle(requireArguments()).addType
-        val quiz = AddQuizFragmentArgs.fromBundle(requireArguments()).quiz
+        addType = AddQuizFragmentArgs.fromBundle(requireArguments()).addType
+        quiz = AddQuizFragmentArgs.fromBundle(requireArguments()).quiz
         courseId = AddQuizFragmentArgs.fromBundle(requireArguments()).courseId
 
-        if (addType == 0) { // Add Quiz
-            viewModel.num.value = 1
-        } else if (addType == 1) { // Modify Quiz
-        } else { // Add Question
-            viewModel.num.value = quiz.questions?.size?.plus(1)
+        when (addType) {
+            0 -> { // Add Quiz
+                viewModel.setNumValue(1)
+            }
+            1 -> { // Modify Quiz
+                viewModel.putValuesToEditTexts(quiz.questions[0])
+                when (quiz.questions[0].answer) {
+                    1 -> { binding.option1RadioButton.isChecked = true }
+                    2 -> { binding.option2RadioButton.isChecked = true }
+                    3 -> { binding.option3RadioButton.isChecked = true }
+                    4 -> { binding.option4RadioButton.isChecked = true }
+                }
+                binding.addAnotherQuestionButton.setText(R.string.add_quiz_modify_question_button)
+                viewModel.setNumValue(1)
+            }
+            else -> { // Add Question
+                viewModel.setNumValue(quiz.questions.size.plus(1))
+            }
         }
 
         viewModel.setValueOfQuiz(quiz)
@@ -78,6 +93,13 @@ class AddQuizFragment: BaseFragment() {
             finish()
         }
 
+        viewModel.navigateUp.observe(viewLifecycleOwner) {
+            if (it) {
+                findNavController().navigateUp()
+                viewModel.finishNavigating()
+            }
+        }
+
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -89,12 +111,18 @@ class AddQuizFragment: BaseFragment() {
     }
 
     private fun addAnotherQuestion() {
-        viewModel.validateAndAddQuestion()
+        if (addType == 1) { // Modify Questions
+            viewModel.validateAndUpdateQuestion(courseId)
+        } else {
+            viewModel.validateAndAddQuestion()
+        }
     }
 
     private fun finish() {
-        if (viewModel.finish(courseId)) {
+        if (addType == 1) {
             findNavController().navigateUp()
+        } else {
+            viewModel.finishAdd(courseId)
         }
     }
 
