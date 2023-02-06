@@ -63,8 +63,8 @@ class AnswerQuizViewModel(
 
     private fun saveDegree() {
         viewModelScope.launch {
-            val percentDegree: Double = 100.0 * (_degree.value?.div(_noOfQuestions.value!!)!!)
-            onCompleteListener(repository.saveDegree(courseId ,quiz.id , percentDegree))
+//            val percentDegree: Double = 100.0 * (_degree.value?.div(_noOfQuestions.value!!)!!)
+            onCompleteListener(repository.saveDegree(courseId ,quiz.id , _degree.value!!, _noOfQuestions.value!!))
         }
     }
 

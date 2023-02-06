@@ -191,8 +191,9 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quizId).child(Constants.STUDENTS)
     }
 
-    fun saveDegree(courseId: String, quizId: String, degree: Double): Task<Void> {
-        return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quizId).child(Constants.STUDENTS).child(getUid()).setValue(degree)
+    fun saveDegree(courseId: String, quizId: String, degree: Int, noOfQuestions: Int): Task<Void> {
+        val percentDegree: Double = 100.0 * degree / noOfQuestions
+        return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quizId).child(Constants.STUDENTS).child(getUid()).setValue(percentDegree)
     }
 
     // Chats
