@@ -46,6 +46,13 @@ class AnswerQuizViewModel(
     }
 
     fun setNextQuestion() {
+        _num.value = _num.value?.plus(1)
+        if (_num.value!! > _noOfQuestions.value!!) {
+            // todo save degree
+            _navigateUp.value = true
+        } else {
+            putValues(quiz.questions[_num.value!!.minus(1)])
+        }
     }
 
     fun finishNavigating() {

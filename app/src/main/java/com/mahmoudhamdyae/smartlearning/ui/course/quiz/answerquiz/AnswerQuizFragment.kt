@@ -66,7 +66,14 @@ class AnswerQuizFragment: BaseFragment() {
         viewModel.navigateUp.observe(viewLifecycleOwner) {
             if (it) {
                 // todo Show Degree
+                findNavController().navigateUp()
                 viewModel.finishNavigating()
+            }
+        }
+
+        viewModel.num.observe(viewLifecycleOwner) {
+            if (quiz.questions.size == it) {
+                binding.nextQuestionButton.text = getString(R.string.add_quiz_finish_button)
             }
         }
 
@@ -108,6 +115,11 @@ class AnswerQuizFragment: BaseFragment() {
 
     private fun nextQuestion() {
         viewModel.setNextQuestion()
+
+        binding.option1.background = ContextCompat.getDrawable(requireContext(), R.color.grey)
+        binding.option2.background = ContextCompat.getDrawable(requireContext(), R.color.grey)
+        binding.option3.background = ContextCompat.getDrawable(requireContext(), R.color.grey)
+        binding.option4.background = ContextCompat.getDrawable(requireContext(), R.color.grey)
     }
 
     private fun confirmDiscard() {
