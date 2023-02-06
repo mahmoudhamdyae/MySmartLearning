@@ -240,7 +240,14 @@
         android:id="@+id/answerQuizFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.answerquiz.AnswerQuizFragment"
         android:label="@string/answer_quiz_label"
-        tools:layout="@layout/fragment_quiz_answer" />
+        tools:layout="@layout/fragment_quiz_answer" >
+        <argument
+            android:name="quiz"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Quiz" />
+        <argument
+            android:name="courseId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/quizDetailsFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.quizdetails.QuizDetailsFragment"

@@ -1,114 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.mahmoudhamdyae.smartlearning.ui.course.quiz.answerquiz.AnswerQuizViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/question_number_label"
+            style="@style/MainTextViewStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="@string/add_quiz_question_number_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_quiz_question_number_text_view" />
+        <TextView
+            android:id="@+id/question_number"
+            style="@style/MainTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`` + viewModel.num}"
+            app:layout_constraintStart_toEndOf="@id/question_number_label"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
 
-            <TextView
-                android:id="@+id/question_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/of_label"
+            style="@style/MainTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/of"
+            app:layout_constraintStart_toEndOf="@id/question_number"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="of" />
+
+        <TextView
+            android:id="@+id/questions_number"
+            style="@style/MainTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{`` + viewModel.nuOfQuestions}"
+            app:layout_constraintStart_toEndOf="@id/of_label"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10" />
 
         <TextView
             android:id="@+id/question"
-            android:layout_width="match_parent"
+            style="@style/MainTextViewStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textAlignment="center"
-            android:textSize="25sp"
+            android:text="@{viewModel.question}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/question_number_label"
             tools:text="Question" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/option_1"
+            style="@style/Options"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:text="@{viewModel.option1}"
+            app:layout_constraintTop_toBottomOf="@+id/question"
+            tools:text="Option 1" />
 
-            <TextView
-                android:id="@+id/option1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                tools:text="Option 1" />
+        <TextView
+            android:id="@+id/option_2"
+            style="@style/Options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.option2}"
+            app:layout_constraintTop_toBottomOf="@+id/option_1"
+            tools:text="Option 2" />
 
-            <TextView
-                android:id="@+id/option2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                tools:text="Option 2" />
+        <TextView
+            android:id="@+id/option_3"
+            style="@style/Options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.option3}"
+            app:layout_constraintTop_toBottomOf="@+id/option_2"
+            tools:text="Option 3" />
 
-            <TextView
-                android:id="@+id/option3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                tools:text="Option 3" />
-
-            <TextView
-                android:id="@+id/option4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                tools:text="Option 4" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/option_4"
+            style="@style/Options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.option4}"
+            app:layout_constraintTop_toBottomOf="@+id/option_3"
+            tools:text="Option 4" />
 
         <Button
             android:id="@+id/next_question_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:text="@string/quiz_next_question_button" />
+            android:layout_margin="@dimen/button_margin"
+            android:text="@string/quiz_next_question_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/option_4" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

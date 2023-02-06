@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="auth_red">@android:color/holo_red_dark</color>
+    <color name="grey">@android:color/darker_gray</color>
+    <color name="green">@android:color/holo_green_light</color>
+    <color name="red">@android:color/holo_red_light</color>
 </resources>

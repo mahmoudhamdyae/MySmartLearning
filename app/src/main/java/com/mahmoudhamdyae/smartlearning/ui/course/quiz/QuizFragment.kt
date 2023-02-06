@@ -55,11 +55,11 @@ class QuizFragment: BaseFragment() {
                 if (it == IsTeacher.TEACHER) {
                     findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz, courseId))
                 } else {
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment())
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment(quiz, courseId))
                 }
             }
         }, QuizAdapter.OnDelClickListener {
-            delQuiz(it.id!!)
+            delQuiz(it.id)
         })
         viewModel.isTeacher.observe(viewLifecycleOwner) {
             adapter.setIsTeacher(it == IsTeacher.TEACHER)

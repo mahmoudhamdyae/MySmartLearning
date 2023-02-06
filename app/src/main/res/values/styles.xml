@@ -33,4 +33,14 @@
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:layout_margin">@dimen/message_margin</item>
     </style>
+
+    <style name="Options" parent="ThemeOverlay.Material3.AutoCompleteTextView">
+        <item name="android:textSize">@dimen/text_secondary_size</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:layout_margin">@dimen/options_margin</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@color/grey</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

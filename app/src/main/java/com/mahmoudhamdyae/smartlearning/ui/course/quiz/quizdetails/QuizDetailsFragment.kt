@@ -38,6 +38,10 @@ class QuizDetailsFragment: BaseFragment() {
         val courseId = QuizDetailsFragmentArgs.fromBundle(requireArguments()).courseId
 
         binding.toolbar.title = quiz.name
+        binding.toolbar.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         viewModel.getStudents(courseId, quiz.id)
 
         binding.quizModifyButton.setOnClickListener {

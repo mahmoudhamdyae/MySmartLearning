@@ -60,4 +60,7 @@
     <dimen name="back_button_margin">16dp</dimen>
     <dimen name="fragment_profile_picture_margin">16dp</dimen>
 
+    <!-- Quizzes -->
+    <dimen name="options_margin">25dp</dimen>
+
 </resources>
