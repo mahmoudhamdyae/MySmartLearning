@@ -46,7 +46,7 @@ class CourseFragment: BaseFragment() {
         }
 
         binding.quizzesCard.setOnClickListener {
-            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(course.id))
+            findNavController().navigate(CourseFragmentDirections.actionCourseFragmentToQuizFragment(course, user))
         }
 
         binding.addStudentCard.setOnClickListener {

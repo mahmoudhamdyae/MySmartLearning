@@ -35,25 +35,26 @@ class QuizDetailsFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val quiz = QuizDetailsFragmentArgs.fromBundle(requireArguments()).quiz
-        val courseId = QuizDetailsFragmentArgs.fromBundle(requireArguments()).courseId
+        val course = QuizDetailsFragmentArgs.fromBundle(requireArguments()).course
 
         binding.toolbar.title = quiz.name
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        viewModel.getStudents(courseId, quiz.id)
+        viewModel.getStudents(course.id, quiz.id)
 
         binding.quizModifyButton.setOnClickListener {
-            findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, courseId, 1))
+            findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, course.id, 1))
         }
 
         binding.addQuestionButton.setOnClickListener {
-            findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, courseId, 2))
+            findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, course.id, 2))
         }
 
         binding.studentsRecyclerView.layoutManager = GridLayoutManager(context, 1)
         binding.studentsRecyclerView.adapter = StudentsAdapter(StudentsAdapter.OnClickListener {
+            findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, 99, it))
         })
     }
 }

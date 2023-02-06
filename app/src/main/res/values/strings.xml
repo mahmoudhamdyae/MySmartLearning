@@ -136,6 +136,7 @@
     <string name="add_quiz_label">Add Quiz</string>
     <string name="answer_quiz_label">Answer Quiz</string>
     <string name="quiz_details_label">Quiz Details</string>
+    <string name="quiz_statistics_label">Quiz Statistics</string>
     <string name="materials_label">Materials</string>
     <string name="notifications_label">Notifications</string>
     <string name="my_profile_label">My Profile</string>

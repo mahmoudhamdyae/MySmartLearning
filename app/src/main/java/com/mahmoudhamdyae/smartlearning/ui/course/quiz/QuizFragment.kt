@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
+import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
@@ -24,7 +26,8 @@ class QuizFragment: BaseFragment() {
         QuizViewModelFactory(FirebaseRepository())
     }
 
-    private lateinit var courseId: String
+    private lateinit var course: Course
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,8 +46,9 @@ class QuizFragment: BaseFragment() {
 
         getUserType()
 
-        courseId = QuizFragmentArgs.fromBundle(requireArguments()).courseId!!
-        viewModel.getListOfQuizzes(courseId)
+        user = QuizFragmentArgs.fromBundle(requireArguments()).user
+        course = QuizFragmentArgs.fromBundle(requireArguments()).course!!
+        viewModel.getListOfQuizzes(course.id)
 
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
@@ -53,9 +57,12 @@ class QuizFragment: BaseFragment() {
         val adapter = QuizAdapter(QuizAdapter.OnClickListener { quiz ->
             viewModel.isTeacher.observe(viewLifecycleOwner) {
                 if (it == IsTeacher.TEACHER) {
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz, courseId))
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz, course))
                 } else {
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment(quiz, courseId))
+                    // if not solved
+                    //findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment(quiz, course.id))
+                    // todo if solved
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, 99, user))
                 }
             }
         }, QuizAdapter.OnDelClickListener {
@@ -88,7 +95,7 @@ class QuizFragment: BaseFragment() {
                     Toast.makeText(context, R.string.quiz_name_edit_text_empty, Toast.LENGTH_SHORT).show()
                 } else {
                     val quiz = Quiz(quizName)
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment(quiz, courseId, 0))
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAddQuizFragment(quiz, course.id, 0))
                 }
             }
             .setNegativeButton(R.string.add_quiz_dialog_negative_button) { dialog, _ ->
@@ -103,7 +110,7 @@ class QuizFragment: BaseFragment() {
             .setMessage(R.string.quiz_delete_dialog_msg)
             // Delete Button
             .setPositiveButton(R.string.quiz_delete_dialog_delete) { dialog, _ ->
-                viewModel.delQuiz(courseId, quizId)
+                viewModel.delQuiz(course.id, quizId)
                 dialog.dismiss()
             }
             // Cancel Button

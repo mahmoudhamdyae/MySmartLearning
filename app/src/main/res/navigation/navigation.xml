@@ -73,8 +73,8 @@
         android:label="@string/quizzes_label"
         tools:layout="@layout/fragment_quiz">
         <argument
-            android:name="courseId"
-            app:argType="string"
+            android:name="course"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Course"
             app:nullable="true" />
         <action
             android:id="@+id/action_quizFragment_to_addQuizFragment"
@@ -85,6 +85,12 @@
         <action
             android:id="@+id/action_quizFragment_to_quizDetailsFragment"
             app:destination="@id/quizDetailsFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_quizStatisticsFragment"
+            app:destination="@id/quizStatisticsFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
     </fragment>
     <fragment
         android:id="@+id/addStudentFragment"
@@ -225,7 +231,7 @@
         android:id="@+id/addQuizFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.addquiz.AddQuizFragment"
         android:label="@string/add_quiz_label"
-        tools:layout="@layout/fragment_quiz_add" >
+        tools:layout="@layout/fragment_quiz_add">
         <argument
             android:name="quiz"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.Quiz" />
@@ -240,7 +246,7 @@
         android:id="@+id/answerQuizFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.answerquiz.AnswerQuizFragment"
         android:label="@string/answer_quiz_label"
-        tools:layout="@layout/fragment_quiz_answer" >
+        tools:layout="@layout/fragment_quiz_answer">
         <argument
             android:name="quiz"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.Quiz" />
@@ -252,7 +258,7 @@
         android:id="@+id/quizDetailsFragment"
         android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.quizdetails.QuizDetailsFragment"
         android:label="@string/quiz_details_label"
-        tools:layout="@layout/fragment_quiz_details" >
+        tools:layout="@layout/fragment_quiz_details">
         <argument
             android:name="quiz"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.Quiz" />
@@ -260,7 +266,28 @@
             android:id="@+id/action_quizDetailsFragment_to_addQuizFragment"
             app:destination="@id/addQuizFragment" />
         <argument
-            android:name="courseId"
+            android:name="course"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Course" />
+        <action
+            android:id="@+id/action_quizDetailsFragment_to_quizStatisticsFragment"
+            app:destination="@id/quizStatisticsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizStatisticsFragment"
+        android:name="com.mahmoudhamdyae.smartlearning.ui.course.quiz.quizstatistics.QuizStatisticsFragment"
+        android:label="@string/quiz_statistics_label"
+        tools:layout="@layout/fragment_quiz_statistics">
+        <argument
+            android:name="courseName"
             app:argType="string" />
+        <argument
+            android:name="quizName"
+            app:argType="string" />
+        <argument
+            android:name="degree"
+            app:argType="integer" />
+        <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
     </fragment>
 </navigation>
