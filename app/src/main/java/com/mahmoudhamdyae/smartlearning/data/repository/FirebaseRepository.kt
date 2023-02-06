@@ -191,7 +191,7 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quizId).child(Constants.STUDENTS)
     }
 
-    fun answerQuiz(courseId: String, quizId: String, degree: String): Task<Void> {
+    fun saveDegree(courseId: String, quizId: String, degree: Double): Task<Void> {
         return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quizId).child(Constants.STUDENTS).child(getUid()).setValue(degree)
     }
 

@@ -1,25 +1,24 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz.answerquiz
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Question
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import kotlinx.coroutines.launch
 
 class AnswerQuizViewModel(
     private val repository: FirebaseRepository
 ): BaseViewModel() {
 
     var quiz = Quiz()
+    var courseId = ""
 
     private val _num = MutableLiveData(1)
     val num: LiveData<Int>
         get() = _num
     private val _noOfQuestions = MutableLiveData<Int>()
-    val nuOfQuestions: LiveData<Int>
+    val noOfQuestions: LiveData<Int>
         get() = _noOfQuestions
     val question = MutableLiveData<String>()
     val option1 = MutableLiveData<String>()
@@ -55,10 +54,17 @@ class AnswerQuizViewModel(
     fun setNextQuestion() {
         _num.value = _num.value?.plus(1)
         if (_num.value!! > _noOfQuestions.value!!) {
-            // todo save degree
+            saveDegree()
             _navigateUp.value = true
         } else {
             putValues(quiz.questions[_num.value!!.minus(1)])
+        }
+    }
+
+    private fun saveDegree() {
+        viewModelScope.launch {
+            val percentDegree: Double = 100.0 * (_degree.value?.div(_noOfQuestions.value!!)!!)
+            onCompleteListener(repository.saveDegree(courseId ,quiz.id , percentDegree))
         }
     }
 
@@ -66,7 +72,8 @@ class AnswerQuizViewModel(
         _navigateUp.value = false
     }
 
-    fun setValueOfQuiz(quiz2: Quiz) {
+    fun setValueOfQuiz(quiz2: Quiz, courseId2: String) {
+        courseId = courseId2
         quiz = quiz2
         _num.value = 1
         _noOfQuestions.value = quiz2.questions.size

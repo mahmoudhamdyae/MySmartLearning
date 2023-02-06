@@ -60,9 +60,9 @@ class QuizFragment: BaseFragment() {
                     findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz, course))
                 } else {
                     // if not solved
-                    //findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment(quiz, course.id))
+                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment(quiz, course, user))
                     // todo if solved
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, 99, user))
+//                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, 99, user))
                 }
             }
         }, QuizAdapter.OnDelClickListener {

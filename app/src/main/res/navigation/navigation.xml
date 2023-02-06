@@ -251,8 +251,16 @@
             android:name="quiz"
             app:argType="com.mahmoudhamdyae.smartlearning.data.models.Quiz" />
         <argument
-            android:name="courseId"
-            app:argType="string" />
+            android:name="course"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.Course" />
+        <action
+            android:id="@+id/action_answerQuizFragment_to_quizStatisticsFragment"
+            app:destination="@id/quizStatisticsFragment"
+            app:popUpTo="@id/answerQuizFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="user"
+            app:argType="com.mahmoudhamdyae.smartlearning.data.models.User" />
     </fragment>
     <fragment
         android:id="@+id/quizDetailsFragment"

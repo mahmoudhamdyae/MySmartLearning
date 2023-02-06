@@ -12,7 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
+import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizAnswerBinding
 
@@ -24,7 +26,8 @@ class AnswerQuizFragment: BaseFragment() {
     }
 
     private lateinit var quiz: Quiz
-    private lateinit var courseId: String
+    private lateinit var course: Course
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,9 +45,10 @@ class AnswerQuizFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         quiz = AnswerQuizFragmentArgs.fromBundle(requireArguments()).quiz
-        courseId = AnswerQuizFragmentArgs.fromBundle(requireArguments()).courseId
+        course = AnswerQuizFragmentArgs.fromBundle(requireArguments()).course
+        user = AnswerQuizFragmentArgs.fromBundle(requireArguments()).user
 
-        viewModel.setValueOfQuiz(quiz)
+        viewModel.setValueOfQuiz(quiz, course.id)
 
         binding.option1.setOnClickListener {
             onAnswer(1, it)
@@ -66,12 +70,9 @@ class AnswerQuizFragment: BaseFragment() {
 
         viewModel.navigateUp.observe(viewLifecycleOwner) {
             if (it) {
-//                viewModel.degree.observe(viewLifecycleOwner) { degree ->
-//                    Toast.makeText(context, degree.toString(), Toast.LENGTH_SHORT).show()
-//                    val newDegree = 100 * (degree / quiz.questions.size)
-//                    Toast.makeText(context, (100 * (2 / 3)).toString(), Toast.LENGTH_SHORT).show()
-//                }
-                findNavController().navigateUp()
+                viewModel.degree.observe(viewLifecycleOwner) { degree ->
+                    findNavController().navigate(AnswerQuizFragmentDirections.actionAnswerQuizFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, degree, user))
+                }
                 viewModel.finishNavigating()
             }
         }
