@@ -32,6 +32,10 @@ class AddQuizViewModel(
     val navigateUp: LiveData<Boolean>
         get() = _navigateUp
 
+    private val _visibilityOfModifyButton = MutableLiveData(true)
+    val visibilityOfModifyButton: LiveData<Boolean>
+        get() = _visibilityOfModifyButton
+
     private fun validateTexts(): Boolean {
         return !(question.value.isNullOrEmpty()
                 || option1.value.isNullOrEmpty()
@@ -90,9 +94,12 @@ class AddQuizViewModel(
             onCompleteListener(repository.updateQuestion(courseId, quiz.id, _num.value!! - 1, questionInQuiz))
         }
 
+        if (_num.value!! >= quiz.questions.size - 1) {
+            _visibilityOfModifyButton.value = false
+        }
+
         if (_num.value!! >= quiz.questions.size) {
             _navigateUp.value = true
-            _toast.value = R.string.add_quiz_no_questions_to_modify
         } else {
             _num.value = _num.value?.plus(1)
             putValuesToEditTexts(quiz.questions[_num.value!! - 1])
@@ -111,6 +118,13 @@ class AddQuizViewModel(
         } else {
             _toast.value = R.string.add_quiz_empty_questions_toast
         }
+    }
+
+    fun finishUpdate(courseId: String) {
+        if (validateTexts()) {
+            updateQuestion(courseId)
+        }
+        _navigateUp.value = true
     }
 
     fun setNumValue(num2: Int) {

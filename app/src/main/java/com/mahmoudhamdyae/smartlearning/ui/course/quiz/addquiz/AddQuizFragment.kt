@@ -120,7 +120,7 @@ class AddQuizFragment: BaseFragment() {
 
     private fun finish() {
         if (addType == 1) {
-            findNavController().navigateUp()
+            viewModel.finishUpdate(courseId)
         } else {
             viewModel.finishAdd(courseId)
         }

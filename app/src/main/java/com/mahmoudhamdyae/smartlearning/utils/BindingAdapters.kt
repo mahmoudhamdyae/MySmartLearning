@@ -83,3 +83,12 @@ fun bindEmptyView(view: View, data: List<Any>?) {
         view.visibility = View.GONE
     }
 }
+
+@BindingAdapter("bindVisibility")
+fun bindVisibility(view: View, isVisible: Boolean) {
+    if (isVisible) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.GONE
+    }
+}
