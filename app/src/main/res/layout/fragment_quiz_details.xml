@@ -22,7 +22,8 @@
             android:layout_marginBottom="@dimen/toolbar_margin"
             android:background="?attr/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"
-            app:logo="@drawable/baseline_arrow_back_ios_24" />
+            app:logo="@drawable/baseline_arrow_back_ios_24"
+            tools:title="Quiz Name" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
