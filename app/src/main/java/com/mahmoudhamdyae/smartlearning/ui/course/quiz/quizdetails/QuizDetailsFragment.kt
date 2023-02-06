@@ -35,6 +35,8 @@ class QuizDetailsFragment: BaseFragment() {
         val quiz = QuizDetailsFragmentArgs.fromBundle(requireArguments()).quiz
         val courseId = QuizDetailsFragmentArgs.fromBundle(requireArguments()).courseId
 
+        binding.toolbar.title = quiz.name
+
         binding.quizModifyButton.setOnClickListener {
             findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, courseId, 1))
         }
