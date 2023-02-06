@@ -16,6 +16,11 @@ class QuizDetailsViewModel(
 
     fun getStudents(courseId: String, quizId: String) {
         viewModelScope.launch {
+            val studentsList: MutableList<User> = mutableListOf()
+            val studentItem = User("nameo", "emailo", null, false)
+            studentsList.add(studentItem)
+            
+            _students.value = studentsList
         }
     }
 }

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizDetailsBinding
+import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
 
 class QuizDetailsFragment: BaseFragment() {
 
@@ -36,6 +38,7 @@ class QuizDetailsFragment: BaseFragment() {
         val courseId = QuizDetailsFragmentArgs.fromBundle(requireArguments()).courseId
 
         binding.toolbar.title = quiz.name
+        viewModel.getStudents(courseId, quiz.id)
 
         binding.quizModifyButton.setOnClickListener {
             findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, courseId, 1))
@@ -44,5 +47,9 @@ class QuizDetailsFragment: BaseFragment() {
         binding.addQuestionButton.setOnClickListener {
             findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToAddQuizFragment(quiz, courseId, 2))
         }
+
+        binding.studentsRecyclerView.layoutManager = GridLayoutManager(context, 1)
+        binding.studentsRecyclerView.adapter = StudentsAdapter(StudentsAdapter.OnClickListener {
+        })
     }
 }
