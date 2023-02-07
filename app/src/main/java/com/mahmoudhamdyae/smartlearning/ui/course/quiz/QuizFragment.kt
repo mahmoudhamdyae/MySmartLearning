@@ -55,15 +55,13 @@ class QuizFragment: BaseFragment() {
         }
 
         val adapter = QuizAdapter(QuizAdapter.OnClickListener { quiz ->
-            viewModel.isTeacher.observe(viewLifecycleOwner) {
-                if (it == IsTeacher.TEACHER) {
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz, course))
-                } else {
-                    // if not solved
-                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment(quiz, course, user))
-                    // todo if solved
+            if (user.teacher) {
+                findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizDetailsFragment(quiz, course))
+            } else {
+                // if not solved
+                findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToAnswerQuizFragment(quiz, course, user))
+                // todo if solved
 //                    findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, 99, user))
-                }
             }
         }, QuizAdapter.OnDelClickListener {
             delQuiz(it.id)
