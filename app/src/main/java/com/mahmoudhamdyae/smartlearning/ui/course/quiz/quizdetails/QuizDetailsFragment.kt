@@ -53,8 +53,10 @@ class QuizDetailsFragment: BaseFragment() {
         }
 
         binding.studentsRecyclerView.layoutManager = GridLayoutManager(context, 1)
-        val adapter = StudentsAdapter(StudentsAdapter.OnClickListener {
-            findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, 99, it))
+        val adapter = StudentsAdapter(StudentsAdapter.OnClickListener { user ->
+            viewModel.hashMap.observe(viewLifecycleOwner) { hashMap ->
+                findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, hashMap[user]!!.toInt(), user))
+            }
         })
         viewModel.hashMap.observe(viewLifecycleOwner) {
             adapter.setDegree(it)
