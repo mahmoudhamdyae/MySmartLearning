@@ -96,13 +96,19 @@ class AddQuizViewModel(
         }
     }
 
-    fun finishAdd(courseId: String) {
+    fun finishAdd(courseId: String, addType: Int) {
         if (validateTexts()) {
             addQuestion()
         }
         if (quiz.questions.isNotEmpty()) {
             viewModelScope.launch {
-                onCompleteListener(repository.saveQuiz(courseId, quiz))
+                if (addType == 0) {
+                    // Add Quiz
+                    onCompleteListener(repository.saveQuiz(courseId, quiz))
+                } else {
+                    // Add Question
+                    onCompleteListener(repository.addQuestions(courseId,quiz.id, quiz.questions))
+                }
             }
             _navigateUp.value = true
         } else {

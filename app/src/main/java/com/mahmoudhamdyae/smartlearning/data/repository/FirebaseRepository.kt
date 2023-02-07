@@ -171,7 +171,14 @@ class FirebaseRepository {
     // Quizzes
 
     fun saveQuiz(courseId: String, quiz: Quiz): Task<Void> {
-        return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quiz.id!!).setValue(quiz)
+        return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quiz.id).setValue(quiz)
+    }
+
+    fun addQuestions(courseId: String, quizId: String, quiz: MutableList<Question>): Task<Void> {
+        val childUpdates = hashMapOf<String, Any>(
+            "/$quizId/${Constants.QUESTIONS}" to quiz
+        )
+        return courseDatabaseReference.child(courseId).child(Constants.Quizzes).updateChildren(childUpdates)
     }
 
     fun updateQuestion(courseId: String, quizId: String, questionNo: Int, question: Question): Task<Void> {

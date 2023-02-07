@@ -124,7 +124,7 @@ class AddQuizFragment: BaseFragment() {
         if (addType == 1) {
             viewModel.finishUpdate(courseId)
         } else {
-            viewModel.finishAdd(courseId)
+            viewModel.finishAdd(courseId, addType)
         }
     }
 
