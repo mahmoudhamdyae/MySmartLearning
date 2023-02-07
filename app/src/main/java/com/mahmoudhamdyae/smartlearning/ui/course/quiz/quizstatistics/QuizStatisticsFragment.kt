@@ -30,7 +30,12 @@ class QuizStatisticsFragment: Fragment() {
         val degree = QuizStatisticsFragmentArgs.fromBundle(requireArguments()).degree
         val user = QuizStatisticsFragmentArgs.fromBundle(requireArguments()).user
 
-        val text = "${courseName}\n${quizName}\n${degree}\n${user.userName}"
+        binding.toolbar.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        binding.toolbar.title = user.userName
+
+        val text = "Student: ${user.userName}\nCourse: ${courseName}\nQuiz: ${quizName}\nDegree: ${degree}%"
         binding.statisticsText.text = text
 
         binding.okButton.setOnClickListener {

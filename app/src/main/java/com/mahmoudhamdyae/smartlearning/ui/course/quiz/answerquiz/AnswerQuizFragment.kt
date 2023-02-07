@@ -71,7 +71,8 @@ class AnswerQuizFragment: BaseFragment() {
         viewModel.navigateUp.observe(viewLifecycleOwner) {
             if (it) {
                 viewModel.degree.observe(viewLifecycleOwner) { degree ->
-                    findNavController().navigate(AnswerQuizFragmentDirections.actionAnswerQuizFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, degree, user))
+                    val percentDegree = degree * 100 / quiz.questions.size
+                    findNavController().navigate(AnswerQuizFragmentDirections.actionAnswerQuizFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, percentDegree, user))
                 }
                 viewModel.finishNavigating()
             }
