@@ -15,10 +15,15 @@ import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.StudentItemBinding
 
 class StudentsAdapter(
-    private val onClickListener: OnClickListener,
-    private val isQuiz: Boolean
+    private val onClickListener: OnClickListener
 ) :
     ListAdapter<User, StudentsAdapter.StudentPropertyViewHolder>(DiffCallback) {
+
+    private var degree = -1
+
+    fun setDegree(degree2: Int) {
+        degree = degree2
+    }
 
     /**
      * The [StudentPropertyViewHolder] constructor takes the binding variable from the associated
@@ -27,7 +32,7 @@ class StudentsAdapter(
     class StudentPropertyViewHolder(private var binding: StudentItemBinding):
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(user: User, isQuiz: Boolean) {
+        fun bind(user: User, degree: Int) {
             binding.property = user
             val repository = FirebaseRepository()
             repository.getProfilePicture(user.userId!!).addOnSuccessListener {
@@ -43,9 +48,7 @@ class StudentsAdapter(
                 binding.teacherLabel.visibility = View.VISIBLE
                 binding.teacherLabel.text = "The Teacher"
             } else {
-                if (isQuiz) {
-                    // todo degree
-                    val degree = 0
+                if (degree != -1) {
                     binding.teacherLabel.text = "Degree: $degree"
                 } else {
                     binding.teacherLabel.visibility = View.GONE
@@ -73,7 +76,7 @@ class StudentsAdapter(
         holder.itemView.setOnClickListener {
             onClickListener.onClick(user)
         }
-        holder.bind(user, isQuiz)
+        holder.bind(user, degree)
     }
 
     /**

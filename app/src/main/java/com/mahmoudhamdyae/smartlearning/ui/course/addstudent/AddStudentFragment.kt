@@ -51,6 +51,6 @@ class AddStudentFragment: BaseFragment() {
         binding.studentsList.adapter = StudentsAdapter(StudentsAdapter.OnClickListener {
             // Add this student to the course
             viewModel.addStudentToCourse(it, course)
-        }, false)
+        })
     }
 }

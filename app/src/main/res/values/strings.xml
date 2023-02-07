@@ -158,6 +158,4 @@
     <string name="quiz_finish_button_content_description">Finish</string>
 
     <string name="ok">OK</string>
-    <string name="teacher"></string>
-    <string name="degree">Degree: </string>
 </resources>
