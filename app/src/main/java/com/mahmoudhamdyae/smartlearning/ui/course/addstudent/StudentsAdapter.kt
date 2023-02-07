@@ -50,7 +50,7 @@ class StudentsAdapter(
             } else {
                 val degree = hashMap?.get(user)
                 if (hashMap != null) {
-                    binding.teacherLabel.text = "Degree: $degree"
+                    binding.teacherLabel.text = "Degree: ${degree?.toInt()}"
                 } else {
                     binding.teacherLabel.visibility = View.GONE
                 }
