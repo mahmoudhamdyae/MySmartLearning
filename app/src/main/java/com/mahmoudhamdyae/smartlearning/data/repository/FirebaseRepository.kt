@@ -93,6 +93,10 @@ class FirebaseRepository {
         }
     }
 
+    fun getUserById(userId: String): DatabaseReference {
+        return userDatabaseReference.child(userId)
+    }
+
     // Courses
 
     fun addCourseToCourses(course: Course) : Task<Void> {

@@ -1,6 +1,5 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz.quizdetails
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -15,28 +14,48 @@ class QuizDetailsViewModel(
     private val repository: FirebaseRepository
 ): BaseViewModel() {
 
-    private val _students = MutableLiveData<List<User>>()
+    private val _students = MutableLiveData<List<User>>(mutableListOf())
     val students: LiveData<List<User>>
         get() = _students
+
+    private val _hashMap = MutableLiveData<HashMap<User, Double>>()
+    val hashMap: LiveData<HashMap<User, Double>>
+        get() = _hashMap
 
     fun getStudents(courseId: String, quizId: String) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-//            repository.getStudentsInQuiz(courseId, quizId).addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                    val studentsList: MutableList<String> = mutableListOf()
-//                    for (material in dataSnapshot.children) {
-//                        val studentItem = material.getValue(String::class.java)
-//                        studentsList.add(studentItem!!)
-//                    }
-//                    _students.value = studentsList
-//                    _status.value = STATUS.DONE
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    _status.value = STATUS.ERROR
-//                }
-//            })
+            repository.getStudentsInQuiz(courseId, quizId).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val studentsList: MutableList<User> = mutableListOf()
+//                    val hashMapList: HashMap<User, Double> = HashMap()
+                    for (studentsId in dataSnapshot.children) {
+                        val studentIdItem = studentsId.key
+//                        val studentDegreeItem = studentsId.getValue(Double::class.java)
+
+                        repository.getUserById(studentIdItem!!).get().addOnSuccessListener {
+                            studentsList.add(it.getValue(User::class.java)!!)
+//                            hashMapList[it.getValue(User::class.java)!!] = studentDegreeItem!!
+
+//                            _hashMap.value = hashMapList
+//                            val entries: List<User> = _hashMap.value.keys.toList()
+//                            _students.value = entries
+                            _students.value = studentsList
+//                            _status.value = STATUS.DONE
+                        }.addOnFailureListener {
+                            _error.value = it.message.toString()
+                            _status.value = STATUS.ERROR
+                        }.addOnCompleteListener {
+//                            _status.value = STATUS.DONE
+                        }
+                    }
+                    _status.value = STATUS.DONE
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    _status.value = STATUS.ERROR
+                }
+            })
         }
     }
 }
