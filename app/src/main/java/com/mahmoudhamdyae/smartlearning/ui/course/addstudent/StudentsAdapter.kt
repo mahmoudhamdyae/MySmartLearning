@@ -1,6 +1,8 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.addstudent
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,7 +14,10 @@ import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.StudentItemBinding
 
-class StudentsAdapter(private val onClickListener: OnClickListener) :
+class StudentsAdapter(
+    private val onClickListener: OnClickListener,
+    private val isQuiz: Boolean
+) :
     ListAdapter<User, StudentsAdapter.StudentPropertyViewHolder>(DiffCallback) {
 
     /**
@@ -21,7 +26,8 @@ class StudentsAdapter(private val onClickListener: OnClickListener) :
      */
     class StudentPropertyViewHolder(private var binding: StudentItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User) {
+        @SuppressLint("SetTextI18n")
+        fun bind(user: User, isQuiz: Boolean) {
             binding.property = user
             val repository = FirebaseRepository()
             repository.getProfilePicture(user.userId!!).addOnSuccessListener {
@@ -32,6 +38,18 @@ class StudentsAdapter(private val onClickListener: OnClickListener) :
                             .placeholder(R.drawable.loading_animation)
                             .error(R.drawable.ic_broken_image))
                     .into(binding.profileImage)
+            }
+            if (user.teacher) {
+                binding.teacherLabel.visibility = View.VISIBLE
+                binding.teacherLabel.text = "The Teacher"
+            } else {
+                if (isQuiz) {
+                    // todo degree
+                    val degree = 0
+                    binding.teacherLabel.text = "Degree: $degree"
+                } else {
+                    binding.teacherLabel.visibility = View.GONE
+                }
             }
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
@@ -55,7 +73,7 @@ class StudentsAdapter(private val onClickListener: OnClickListener) :
         holder.itemView.setOnClickListener {
             onClickListener.onClick(user)
         }
-        holder.bind(user)
+        holder.bind(user, isQuiz)
     }
 
     /**
