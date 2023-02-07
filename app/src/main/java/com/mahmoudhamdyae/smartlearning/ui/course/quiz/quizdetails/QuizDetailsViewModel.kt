@@ -33,21 +33,32 @@ class QuizDetailsViewModel(
                         val studentIdItem = studentsId.key
 //                        val studentDegreeItem = studentsId.getValue(Double::class.java)
 
-                        repository.getUserById(studentIdItem!!).get().addOnSuccessListener {
-                            studentsList.add(it.getValue(User::class.java)!!)
-//                            hashMapList[it.getValue(User::class.java)!!] = studentDegreeItem!!
+//                        repository.getUserById(studentIdItem!!).get().addOnSuccessListener {
+//                            studentsList.add(it.getValue(User::class.java)!!)
+////                            hashMapList[it.getValue(User::class.java)!!] = studentDegreeItem!!
+//
+////                            _hashMap.value = hashMapList
+////                            val entries: List<User> = _hashMap.value.keys.toList()
+////                            _students.value = entries
+//                            _students.value = studentsList
+////                            _status.value = STATUS.DONE
+//                        }.addOnFailureListener {
+//                            _error.value = it.message.toString()
+//                            _status.value = STATUS.ERROR
+//                        }.addOnCompleteListener {
+////                            _status.value = STATUS.DONE
+//                        }
 
-//                            _hashMap.value = hashMapList
-//                            val entries: List<User> = _hashMap.value.keys.toList()
-//                            _students.value = entries
-                            _students.value = studentsList
-//                            _status.value = STATUS.DONE
-                        }.addOnFailureListener {
-                            _error.value = it.message.toString()
-                            _status.value = STATUS.ERROR
-                        }.addOnCompleteListener {
-//                            _status.value = STATUS.DONE
-                        }
+                        repository.getUserById(studentIdItem!!).addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                studentsList.add(snapshot.getValue(User::class.java)!!)
+                                _students.value = studentsList
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                _status.value = STATUS.ERROR
+                            }
+                        })
                     }
                     _status.value = STATUS.DONE
                 }
