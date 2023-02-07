@@ -1,5 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +41,7 @@ class QuizFragment: BaseFragment() {
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -68,6 +70,7 @@ class QuizFragment: BaseFragment() {
 
         viewModel.hashMap.observe(viewLifecycleOwner) {
             adapter.setHashMap(it)
+            adapter.notifyDataSetChanged()
         }
 
         adapter.setIsTeacher(user.teacher)
