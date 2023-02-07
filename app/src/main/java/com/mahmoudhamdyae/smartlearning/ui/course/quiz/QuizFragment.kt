@@ -17,7 +17,6 @@ import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizBinding
-import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 
 class QuizFragment: BaseFragment() {
 
