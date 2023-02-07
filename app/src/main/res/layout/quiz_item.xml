@@ -53,7 +53,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_margin="@dimen/card_text_margin"
                     android:text="@string/quiz_not_solved"
-                    android:textColor="@android:color/holo_red_light"
+                    android:textColor="@color/red"
                     android:textSize="@dimen/text_secondary_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/quiz_date" />
@@ -68,26 +68,6 @@
                     android:src="@drawable/checked"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/quiz_date" />
-
-                <TextView
-                    android:id="@+id/degree_text"
-                    style="@style/SecondaryTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
-                    app:layout_constraintEnd_toStartOf="@id/degree"
-                    app:layout_constraintTop_toTopOf="@id/degree"
-                    tools:text="degree here wen solved" />
-
-                <TextView
-                    android:id="@+id/degree"
-                    style="@style/SecondaryTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_text_margin"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/solved_or_not"
-                    tools:text="Degree" />
 
                 <ImageView
                     android:id="@+id/delete_button"

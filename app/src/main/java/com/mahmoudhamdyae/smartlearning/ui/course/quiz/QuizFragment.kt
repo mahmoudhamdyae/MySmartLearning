@@ -68,12 +68,15 @@ class QuizFragment: BaseFragment() {
         }, QuizAdapter.OnDelClickListener {
             delQuiz(it.id)
         })
-        viewModel.isTeacher.observe(viewLifecycleOwner) {
-            adapter.setIsTeacher(it == IsTeacher.TEACHER)
-            if (it == IsTeacher.TEACHER) {
-                binding.addFab.setOnClickListener {
-                    addQuiz()
-                }
+
+        viewModel.hashMap.observe(viewLifecycleOwner) {
+            adapter.setHashMap(it)
+        }
+
+        adapter.setIsTeacher(user.teacher)
+        if (user.teacher) {
+            binding.addFab.setOnClickListener {
+                addQuiz()
             }
         }
 

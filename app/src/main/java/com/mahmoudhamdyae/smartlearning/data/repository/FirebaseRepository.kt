@@ -194,6 +194,10 @@ class FirebaseRepository {
         return courseDatabaseReference.child(courseId).child(Constants.Quizzes)
     }
 
+    fun getDegree(courseId: String, quizId: String, userId: String): DatabaseReference {
+        return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quizId).child(Constants.STUDENTS).child(userId)
+    }
+
     fun delQuiz(courseId: String, quizId: String): Task<Void> {
         return courseDatabaseReference.child(courseId).child(Constants.Quizzes).child(quizId).removeValue()
     }

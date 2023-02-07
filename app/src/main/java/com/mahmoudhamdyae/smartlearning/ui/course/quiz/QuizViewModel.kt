@@ -18,15 +18,36 @@ class QuizViewModel(
     val quizzes: LiveData<List<Quiz>>
         get() = _quizzes
 
+    private val _hashMap = MutableLiveData<HashMap<String, Int?>>()
+    val hashMap: LiveData<HashMap<String, Int?>>
+        get() = _hashMap
+
     fun getListOfQuizzes(courseId: String) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
             repository.getQuizzes(courseId).addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val quizzesList: MutableList<Quiz> = mutableListOf()
+                    val hashMapList: HashMap<String, Int?> = HashMap()
                     for (quiz in snapshot.children) {
                         val quizItem = quiz.getValue(Quiz::class.java)
                         quizzesList.add(quizItem!!)
+
+                        repository.getDegree(courseId, quizItem.id, repository.getUid()).addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                val firebaseDegree = snapshot.getValue(Double::class.java)
+                                if (firebaseDegree != null) {
+                                    hashMapList[quizItem.id] = firebaseDegree.toInt()
+                                    _hashMap.value = hashMapList
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                _status.value = STATUS.ERROR
+                                _error.value = error.message
+                            }
+                        })
+
                     }
                     _quizzes.value = quizzesList
                     _status.value = STATUS.DONE

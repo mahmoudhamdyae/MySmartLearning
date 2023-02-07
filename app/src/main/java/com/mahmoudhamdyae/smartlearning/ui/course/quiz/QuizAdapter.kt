@@ -1,5 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,21 +22,33 @@ class QuizAdapter(
         isTeacher = isTeacher1
     }
 
+    private var hashMap: HashMap<String, Int?>? = HashMap()
+    fun setHashMap(hashMap2: HashMap<String, Int?>?) {
+        hashMap = hashMap2
+    }
+
     /**
      * The CoursePropertyViewHolder constructor takes the binding variable from the associated
      * GridViewItem, which nicely gives it access to the full [Quiz] information.
      */
     class QuizzesPropertyViewHolder(private var binding: QuizItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(quiz: Quiz, isTeacher: Boolean) {
+        @SuppressLint("SetTextI18n")
+        fun bind(quiz: Quiz, isTeacher: Boolean, hashMap: HashMap<String, Int?>?) {
             binding.property = quiz
             if (isTeacher) {
                 binding.checkedImage.visibility = View.GONE
-                binding.degreeText.visibility = View.GONE
-                binding.degree.visibility = View.GONE
                 binding.solvedOrNot.visibility = View.GONE
             } else {
                 binding.deleteButton.visibility = View.GONE
+                if (hashMap?.get(quiz.id) == null) {
+                    // Not Solved
+                    binding.checkedImage.visibility = View.GONE
+                } else {
+                    val degree = hashMap[quiz.id]
+                    binding.solvedOrNot.text = "Degree: ${degree.toString()}"
+                    binding.solvedOrNot.setTextColor(Color.GREEN)
+                }
             }
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
@@ -61,7 +75,7 @@ class QuizAdapter(
         holder.itemView.setOnClickListener {
             onClickListener.onClick(quiz)
         }
-        holder.bind(quiz, isTeacher)
+        holder.bind(quiz, isTeacher, hashMap)
     }
 
     /**
