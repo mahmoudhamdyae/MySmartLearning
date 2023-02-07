@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -57,15 +56,9 @@ class QuizDetailsFragment: BaseFragment() {
         val adapter = StudentsAdapter(StudentsAdapter.OnClickListener {
             findNavController().navigate(QuizDetailsFragmentDirections.actionQuizDetailsFragmentToQuizStatisticsFragment(course.courseName!!, quiz.name!!, 99, it))
         })
-        adapter.setDegree(95)
-        binding.studentsRecyclerView.adapter = adapter
-
         viewModel.hashMap.observe(viewLifecycleOwner) {
-            for (user in it.keys){
-                val u = user
-                val d = it[user]
-            }
-//            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+            adapter.setDegree(it)
         }
+        binding.studentsRecyclerView.adapter = adapter
     }
 }
