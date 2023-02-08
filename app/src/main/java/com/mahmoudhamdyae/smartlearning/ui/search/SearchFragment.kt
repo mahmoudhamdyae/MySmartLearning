@@ -48,5 +48,9 @@ class SearchFragment: BaseFragment() {
         binding.toolbar.setOnClickListener {
             findNavController().navigateUp()
         }
+
+        viewModel.courses.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
     }
 }

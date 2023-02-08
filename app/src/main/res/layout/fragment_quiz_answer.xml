@@ -60,6 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.question}"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/question_number_label"
@@ -71,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{viewModel.option1}"
+            android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/question"
             tools:text="Option 1" />
 
@@ -80,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{viewModel.option2}"
+            android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/option_1"
             tools:text="Option 2" />
 
@@ -89,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{viewModel.option3}"
+            android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/option_2"
             tools:text="Option 3" />
 
@@ -98,6 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{viewModel.option4}"
+            android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@+id/option_3"
             tools:text="Option 4" />
 
