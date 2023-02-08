@@ -23,7 +23,7 @@ class WelcomeViewPageAdapter : RecyclerView.Adapter<PagerVH2>() {
             if (position == 0) {
                 bindingDesign.introTitle.text = context.getString(R.string.title1)
                 bindingDesign.introDescription.text = context.getString(R.string.description1)
-                bindingDesign.introImage.setAnimationFromUrl("https://assets1.lottiefiles.com/packages/lf20_ncpnijkz.json")
+                bindingDesign.introImage.setAnimationFromUrl("https://assets3.lottiefiles.com/packages/lf20_biwpfsmp.json")
             }
             if (position == 1) {
                 bindingDesign.introTitle.text = context.getString(R.string.title2)
