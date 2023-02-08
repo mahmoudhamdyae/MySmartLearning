@@ -2,20 +2,62 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/dialog_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/fragments_margin">
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
+        <!-- View Pager -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Indicator -->
+        <!--app:tabBackground="@drawable/intro_tab_selector"-->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            app:tabBackground="@android:color/holo_blue_light"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp" />
+
+        <!-- Next -->
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/to_log_in"
+            android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center"
+            android:text="@string/welcome_next_button"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:backgroundTint="#356DF1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:cornerRadius="30dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Skip -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/skip_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/welcome_skip_button"
+            android:gravity="center"
+            android:textAllCaps="true"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"
+            app:cornerRadius="30dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

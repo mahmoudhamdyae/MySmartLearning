@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Smart Learning</string>
 
+    <!-- Welcome Screen -->
+    <string name="welcome_next_button">Next</string>
+    <string name="welcome_get_started_button">Get Started</string>
+    <string name="welcome_skip_button">Skip</string>
+
     <!-- Login Activity -->
     <string name="login_under_app_name_intro">Easy and Smart Learning, Welcome!</string>
     <string name="login_email_edit_text_hint">E-mail</string>
