@@ -6,6 +6,13 @@
     <string name="welcome_get_started_button">Get Started</string>
     <string name="welcome_skip_button">Skip</string>
 
+    <string name="title1">Enroll courses</string>
+    <string name="description1">Enroll courses and never miss any updates from your teachers</string>
+    <string name="title2">Do quizzes and Download materials</string>
+    <string name="description2">Do quizzes, celebrate your success, and download the courses materials</string>
+    <string name="title3">Chat</string>
+    <string name="description3">Chat with other learners and your teachers</string>
+
     <!-- Login Activity -->
     <string name="login_under_app_name_intro">Easy and Smart Learning, Welcome!</string>
     <string name="login_email_edit_text_hint">E-mail</string>

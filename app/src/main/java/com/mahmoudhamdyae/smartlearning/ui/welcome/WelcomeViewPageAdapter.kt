@@ -20,18 +20,18 @@ class WelcomeViewPageAdapter : RecyclerView.Adapter<PagerVH2>() {
     override fun onBindViewHolder(holder: PagerVH2, position: Int) = holder.itemView.run {
         with(holder) {
             if (position == 0) {
-                bindingDesign.introTitle.text = context.getString(R.string.select_account_type)
-                bindingDesign.introDescription.text = context.getString(R.string.select_account_type)
+                bindingDesign.introTitle.text = context.getString(R.string.title1)
+                bindingDesign.introDescription.text = context.getString(R.string.description1)
                 bindingDesign.introImage.setImageResource(R.drawable.school)
             }
             if (position == 1) {
-                bindingDesign.introTitle.text = context.getString(R.string.select_account_type)
-                bindingDesign.introDescription.text = context.getString(R.string.select_account_type)
+                bindingDesign.introTitle.text = context.getString(R.string.title2)
+                bindingDesign.introDescription.text = context.getString(R.string.description2)
                 bindingDesign.introImage.setImageResource(R.drawable.school)
             }
             if (position == 2) {
-                bindingDesign.introTitle.text = context.getString(R.string.select_account_type)
-                bindingDesign.introDescription.text = context.getString(R.string.select_account_type)
+                bindingDesign.introTitle.text = context.getString(R.string.title3)
+                bindingDesign.introDescription.text = context.getString(R.string.description3)
                 bindingDesign.introImage.setImageResource(R.drawable.school)
             }
         }

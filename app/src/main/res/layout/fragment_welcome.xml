@@ -32,14 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#356DF1"
-            android:gravity="center"
-            android:text="@string/welcome_next_button"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            app:cornerRadius="30dp" />
+            android:text="@string/welcome_next_button" />
 
         <!-- Skip -->
         <com.google.android.material.button.MaterialButton
@@ -48,13 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/welcome_skip_button"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@android:color/darker_gray"
-            android:textStyle="bold"
-            app:cornerRadius="30dp" />
+            android:text="@string/welcome_skip_button" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>
