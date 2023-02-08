@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -48,17 +48,20 @@ class ProfileFragment: BaseFragment() {
                                     else getString(R.string.account_type_student)
 
         val imageUri = user.imageUri
-        if (!imageUri.isNullOrEmpty()) {
+        if (imageUri != "null") {
             viewModel.getProfileImage()
             viewModel.uri.observe(viewLifecycleOwner) {
                 Glide.with(requireContext())
-                    .load(it)
+                    .load(if (it.toString() != "null") it else R.drawable.default_image )
                     .apply(
                         RequestOptions()
                             .placeholder(R.drawable.loading_animation)
+                            .fallback(R.drawable.default_image)
                             .error(R.drawable.ic_broken_image))
                     .into(binding.profileImage)
             }
+        } else {
+            binding.profileImage.setImageDrawable(getDrawable(requireContext(), R.drawable.default_image))
         }
     }
 }
