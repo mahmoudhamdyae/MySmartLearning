@@ -2,7 +2,6 @@ package com.mahmoudhamdyae.smartlearning.ui.welcome
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.databinding.OnboardingItemBinding
