@@ -11,5 +11,6 @@ data class Quiz(
     val questions: MutableList<Question> = mutableListOf(),
     val date: String =
         SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.getDefault()).format(Date()),
-    val id: String = UUID.randomUUID().toString()
+    val id: String =
+        SimpleDateFormat("yyy-MM-dd hh:mm:ss", Locale.getDefault()).format(Date())
 ): Parcelable

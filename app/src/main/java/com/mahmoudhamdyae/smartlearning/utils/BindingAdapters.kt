@@ -24,7 +24,7 @@ fun bindStudentsRecyclerView(recyclerView: RecyclerView, data: List<User>?) {
 }
 
 @BindingAdapter("materialsData")
-fun bindMaterialsRecyclerView(recyclerView: RecyclerView, data: List<String>?) {
+fun bindMaterialsRecyclerView(recyclerView: RecyclerView, data: List<Material>?) {
     val adapter = recyclerView.adapter as MaterialsAdapter
     adapter.submitList(data)
 }

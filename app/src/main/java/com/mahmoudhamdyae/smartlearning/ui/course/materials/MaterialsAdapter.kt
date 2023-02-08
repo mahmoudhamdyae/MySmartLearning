@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.mahmoudhamdyae.smartlearning.data.models.Material
 import com.mahmoudhamdyae.smartlearning.databinding.MaterialItemBinding
 
 class MaterialsAdapter(
@@ -15,7 +16,7 @@ class MaterialsAdapter(
     private val onDelClickListener: OnDelClickListener,
     private val isTeacher: Boolean
 ) :
-    ListAdapter<String, MaterialsAdapter.MaterialsPropertyViewHolder>(DiffCallback) {
+    ListAdapter<Material, MaterialsAdapter.MaterialsPropertyViewHolder>(DiffCallback) {
 
     /**
      * The CoursePropertyViewHolder constructor takes the binding variable from the associated
@@ -23,8 +24,8 @@ class MaterialsAdapter(
      */
     class MaterialsPropertyViewHolder(private var binding: MaterialItemBinding):
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(material: String) {
-            binding.materialText.text = material
+        fun bind(material: Material) {
+            binding.property = material
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
             binding.executePendingBindings()
@@ -41,13 +42,13 @@ class MaterialsAdapter(
         }
 
         binding.playButton.setOnClickListener {
-            onPlayClickListener.onPlayClick(binding.materialText.text.toString())
+            onPlayClickListener.onPlayClick(binding.property!!)
         }
         binding.downloadButton.setOnClickListener {
-            onDownloadClickListener.onDownloadClick(binding.materialText.text.toString())
+            onDownloadClickListener.onDownloadClick(binding.property!!)
         }
         binding.deleteButton.setOnClickListener {
-            onDelClickListener.onDelClick(binding.materialText.text.toString())
+            onDelClickListener.onDelClick(binding.property!!)
         }
         return MaterialsPropertyViewHolder(binding)
     }
@@ -67,12 +68,12 @@ class MaterialsAdapter(
      * Allows the RecyclerView to determine which items have changed when the [List] of [Material]
      * has been updated.
      */
-    companion object DiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Material>() {
+        override fun areItemsTheSame(oldItem: Material, newItem: Material): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: Material, newItem: Material): Boolean {
             return oldItem == newItem
         }
     }
@@ -82,19 +83,19 @@ class MaterialsAdapter(
      * associated with the current item to the [onClick] function.
      * @param clickListener lambda that will be called with the current [Material]
      */
-    class OnClickListener(val clickListener: (material: String) -> Unit) {
-        fun onClick(material: String) = clickListener(material)
+    class OnClickListener(val clickListener: (material: Material) -> Unit) {
+        fun onClick(material: Material) = clickListener(material)
     }
 
-    class OnPlayClickListener(val clickListener: (material: String) -> Unit) {
-        fun onPlayClick(material: String) = clickListener(material)
+    class OnPlayClickListener(val clickListener: (material: Material) -> Unit) {
+        fun onPlayClick(material: Material) = clickListener(material)
     }
 
-    class OnDownloadClickListener(val clickListener: (material: String) -> Unit) {
-        fun onDownloadClick(material: String) = clickListener(material)
+    class OnDownloadClickListener(val clickListener: (material: Material) -> Unit) {
+        fun onDownloadClick(material: Material) = clickListener(material)
     }
 
-    class OnDelClickListener(val clickListener: (material: String) -> Unit) {
-        fun onDelClick(material: String) = clickListener(material)
+    class OnDelClickListener(val clickListener: (material: Material) -> Unit) {
+        fun onDelClick(material: Material) = clickListener(material)
     }
 }

@@ -61,7 +61,7 @@ class ChatFragment: BaseFragment() {
 
         binding.messageList.layoutManager = GridLayoutManager(context, 1)
         binding.messageList.adapter = ChatAdapter(ChatAdapter.OnClickListener {
-        }, user!!.userId!!)
+        }, user!!.id!!)
 
         binding.sendFab.setOnClickListener {
             viewModel.sendMessage(isGroup, course.id, user!!, anotherUser!!)

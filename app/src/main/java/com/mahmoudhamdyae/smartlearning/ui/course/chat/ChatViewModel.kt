@@ -70,7 +70,7 @@ class ChatViewModel(
     fun sendMessage(isGroup: Boolean, courseId: String, user: User, anotherUser: User) {
         if (validateText()) {
             viewModelScope.launch {
-                val message = Message(messageText.value, user.userName, user.userId, anotherUser.userName)
+                val message = Message(messageText.value, user.userName, user.id, anotherUser.userName)
                 if (isGroup) {
                     onCompleteListener(repository.sendMessageGroup(courseId, message))
                 } else {

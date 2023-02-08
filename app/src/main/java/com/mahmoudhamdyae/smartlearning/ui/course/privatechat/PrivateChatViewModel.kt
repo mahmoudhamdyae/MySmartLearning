@@ -35,7 +35,7 @@ class PrivateChatViewModel(
                     }
                     for (student in snapshot.children) {
                         val studentItem = student.getValue(User::class.java)
-                        if (repository.getUid() != studentItem?.userId) {
+                        if (repository.getUid() != studentItem?.id) {
                             studentsList.add(studentItem!!)
                         }
                     }

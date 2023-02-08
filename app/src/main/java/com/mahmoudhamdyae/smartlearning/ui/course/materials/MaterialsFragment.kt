@@ -1,6 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.materials
 
-import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity.RESULT_OK
 import android.content.ActivityNotFoundException
@@ -31,7 +31,6 @@ import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.getFileName
 import java.io.File
-
 
 @Suppress("DEPRECATION")
 class MaterialsFragment: BaseFragment() {
@@ -69,13 +68,13 @@ class MaterialsFragment: BaseFragment() {
 
         binding.materialsList.layoutManager = GridLayoutManager(context, 1)
         binding.materialsList.adapter = MaterialsAdapter(MaterialsAdapter.OnClickListener {
-            playMaterial(it)
+            playMaterial(it.name!!)
         }, MaterialsAdapter.OnPlayClickListener {
-            playMaterial(it)
+            playMaterial(it.name!!)
         }, MaterialsAdapter.OnDownloadClickListener {
-            downloadMaterial(it)
+            downloadMaterial(it.name!!)
         }, MaterialsAdapter.OnDelClickListener {
-            delMaterial(it)
+            delMaterial(it.name!!)
         }, viewModel.isTeacher.value == IsTeacher.TEACHER)
 
         binding.addFab.setOnClickListener {
@@ -192,8 +191,8 @@ class MaterialsFragment: BaseFragment() {
         private const val PICK_FILE = 1
         private const val REQUEST_EXTERNAL_STORAGE = 1
         private val PERMISSION_STORAGE = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            READ_EXTERNAL_STORAGE,
+            WRITE_EXTERNAL_STORAGE
         )
     }
 

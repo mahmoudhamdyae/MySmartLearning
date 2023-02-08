@@ -72,7 +72,7 @@ class SearchViewModel(
     fun addCourse(course: Course, user: User) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.addCourseToUser(user.userId!!, course).addOnCompleteListener { task ->
+            repository.addCourseToUser(user.id!!, course).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     repository.addStudentToCourse(user, course.id).addOnCompleteListener { task2 ->
                         if (task2.isSuccessful) {

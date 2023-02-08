@@ -65,7 +65,7 @@ class FirebaseRepository {
     // Users
 
     fun addStudentToCourse(user: User, courseId: String): Task<Void> {
-        return courseDatabaseReference.child(courseId).child(Constants.STUDENTS).child(user.userId!!).setValue(user)
+        return courseDatabaseReference.child(courseId).child(Constants.STUDENTS).child(user.id!!).setValue(user)
     }
 
     fun getStudentsOfCourse(courseId: String): DatabaseReference {
@@ -78,12 +78,12 @@ class FirebaseRepository {
         val updates: MutableMap<String, Any> = HashMap()
         updates["studentsNo"] = noOfStudents
         courseDatabaseReference.child(courseId).updateChildren(updates).addOnSuccessListener {
-            userDatabaseReference.child(teacher.userId!!).child(Constants.COURSES).child(courseId).updateChildren(updates)
+            userDatabaseReference.child(teacher.id!!).child(Constants.COURSES).child(courseId).updateChildren(updates)
             getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (student in snapshot.children) {
                         val studentItem = student.getValue(User::class.java)
-                        userDatabaseReference.child(studentItem!!.userId!!).child(Constants.COURSES).child(courseId).updateChildren(updates)
+                        userDatabaseReference.child(studentItem!!.id!!).child(Constants.COURSES).child(courseId).updateChildren(updates)
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
@@ -123,7 +123,7 @@ class FirebaseRepository {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (student in snapshot.children) {
                     val studentItem = student.getValue(User::class.java)
-                    userDatabaseReference.child(studentItem!!.userId!!).child(Constants.COURSES).child(courseId).removeValue()
+                    userDatabaseReference.child(studentItem!!.id!!).child(Constants.COURSES).child(courseId).removeValue()
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -218,7 +218,7 @@ class FirebaseRepository {
     }
 
     fun sendMessagePrivate(user: User, anotherUser: User, message: Message): Task<Void> {
-        return userDatabaseReference.child(user.userId!!).child(Constants.CHATS).child(anotherUser.userId!!).child(message.time).setValue(message)
+        return userDatabaseReference.child(user.id!!).child(Constants.CHATS).child(anotherUser.id!!).child(message.time).setValue(message)
     }
 
     fun getGroupChat(courseId: String): DatabaseReference {
@@ -226,6 +226,6 @@ class FirebaseRepository {
     }
 
     fun getPrivateChat(user: User, anotherUser: User): DatabaseReference {
-        return userDatabaseReference.child(user.userId!!).child(Constants.CHATS).child(anotherUser.userId!!)
+        return userDatabaseReference.child(user.id!!).child(Constants.CHATS).child(anotherUser.id!!)
     }
 }

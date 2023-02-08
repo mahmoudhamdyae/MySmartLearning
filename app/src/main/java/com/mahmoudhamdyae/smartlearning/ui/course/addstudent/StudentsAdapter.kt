@@ -35,7 +35,7 @@ class StudentsAdapter(
         fun bind(user: User, hashMap: HashMap<User, Double>?) {
             binding.property = user
             val repository = FirebaseRepository()
-            repository.getProfilePicture(user.userId!!).addOnSuccessListener {
+            repository.getProfilePicture(user.id!!).addOnSuccessListener {
                 Glide.with(binding.profileImage.context)
                     .load(it)
                     .apply(
@@ -90,7 +90,7 @@ class StudentsAdapter(
         }
 
         override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem.userId == newItem.userId
+            return oldItem.id == newItem.id
         }
     }
 

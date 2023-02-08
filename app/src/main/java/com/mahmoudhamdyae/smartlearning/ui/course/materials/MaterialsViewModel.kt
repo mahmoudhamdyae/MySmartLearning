@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
+import com.mahmoudhamdyae.smartlearning.data.models.Material
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
@@ -17,8 +18,8 @@ class MaterialsViewModel(
     private val repository: FirebaseRepository
 ) : BaseViewModel() {
 
-    private val _materials = MutableLiveData<List<String>>()
-    val materials: LiveData<List<String>>
+    private val _materials = MutableLiveData<List<Material>>()
+    val materials: LiveData<List<Material>>
         get() = _materials
 
     private var _snackBar = MutableLiveData<Int>()
@@ -43,10 +44,10 @@ class MaterialsViewModel(
                 _status.value = STATUS.LOADING
                 repository.getMaterials(courseId).addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val materialsList: MutableList<String> = mutableListOf()
+                        val materialsList: MutableList<Material> = mutableListOf()
                         for (material in dataSnapshot.children) {
                             val materialItem = material.getValue(String::class.java)
-                            materialsList.add(materialItem!!)
+                            materialsList.add(Material(materialItem!!))
                         }
                         _materials.value = materialsList
                         _status.value = STATUS.DONE

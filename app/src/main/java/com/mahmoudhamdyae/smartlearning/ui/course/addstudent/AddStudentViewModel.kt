@@ -29,7 +29,7 @@ class AddStudentViewModel(
             _status.value = STATUS.LOADING
             repository.addStudentToCourse(user, course.id).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    onCompleteListener(repository.addCourseToUser(user.userId!!, course))
+                    onCompleteListener(repository.addCourseToUser(user.id!!, course))
                     course.studentsNo += 1
                     addNoOfStudents(course)
                     navigate()
@@ -60,7 +60,7 @@ class AddStudentViewModel(
                                         var isStudentHere = false
                                         for (student in dataSnapshot.children) {
                                             val studentItem = student.getValue(User::class.java)
-                                            if (userItem.userId == studentItem!!.userId) {
+                                            if (userItem.id == studentItem!!.id) {
                                                 isStudentHere = true
                                                 break
                                             }
