@@ -6,7 +6,6 @@
         android:id="@+id/dialog_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
@@ -18,14 +17,12 @@
             android:layout_weight="1" />
 
         <!-- Indicator -->
-        <!--app:tabBackground="@drawable/intro_tab_selector"-->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@android:color/white"
-            app:tabBackground="@android:color/holo_blue_light"
+            app:tabBackground="@drawable/intro_tab_selector"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp" />
 
@@ -35,10 +32,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/welcome_next_button"
-            android:gravity="center"
-            android:textAllCaps="true"
             android:backgroundTint="#356DF1"
+            android:gravity="center"
+            android:text="@string/welcome_next_button"
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@android:color/white"
             android:textStyle="bold"
@@ -47,13 +44,13 @@
         <!-- Skip -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/skip_button"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/welcome_skip_button"
             android:gravity="center"
+            android:text="@string/welcome_skip_button"
             android:textAllCaps="true"
-            style="@style/Widget.Material3.Button.TextButton"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@android:color/darker_gray"
             android:textStyle="bold"

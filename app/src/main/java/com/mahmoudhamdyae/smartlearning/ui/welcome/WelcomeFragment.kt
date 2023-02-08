@@ -29,13 +29,9 @@ class WelcomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.nextButton.setOnClickListener {
-////            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToLogInFragment())
-//            changeFirstTime()
-//        }
 
         binding.viewPager.adapter = WelcomeViewPageAdapter()
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ ->
         }.attach()
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -51,7 +47,7 @@ class WelcomeFragment: Fragment() {
                 }
             }
         })
-//        binding.viewPager.setPageTransformer(ZoomOutPageTransformer())
+        binding.viewPager.setPageTransformer(ZoomOutPageTransformer())
 
         binding.skipButton.setOnClickListener {
             findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToLogInFragment())
