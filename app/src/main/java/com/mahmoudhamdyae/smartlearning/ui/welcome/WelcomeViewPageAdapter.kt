@@ -2,6 +2,7 @@ package com.mahmoudhamdyae.smartlearning.ui.welcome
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.databinding.OnboardingItemBinding
@@ -22,17 +23,20 @@ class WelcomeViewPageAdapter : RecyclerView.Adapter<PagerVH2>() {
             if (position == 0) {
                 bindingDesign.introTitle.text = context.getString(R.string.title1)
                 bindingDesign.introDescription.text = context.getString(R.string.description1)
-                bindingDesign.introImage.setImageResource(R.drawable.school)
+//                bindingDesign.introImage.setImageResource(R.drawable.school)
+                bindingDesign.introImage.setAnimationFromUrl("https://assets9.lottiefiles.com/packages/lf20_b88nh30c.json")
             }
             if (position == 1) {
                 bindingDesign.introTitle.text = context.getString(R.string.title2)
                 bindingDesign.introDescription.text = context.getString(R.string.description2)
-                bindingDesign.introImage.setImageResource(R.drawable.school)
+//                bindingDesign.introImage.setImageResource(R.drawable.school)
+                bindingDesign.introImage.setAnimationFromUrl("https://assets9.lottiefiles.com/packages/lf20_b88nh30c.json")
             }
             if (position == 2) {
                 bindingDesign.introTitle.text = context.getString(R.string.title3)
                 bindingDesign.introDescription.text = context.getString(R.string.description3)
-                bindingDesign.introImage.setImageResource(R.drawable.school)
+//                bindingDesign.introImage.setImageResource(R.drawable.school)
+                bindingDesign.introImage.setAnimationFromUrl("https://assets9.lottiefiles.com/packages/lf20_b88nh30c.json")
             }
         }
     }
