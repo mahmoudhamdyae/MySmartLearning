@@ -1,23 +1,16 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.materials
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity.RESULT_OK
 import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
-import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.os.Environment
-import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -111,25 +104,25 @@ class MaterialsFragment: BaseFragment() {
     }
 
     private fun verifyStoragePermission() {
-        val permission = ActivityCompat.checkSelfPermission(requireActivity(), WRITE_EXTERNAL_STORAGE)
-
-        // Surrounded with if statement for Android R to get access of complete file.
-        if (SDK_INT >= Build.VERSION_CODES.R) {
-            if (!Environment.isExternalStorageManager() && permission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    PERMISSION_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-                )
-
-                // Abruptly we will ask for permission once the application is launched for sake demo.
-                val intent = Intent()
-                intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-                val uri = Uri.fromParts("package", requireActivity().packageName, null)
-                intent.data = uri
-                startActivity(intent)
-            }
-        }
+//        val permission = ActivityCompat.checkSelfPermission(requireActivity(), WRITE_EXTERNAL_STORAGE)
+//
+//        // Surrounded with if statement for Android R to get access of complete file.
+//        if (SDK_INT >= Build.VERSION_CODES.R) {
+//            if (!Environment.isExternalStorageManager() && permission != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(
+//                    requireActivity(),
+//                    PERMISSION_STORAGE,
+//                    REQUEST_EXTERNAL_STORAGE
+//                )
+//
+//                // Abruptly we will ask for permission once the application is launched for sake demo.
+//                val intent = Intent()
+//                intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+//                val uri = Uri.fromParts("package", requireActivity().packageName, null)
+//                intent.data = uri
+//                startActivity(intent)
+//            }
+//        }
     }
 
     private fun openPDF() {
@@ -189,11 +182,11 @@ class MaterialsFragment: BaseFragment() {
 
     companion object {
         private const val PICK_FILE = 1
-        private const val REQUEST_EXTERNAL_STORAGE = 1
-        private val PERMISSION_STORAGE = arrayOf(
-            READ_EXTERNAL_STORAGE,
-            WRITE_EXTERNAL_STORAGE
-        )
+//        private const val REQUEST_EXTERNAL_STORAGE = 1
+//        private val PERMISSION_STORAGE = arrayOf(
+//            READ_EXTERNAL_STORAGE,
+//            WRITE_EXTERNAL_STORAGE
+//        )
     }
 
 }
