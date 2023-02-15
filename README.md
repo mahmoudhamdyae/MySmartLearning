@@ -1,9 +1,9 @@
 # Smart Learning
 * Communication between the teacher and his students is considered a big problem in his daily life, After work time teacher can’t communicate with them or upload his lectures, so we built smart learning android application to facilitate communication. In this application, there are two types of users who can register teachers and students.
 
-Teacher users can add a course and quizzes, upload materials and lectures that help the students to understand the course and enable the teacher to test his students and their understanding.
+* Teacher users can add a course and quizzes, upload materials and lectures that help the students to understand the course and enable the teacher to test his students and their understanding.
 
-Student users can enroll in courses, solve the quizzes, download course materials and chat with their teacher and other students.
+* Student users can enroll in courses, solve the quizzes, download course materials and chat with their teacher and other students.
 
 ## Screenshots
 <p align="center">
@@ -11,8 +11,8 @@ Student users can enroll in courses, solve the quizzes, download course material
   <img src="Screenshots/2.jpg" height="450" width="220">
   <img src="Screenshots/4.jpg" height="450" width="220">
   <img src="Screenshots/6.jpg" height="450" width="220">
-  <img src="Screenshots/7.jpg" height="220" width="450">
-  <img src="Screenshots/8.jpg" height="220" width="450">
+  <img src="Screenshots/7.jpg" height="450" width="220">
+  <img src="Screenshots/8.jpg" height="450" width="220">
 </p>
 
 ## Downloads
