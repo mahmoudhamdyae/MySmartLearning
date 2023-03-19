@@ -1,10 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.search
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
@@ -28,48 +24,15 @@ class SearchViewModel(
     private fun getListOfCourses() {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.getAllCourses { courses ->
+            repository.getAllCourses({ courses ->
                 _courses.value = courses
                 _status.value = STATUS.DONE
-            }
-//            repository.getAllCourses().addValueEventListener(object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    val coursesList: MutableList<Course> = mutableListOf()
-//                    for (course in snapshot.children) {
-//                        val courseItem = course.getValue(Course::class.java)
-//                        repository.getUserCourses().addValueEventListener(object : ValueEventListener {
-//                            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                                var isEnteredCourse = false
-//                                for (userCourse in dataSnapshot.children) {
-//                                    val userCourseItem = userCourse.getValue(Course::class.java)
-//                                    if (courseItem!!.id == userCourseItem!!.id) {
-//                                        isEnteredCourse = true
-//                                        break
-//                                    }
-//                                }
-//                                if (!isEnteredCourse) {
-//                                    coursesList.add(courseItem!!)
-//                                }
-//                                _courses.value = coursesList
-//                                _status.value = STATUS.DONE
-//                            }
-//
-//                            override fun onCancelled(error: DatabaseError) {
-//                                _status.value = STATUS.ERROR
-//                            }
-//                        })
-//                    }
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    Log.w(
-//                        "getStudents:Cancelled",
-//                        "loadStudents:onCancelled",
-//                        error.toException()
-//                    )
-//                    _status.value = STATUS.ERROR
-//                }
-//            })
+            }, { error ->
+                if (error != null) {
+                    _status.value = STATUS.ERROR
+                    _error.value = error.message
+                }
+            })
         }
     }
 

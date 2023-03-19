@@ -1,6 +1,5 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.database.*
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
@@ -55,21 +54,14 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         try {
             viewModelScope.launch {
                 _status.value = STATUS.LOADING
-                repository.getUserCourses().addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val coursesList : MutableList<Course> = mutableListOf()
-                        for (course in dataSnapshot.children) {
-                            val courseItem = course.getValue(Course::class.java)
-                            coursesList.add(courseItem!!)
-                        }
-                        _courses.value = coursesList
-                        _status.value = STATUS.DONE
-                    }
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        Log.w("getCourses:onCancelled", "loadCourses:onCancelled", databaseError.toException())
+                repository.getUserCourses ({ courses ->
+                    _courses.value = courses
+                    _status.value = STATUS.DONE
+                }, { error ->
+                    if (error != null) {
                         _status.value = STATUS.ERROR
+                        _error.value = error.message
                     }
-
                 })
             }
         } catch (e: Exception) {

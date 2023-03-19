@@ -13,7 +13,6 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.mahmoudhamdyae.smartlearning.data.models.*
 import com.mahmoudhamdyae.smartlearning.utils.Constants
-import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import java.io.File
 
 class FirebaseRepository {
@@ -113,8 +112,23 @@ class FirebaseRepository {
         }
     }
 
-    fun getUserCourses(): DatabaseReference {
-        return userDatabaseReference.child(getUid()).child(Constants.COURSES)
+    fun getUserCourses(courses: (List<Course>) -> Unit, onResult: (DatabaseError?) -> Unit) {
+        userDatabaseReference.child(getUid()).child(Constants.COURSES)
+            .addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val coursesList : MutableList<Course> = mutableListOf()
+                for (course in dataSnapshot.children) {
+                    val courseItem = course.getValue(Course::class.java)
+                    coursesList.add(courseItem!!)
+                }
+                courses(coursesList)
+            }
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("getCourses:onCancelled", "loadCourses:onCancelled", databaseError.toException())
+                onResult(databaseError)
+            }
+
+        })
     }
 
     fun delCourseFromCourses(courseId: String, onResult: (Throwable?) -> Unit) {
@@ -153,34 +167,27 @@ class FirebaseRepository {
             }
     }
 
-    fun getAllCourses(courses: (List<Course>) -> Unit) {
+    fun getAllCourses(courses: (List<Course>) -> Unit, onResult: (DatabaseError?) -> Unit) {
         courseDatabaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val coursesList: MutableList<Course> = mutableListOf()
                 for (course in snapshot.children) {
                     val courseItem = course.getValue(Course::class.java)
-                    getUserCourses().addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            var isEnteredCourse = false
-                            for (userCourse in dataSnapshot.children) {
-                                val userCourseItem = userCourse.getValue(Course::class.java)
-                                if (courseItem!!.id == userCourseItem!!.id) {
-                                    isEnteredCourse = true
-                                    break
-                                }
+                    getUserCourses({courses ->
+                        var isEnteredCourse = false
+                        for (userCourse in courses) {
+                            if (courseItem!!.id == userCourse.id) {
+                                isEnteredCourse = true
+                                break
                             }
-                            if (!isEnteredCourse) {
-                                coursesList.add(courseItem!!)
-                            }
-                            courses(coursesList)
                         }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            Log.w(
-                                "getStudents:Cancelled",
-                                "loadStudents:onCancelled",
-                                error.toException()
-                            )
+                        if (!isEnteredCourse) {
+                            coursesList.add(courseItem!!)
+                        }
+                        courses(coursesList)
+                    }, { error ->
+                        if (error != null) {
+                            onResult(error)
                         }
                     })
                 }
@@ -192,11 +199,12 @@ class FirebaseRepository {
                     "loadStudents:onCancelled",
                     error.toException()
                 )
+                onResult(error)
             }
         })
     }
 
-            // Materials
+    // Materials
 
     fun addMaterialStorage(file: Uri, name: String, courseId: String): UploadTask {
         return mStorageRef.child(Constants.MATERIALS).child(courseId).child(name).putFile(file)
