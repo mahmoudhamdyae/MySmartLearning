@@ -35,7 +35,7 @@ class StudentsAdapter(
         fun bind(user: User, hashMap: HashMap<User, Double>?) {
             binding.property = user
             val repository = FirebaseRepository()
-            repository.getProfilePicture(user.id!!).addOnSuccessListener {
+            repository.getProfilePicture(user.id).addOnSuccessListener {
                 Glide.with(binding.profileImage.context)
                     .load(it)
                     .apply(

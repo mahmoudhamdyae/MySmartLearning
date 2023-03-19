@@ -29,7 +29,14 @@ class AddStudentViewModel(
             _status.value = STATUS.LOADING
             repository.addStudentToCourse(user, course.id).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    onCompleteListener(repository.addCourseToUser(user.id, course))
+                    repository.addCourseToUser(user.id, course) { error ->
+                        if (error == null) {
+                            _status.value = STATUS.DONE
+                        } else {
+                            _status.value = STATUS.ERROR
+                            _error.value = error.message.toString()
+                        }
+                    }
                     course.studentsNo += 1
                     addNoOfStudents(course)
                     navigate()

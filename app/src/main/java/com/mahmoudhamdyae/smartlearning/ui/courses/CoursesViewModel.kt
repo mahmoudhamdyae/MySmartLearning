@@ -33,12 +33,19 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     fun addCourse(course: Course) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.addCourseToCourses(course).addOnCompleteListener { courseTask ->
-                if (courseTask.isSuccessful) {
-                    onCompleteListener(repository.addCourseToUser(repository.getUid(), course))
+            repository.addCourseToCourses(course) { error1 ->
+                if (error1 == null) {
+                    repository.addCourseToUser(repository.getUid(), course) { error2 ->
+                        if (error2 == null) {
+                            _status.value = STATUS.DONE
+                        } else {
+                            _status.value = STATUS.ERROR
+                            _error.value = error2.message.toString()
+                        }
+                    }
                 } else {
                     _status.value = STATUS.ERROR
-                    _error.value = courseTask.exception?.message
+                    _error.value = error1.message.toString()
                 }
             }
         }
@@ -75,36 +82,44 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
         viewModelScope.launch {
             _status.value = STATUS.LOADING
             delCourseFromStudents(courseId)
-            repository.delCourseFromCourses(courseId).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+            repository.delCourseFromCourses(courseId) { error ->
+                if (error == null) {
                     delMaterials(courseId)
                     _status.value = STATUS.DONE
                 } else {
                     _status.value = STATUS.ERROR
-                    _error.value = task.exception?.message
+                    _error.value = error.message.toString()
                 }
             }
         }
     }
 
     private fun delCourseFromStudents(courseId: String) {
-        repository.delCourseFromStudents(courseId)
+        repository.delCourseFromStudents(courseId) { error ->
+            if (error != null) {
+                _error.value = error.message.toString()
+            }
+        }
     }
 
     fun delCourseFromUser(courseId: String) {
         viewModelScope.launch {
-            onCompleteListener(repository.delCourseFromUser(courseId))
+            repository.delCourseFromUser(courseId) { error ->
+                if (error != null) {
+                    _error.value = error.message.toString()
+                }
+            }
         }
     }
 
     fun delStudentFromCourse(courseId: String) {
         viewModelScope.launch {
-            repository.delStudentFromCourse(repository.getUid(), courseId).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+            repository.delStudentFromCourse(repository.getUid(), courseId) { error ->
+                if (error == null) {
                     _status.value = STATUS.DONE
                 } else {
                     _status.value = STATUS.ERROR
-                    _error.value = task.exception?.message
+                    _error.value = error.message.toString()
                 }
             }
         }

@@ -28,64 +28,68 @@ class SearchViewModel(
     private fun getListOfCourses() {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.getAllCourses().addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val coursesList: MutableList<Course> = mutableListOf()
-                    for (course in snapshot.children) {
-                        val courseItem = course.getValue(Course::class.java)
-                        repository.getUserCourses().addValueEventListener(object : ValueEventListener {
-                            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                var isEnteredCourse = false
-                                for (userCourse in dataSnapshot.children) {
-                                    val userCourseItem = userCourse.getValue(Course::class.java)
-                                    if (courseItem!!.id == userCourseItem!!.id) {
-                                        isEnteredCourse = true
-                                        break
-                                    }
-                                }
-                                if (!isEnteredCourse) {
-                                    coursesList.add(courseItem!!)
-                                }
-                                _courses.value = coursesList
-                                _status.value = STATUS.DONE
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                _status.value = STATUS.ERROR
-                            }
-                        })
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.w(
-                        "getStudents:Cancelled",
-                        "loadStudents:onCancelled",
-                        error.toException()
-                    )
-                    _status.value = STATUS.ERROR
-                }
-            })
+            repository.getAllCourses { courses ->
+                _courses.value = courses
+                _status.value = STATUS.DONE
+            }
+//            repository.getAllCourses().addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    val coursesList: MutableList<Course> = mutableListOf()
+//                    for (course in snapshot.children) {
+//                        val courseItem = course.getValue(Course::class.java)
+//                        repository.getUserCourses().addValueEventListener(object : ValueEventListener {
+//                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                                var isEnteredCourse = false
+//                                for (userCourse in dataSnapshot.children) {
+//                                    val userCourseItem = userCourse.getValue(Course::class.java)
+//                                    if (courseItem!!.id == userCourseItem!!.id) {
+//                                        isEnteredCourse = true
+//                                        break
+//                                    }
+//                                }
+//                                if (!isEnteredCourse) {
+//                                    coursesList.add(courseItem!!)
+//                                }
+//                                _courses.value = coursesList
+//                                _status.value = STATUS.DONE
+//                            }
+//
+//                            override fun onCancelled(error: DatabaseError) {
+//                                _status.value = STATUS.ERROR
+//                            }
+//                        })
+//                    }
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    Log.w(
+//                        "getStudents:Cancelled",
+//                        "loadStudents:onCancelled",
+//                        error.toException()
+//                    )
+//                    _status.value = STATUS.ERROR
+//                }
+//            })
         }
     }
 
     fun addCourse(course: Course, user: User) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.addCourseToUser(user.id!!, course).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+            repository.addCourseToUser(user.id, course) { error1 ->
+                if (error1 == null) {
                     repository.addStudentToCourse(user, course.id).addOnCompleteListener { task2 ->
                         if (task2.isSuccessful) {
                             addNoOfStudents(course)
                             _status.value = STATUS.DONE
                         } else {
                             _status.value = STATUS.ERROR
-                            _error.value = task.exception?.message
+                            _error.value = task2.exception?.message.toString()
                         }
                     }
                 } else {
                     _status.value = STATUS.ERROR
-                    _error.value = task.exception?.message
+                    _error.value = error1.message.toString()
                 }
             }
         }
