@@ -77,6 +77,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
             repository.delCourseFromCourses(courseId) { error ->
                 if (error == null) {
                     delMaterials(courseId)
+                    _status.value = STATUS.DONE
                 } else {
                     _status.value = STATUS.ERROR
                     _error.value = error.message.toString()
@@ -117,15 +118,7 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
     }
 
     private fun delMaterials(courseId: String) {
-        _status.value = STATUS.LOADING
-        repository.delMaterialsStorage(courseId) { error ->
-            if (error == null) {
-                _status.value = STATUS.DONE
-            } else {
-                _status.value = STATUS.ERROR
-                _error.value = error.message.toString()
-            }
-        }
+        repository.delMaterialsStorage(courseId) {}
     }
 
     fun decreaseNoOfStudents(course: Course) {
