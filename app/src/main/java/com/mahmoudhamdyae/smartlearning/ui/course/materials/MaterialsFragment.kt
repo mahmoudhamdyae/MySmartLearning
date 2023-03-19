@@ -19,6 +19,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
+import com.mahmoudhamdyae.smartlearning.data.models.Material
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
@@ -67,7 +68,7 @@ class MaterialsFragment: BaseFragment() {
         }, MaterialsAdapter.OnDownloadClickListener {
             downloadMaterial(it.name!!)
         }, MaterialsAdapter.OnDelClickListener {
-            delMaterial(it.name!!)
+            delMaterial(it)
         }, viewModel.isTeacher.value == IsTeacher.TEACHER)
 
         binding.addFab.setOnClickListener {
@@ -150,7 +151,7 @@ class MaterialsFragment: BaseFragment() {
         }
     }
 
-    private fun delMaterial(material: String) {
+    private fun delMaterial(material: Material) {
         val materialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
         materialAlertDialogBuilder
             .setMessage(R.string.material_delete_dialog_msg)
@@ -176,17 +177,13 @@ class MaterialsFragment: BaseFragment() {
         if (data == null) return
         if (requestCode == PICK_FILE && resultCode == RESULT_OK) {
             val file: Uri = data.data!!
-            viewModel.addMaterial(file, context?.getFileName(file), courseId)
+            val material = Material(context?.getFileName(file))
+            viewModel.addMaterial(file, material, courseId)
         }
     }
 
     companion object {
         private const val PICK_FILE = 1
-//        private const val REQUEST_EXTERNAL_STORAGE = 1
-//        private val PERMISSION_STORAGE = arrayOf(
-//            READ_EXTERNAL_STORAGE,
-//            WRITE_EXTERNAL_STORAGE
-//        )
     }
 
 }

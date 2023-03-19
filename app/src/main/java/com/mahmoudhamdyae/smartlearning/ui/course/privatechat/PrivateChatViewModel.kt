@@ -1,10 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.privatechat
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
@@ -27,25 +23,22 @@ class PrivateChatViewModel(
     fun getListOfStudents(courseId: String) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val studentsList: MutableList<User> = mutableListOf()
-                    if (_isTeacher.value != IsTeacher.TEACHER) {
-                        studentsList.add(_teacher.value!!)
-                    }
-                    for (student in snapshot.children) {
-                        val studentItem = student.getValue(User::class.java)
-                        if (repository.getUid() != studentItem?.id) {
-                            studentsList.add(studentItem!!)
-                        }
-                    }
-                    _students.value = studentsList
-                    _status.value = STATUS.DONE
+            repository.getStudentsOfCourse(courseId, { students ->
+                val studentsList: MutableList<User> = mutableListOf()
+                if (_isTeacher.value != IsTeacher.TEACHER) {
+                    studentsList.add(_teacher.value!!)
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.w("getStudents:Cancelled", "loadStudents:onCancelled", error.toException())
+                for (studentItem in students) {
+                    if (repository.getUid() != studentItem.id) {
+                        studentsList.add(studentItem)
+                    }
+                }
+                _students.value = studentsList
+                _status.value = STATUS.DONE
+            }, { error ->
+                if (error != null) {
                     _status.value = STATUS.ERROR
+                    _error.value = error.message
                 }
             })
         }

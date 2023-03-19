@@ -1,9 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.chat
 
 import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Message
 import com.mahmoudhamdyae.smartlearning.data.models.User
@@ -24,18 +21,11 @@ class ChatViewModel(
     fun getListOfGroupMessages(courseId: String) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.getGroupChat(courseId).addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val messagesList: MutableList<Message> = mutableListOf()
-                    for (message in snapshot.children) {
-                        val messageItem = message.getValue(Message::class.java)
-                        messagesList.add(messageItem!!)
-                    }
-                    _messages.value = messagesList
-                    _status.value = STATUS.DONE
-                }
-
-                override fun onCancelled(error: DatabaseError) {
+            repository.getGroupChat(courseId, { messages ->
+                _messages.value = messages
+                _status.value = STATUS.DONE
+            }, { error ->
+                if (error != null) {
                     _status.value = STATUS.ERROR
                     _error.value = error.message
                 }
@@ -46,22 +36,15 @@ class ChatViewModel(
     fun getListOfPrivateMessages(user: User, anotherUser: User) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.getPrivateChat(user, anotherUser).addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val messagesList: MutableList<Message> = mutableListOf()
-                    for (message in snapshot.children) {
-                        val messageItem = message.getValue(Message::class.java)
-                        messagesList.add(messageItem!!)
-                    }
-                    _messages.value = messagesList
-                    _status.value = STATUS.DONE
-                }
-
-                override fun onCancelled(error: DatabaseError) {
+            repository.getPrivateChat(user, anotherUser, { messages ->
+                _messages.value = messages
+                _status.value = STATUS.DONE
+            }) { error ->
+                if (error != null) {
                     _status.value = STATUS.ERROR
                     _error.value = error.message
                 }
-            })
+            }
         }
     }
 
@@ -71,17 +54,36 @@ class ChatViewModel(
         if (validateText()) {
             viewModelScope.launch {
                 val message = Message(messageText.value, user.userName, user.id, anotherUser.userName)
+                _status.value = STATUS.LOADING
                 if (isGroup) {
-                    onCompleteListener(repository.sendMessageGroup(courseId, message))
+                    repository.sendMessageGroup(courseId, message) { error ->
+                        if (error == null) {
+                            _status.value = STATUS.DONE
+                        } else {
+                            _status.value = STATUS.ERROR
+                            _error.value = error.message.toString()
+                        }
+                    }
                 } else {
-                    onCompleteListener(repository.sendMessagePrivate(user, anotherUser, message))
-                    onCompleteListener(repository.sendMessagePrivate(anotherUser, user, message))
+                    sendMessagePrivate(user, anotherUser, message)
+                    sendMessagePrivate(anotherUser, user, message)
                 }
                 _status.value = STATUS.DONE
                 messageText.value = ""
             }
         } else {
             _error.value = "Message Can\'t be empty"
+        }
+    }
+
+    private fun sendMessagePrivate(user: User, anotherUser: User, message: Message) {
+        repository.sendMessagePrivate(user, anotherUser, message) { error ->
+            if (error == null) {
+                _status.value = STATUS.DONE
+            } else {
+                _status.value = STATUS.ERROR
+                _error.value = error.message.toString()
+            }
         }
     }
 }

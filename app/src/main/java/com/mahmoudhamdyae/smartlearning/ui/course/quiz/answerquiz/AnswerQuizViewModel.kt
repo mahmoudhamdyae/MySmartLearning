@@ -5,6 +5,7 @@ import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Question
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
 
 class AnswerQuizViewModel(
@@ -63,8 +64,15 @@ class AnswerQuizViewModel(
 
     private fun saveDegree() {
         viewModelScope.launch {
-//            val percentDegree: Double = 100.0 * (_degree.value?.div(_noOfQuestions.value!!)!!)
-            onCompleteListener(repository.saveDegree(courseId ,quiz.id , _degree.value!!, _noOfQuestions.value!!))
+            _status.value = STATUS.LOADING
+            repository.saveDegree(courseId ,quiz.id , _degree.value!!, _noOfQuestions.value!!) { error ->
+                if (error == null) {
+                    _status.value = STATUS.DONE
+                } else {
+                    _status.value = STATUS.ERROR
+                    _error.value = error.message.toString()
+                }
+            }
         }
     }
 

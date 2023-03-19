@@ -17,8 +17,8 @@ class ProfileViewModel(
         get() = _uri
 
     fun getProfileImage() {
-        repository.getProfilePicture(repository.getUid()).addOnSuccessListener {
-            _uri.value = it
+        repository.getProfilePicture(repository.getUid()) { task ->
+            _uri.value = task.result
         }
     }
 }

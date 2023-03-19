@@ -25,33 +25,16 @@ class QuizDetailsViewModel(
     fun getStudents(courseId: String, quizId: String) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.getStudentsInQuiz(courseId, quizId).addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val studentsList: MutableList<User> = mutableListOf()
-                    val hashMapList: HashMap<User, Double> = HashMap()
-                    for (studentsId in dataSnapshot.children) {
-                        val studentIdItem = studentsId.key
-                        val studentDegreeItem = studentsId.getValue(Double::class.java)
-
-                        repository.getUserById(studentIdItem!!).addValueEventListener(object : ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                val student = snapshot.getValue(User::class.java)!!
-                                studentsList.add(student)
-                                hashMapList[student] = studentDegreeItem!!
-                                _hashMap.value = hashMapList
-                                _students.value = studentsList
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                _status.value = STATUS.ERROR
-                            }
-                        })
-                    }
-                    _status.value = STATUS.DONE
-                }
-
-                override fun onCancelled(error: DatabaseError) {
+            repository.getStudentsInQuiz(courseId, quizId, { hashMap ->
+                _hashMap.value = hashMap
+                _status.value = STATUS.DONE
+            }, { students ->
+                _students.value = students
+                _status.value = STATUS.DONE
+            }, { error ->
+                if (error != null) {
                     _status.value = STATUS.ERROR
+                    _error.value = error.message
                 }
             })
         }

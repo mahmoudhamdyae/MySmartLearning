@@ -35,14 +35,16 @@ class StudentsAdapter(
         fun bind(user: User, hashMap: HashMap<User, Double>?) {
             binding.property = user
             val repository = FirebaseRepository()
-            repository.getProfilePicture(user.id).addOnSuccessListener {
-                Glide.with(binding.profileImage.context)
-                    .load(it)
-                    .apply(
-                        RequestOptions()
-                            .placeholder(R.drawable.loading_animation)
-                            .error(R.drawable.ic_broken_image))
-                    .into(binding.profileImage)
+            repository.getProfilePicture(user.id) { task ->
+                if (task.isSuccessful) {
+                    Glide.with(binding.profileImage.context)
+                        .load(task.result)
+                        .apply(
+                            RequestOptions()
+                                .placeholder(R.drawable.loading_animation)
+                                .error(R.drawable.ic_broken_image))
+                        .into(binding.profileImage)
+                }
             }
             if (user.teacher) {
                 binding.teacherLabel.visibility = View.VISIBLE

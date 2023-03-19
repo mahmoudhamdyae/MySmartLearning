@@ -3,9 +3,6 @@ package com.mahmoudhamdyae.smartlearning.ui.auth
 import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
@@ -63,42 +60,46 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
             viewModelScope.launch {
                 _status.value = STATUS.LOADING
 
-                repository.getAllUsers().addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        var userNameRepeated = false
+                repository.getAllUsers({ users ->
 
-                        for (user in snapshot.children) {
-                            val userItem = user.getValue(User::class.java)
-                            if (userName.value == userItem?.userName) {
-                                userNameRepeated = true
-                                _toast.value = R.string.sign_up_choose_another_user_name_toast
-                                _status.value = STATUS.ERROR
+                }, { error ->
+                    if (error != null) {
+                        _status.value = STATUS.LOADING
+                        _error.value = error.message
+                    }
+                })
+                repository.getAllUsers({ users ->
+                    var userNameRepeated = false
+
+                    for (userItem in users) {
+                        if (userName.value == userItem.userName) {
+                            userNameRepeated = true
+                            _toast.value = R.string.sign_up_choose_another_user_name_toast
+                            _status.value = STATUS.ERROR
                             break
-                            }
-                        }
-
-                        if (!userNameRepeated) {
-                            repository.signUp(email.value!!, password.value!!)
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        // Sign up success.
-                                        Log.d("SignUp", "createUserWithEmail:success")
-                                        saveUserInDatabase()
-                                        saveProfilePicture()
-                                        navigate()
-                                    } else {
-                                        // Sign up fails
-                                        Log.w("SignUp", "createUserWithEmail:failure", task.exception)
-                                        _error.value = task.exception?.message.toString()
-                                        _status.value = STATUS.ERROR
-                                    }
-                                }
                         }
                     }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.w("getUsers:Cancelled", "loadUsers:onCancelled", error.toException())
+                    if (!userNameRepeated) {
+                        repository.signUp(email.value!!, password.value!!) { error ->
+                            if (error == null) {
+                                // Sign up success.
+                                Log.d("SignUp", "createUserWithEmail:success")
+                                saveUserInDatabase()
+                                saveProfilePicture()
+                                navigate()
+                            } else {
+                                // Sign up fails
+                                Log.w("SignUp", "createUserWithEmail:failure", error)
+                                _status.value = STATUS.ERROR
+                                _error.value = error.message.toString()
+                            }
+                        }
+                    }
+                }, { error ->
+                    if (error != null) {
                         _status.value = STATUS.ERROR
+                        _error.value = error.message
                     }
                 })
             }
@@ -110,20 +111,19 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
 
             viewModelScope.launch {
                 _status.value = STATUS.LOADING
-                repository.logIn(email.value!!, password.value!!)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            // Log in success.
-                            Log.d("LogIn", "signInWithEmail:success")
-                            navigate()
-                            _status.value = STATUS.DONE
-                        } else {
-                            // Log in fails.
-                            Log.w("LogIn", "signInWithEmail:failure", task.exception)
-                            _error.value = task.exception?.message.toString()
-                            _status.value = STATUS.ERROR
-                        }
+                repository.logIn(email.value!!, password.value!!) { error ->
+                    if (error == null) {
+                        // Log in success.
+                        Log.d("LogIn", "signInWithEmail:success")
+                        navigate()
+                        _status.value = STATUS.DONE
+                    } else {
+                        // Log in fails.
+                        Log.w("LogIn", "signInWithEmail:failure", error)
+                        _error.value = error.message.toString()
+                        _status.value = STATUS.ERROR
                     }
+                }
             }
         }
     }
@@ -132,21 +132,28 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         val isTeacher = _isTeacher.value == IsTeacher.TEACHER
         val user = User(userName.value!!, email.value!!, imageUri.value, isTeacher, repository.getUid())
 
-        onCompleteListener(repository.saveUserInDatabase(user))
+        _status.value = STATUS.LOADING
+        repository.saveUserInDatabase(user) { error ->
+            if (error == null) {
+                _status.value = STATUS.DONE
+            } else {
+                _status.value = STATUS.ERROR
+                _error.value = error.message.toString()
+            }
+        }
     }
 
     private fun saveProfilePicture() {
         if (imageUri.value != null) {
             _status.value = STATUS.LOADING
-            repository.saveProfilePicture(imageUri.value!!.toUri())
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _status.value = STATUS.DONE
-                    } else {
-                        _error.value = task.exception?.message.toString()
-                        _status.value = STATUS.ERROR
-                    }
+            repository.saveProfilePicture(imageUri.value!!.toUri()) { error ->
+                if (error == null) {
+                    _status.value = STATUS.DONE
+                } else {
+                    _status.value = STATUS.ERROR
+                    _error.value = error.message.toString()
                 }
+            }
         }
     }
 

@@ -41,13 +41,13 @@ class SearchViewModel(
             _status.value = STATUS.LOADING
             repository.addCourseToUser(user.id, course) { error1 ->
                 if (error1 == null) {
-                    repository.addStudentToCourse(user, course.id).addOnCompleteListener { task2 ->
-                        if (task2.isSuccessful) {
+                    repository.addStudentToCourse(user, course.id) { error2 ->
+                        if (error2 == null) {
                             addNoOfStudents(course)
                             _status.value = STATUS.DONE
                         } else {
                             _status.value = STATUS.ERROR
-                            _error.value = task2.exception?.message.toString()
+                            _error.value = error2.message.toString()
                         }
                     }
                 } else {

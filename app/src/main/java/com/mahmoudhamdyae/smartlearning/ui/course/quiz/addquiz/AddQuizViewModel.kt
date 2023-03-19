@@ -6,6 +6,7 @@ import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Question
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import com.mahmoudhamdyae.smartlearning.utils.STATUS
 import kotlinx.coroutines.launch
 
 class AddQuizViewModel(
@@ -81,7 +82,15 @@ class AddQuizViewModel(
             option2.value, option3.value, option4.value, answer.value!!)
         quiz.questions[_num.value!! - 1] = questionInQuiz
         viewModelScope.launch {
-            onCompleteListener(repository.updateQuestion(courseId, quiz.id, _num.value!! - 1, questionInQuiz))
+            _status.value = STATUS.LOADING
+            repository.updateQuestion(courseId, quiz.id, _num.value!! - 1, questionInQuiz) { error ->
+                if (error == null) {
+                    _status.value = STATUS.DONE
+                } else {
+                    _status.value = STATUS.ERROR
+                    _error.value = error.message.toString()
+                }
+            }
         }
 
         if (_num.value!! >= quiz.questions.size - 1) {
@@ -102,12 +111,27 @@ class AddQuizViewModel(
         }
         if (quiz.questions.isNotEmpty()) {
             viewModelScope.launch {
+                _status.value = STATUS.LOADING
                 if (addType == 0) {
                     // Add Quiz
-                    onCompleteListener(repository.saveQuiz(courseId, quiz))
+                    repository.saveQuiz(courseId, quiz) { error ->
+                        if (error == null) {
+                            _status.value = STATUS.DONE
+                        } else {
+                            _status.value = STATUS.ERROR
+                            _error.value = error.message.toString()
+                        }
+                    }
                 } else {
                     // Add Question
-                    onCompleteListener(repository.addQuestions(courseId,quiz.id, quiz.questions))
+                    repository.addQuestions(courseId,quiz.id, quiz.questions) { error ->
+                        if (error == null) {
+                            _status.value = STATUS.DONE
+                        } else {
+                            _status.value = STATUS.ERROR
+                            _error.value = error.message.toString()
+                        }
+                    }
                 }
             }
             _navigateUp.value = true

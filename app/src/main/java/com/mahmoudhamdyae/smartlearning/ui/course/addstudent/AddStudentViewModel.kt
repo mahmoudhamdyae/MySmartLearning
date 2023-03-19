@@ -1,10 +1,6 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.addstudent
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
@@ -27,14 +23,14 @@ class AddStudentViewModel(
     fun addStudentToCourse(user: User, course: Course) {
         viewModelScope.launch {
             _status.value = STATUS.LOADING
-            repository.addStudentToCourse(user, course.id).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    repository.addCourseToUser(user.id, course) { error ->
-                        if (error == null) {
+            repository.addStudentToCourse(user, course.id) { error1 ->
+                if (error1 == null) {
+                    repository.addCourseToUser(user.id, course) { error2 ->
+                        if (error2 == null) {
                             _status.value = STATUS.DONE
                         } else {
                             _status.value = STATUS.ERROR
-                            _error.value = error.message.toString()
+                            _error.value = error2.message.toString()
                         }
                     }
                     course.studentsNo += 1
@@ -42,7 +38,7 @@ class AddStudentViewModel(
                     navigate()
                 } else {
                     _status.value = STATUS.ERROR
-                    _error.value = task.exception?.message
+                    _error.value = error1.message.toString()
                 }
             }
         }
@@ -56,45 +52,35 @@ class AddStudentViewModel(
         try {
             viewModelScope.launch {
                 _status.value = STATUS.LOADING
-                repository.getAllUsers().addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val studentsList: MutableList<User> = mutableListOf()
-                        for (user in snapshot.children) {
-                            val userItem = user.getValue(User::class.java)
-                            if (!userItem!!.teacher) {
-                                repository.getStudentsOfCourse(courseId).addValueEventListener(object : ValueEventListener {
-                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                        var isStudentHere = false
-                                        for (student in dataSnapshot.children) {
-                                            val studentItem = student.getValue(User::class.java)
-                                            if (userItem.id == studentItem!!.id) {
-                                                isStudentHere = true
-                                                break
-                                            }
-                                        }
-                                        if (!isStudentHere) {
-                                            studentsList.add(userItem)
-                                        }
-                                        _students.value = studentsList
-                                        _status.value = STATUS.DONE
+                repository.getAllUsers({ users ->
+                    val studentsList: MutableList<User> = mutableListOf()
+                    for (userItem in users) {
+                        if (!userItem.teacher) {
+                            repository.getStudentsOfCourse(courseId, { students ->
+                                var isStudentHere = false
+                                for (studentItem in students) {
+                                    if (userItem.id == studentItem.id) {
+                                        isStudentHere = true
+                                        break
                                     }
-
-                                    override fun onCancelled(error: DatabaseError) {
-                                        _status.value = STATUS.ERROR
-                                    }
-                                })
-                            }
+                                }
+                                if (!isStudentHere) {
+                                    studentsList.add(userItem)
+                                }
+                                _students.value = studentsList
+                                _status.value = STATUS.DONE
+                            }, { error ->
+                                if (error != null) {
+                                    _status.value = STATUS.ERROR
+                                    _error.value = error.message
+                                }
+                            })
                         }
-                        _status.value = STATUS.DONE
                     }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.w(
-                            "getStudents:Cancelled",
-                            "loadStudents:onCancelled",
-                            error.toException()
-                        )
+                }, { error ->
+                    if (error != null) {
                         _status.value = STATUS.ERROR
+                        _error.value = error.message
                     }
                 })
             }
