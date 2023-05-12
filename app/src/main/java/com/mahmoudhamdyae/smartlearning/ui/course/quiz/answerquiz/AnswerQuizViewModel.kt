@@ -1,14 +1,19 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz.answerquiz
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Question
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AnswerQuizViewModel(
+@HiltViewModel
+class AnswerQuizViewModel @Inject constructor(
     private val repository: FirebaseRepository
 ): BaseViewModel() {
 
@@ -87,12 +92,4 @@ class AnswerQuizViewModel(
         _noOfQuestions.value = quiz2.questions.size
         putValues(quiz2.questions[0])
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class AnswerQuizViewModelFactory (
-    private val repository: FirebaseRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (AnswerQuizViewModel(repository) as T)
 }

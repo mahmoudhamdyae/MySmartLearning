@@ -77,7 +77,7 @@ class WelcomeFragment: Fragment() {
     private fun changeFirstTime() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
         with(sharedPref!!.edit()) {
-            putBoolean(Constants.FIRSTTIME, false)
+            putBoolean(Constants.FIRST_TIME, false)
             apply()
         }
     }

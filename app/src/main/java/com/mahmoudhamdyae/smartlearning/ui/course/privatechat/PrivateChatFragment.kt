@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentPrivateChatBinding
 import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
@@ -18,9 +17,7 @@ import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 class PrivateChatFragment: BaseFragment() {
 
     private lateinit var binding: FragmentPrivateChatBinding
-    override val viewModel: PrivateChatViewModel by viewModels {
-        PrivateChatViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: PrivateChatViewModel by viewModels()
 
     private lateinit var course: Course
     private lateinit var user: User

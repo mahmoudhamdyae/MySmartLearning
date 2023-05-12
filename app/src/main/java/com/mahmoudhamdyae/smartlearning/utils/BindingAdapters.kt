@@ -1,8 +1,14 @@
 package com.mahmoudhamdyae.smartlearning.utils
 
+import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.data.models.*
 import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
 import com.mahmoudhamdyae.smartlearning.ui.course.chat.ChatAdapter
@@ -90,5 +96,20 @@ fun bindVisibility(view: View, isVisible: Boolean) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("imageUrl")
+fun bindImage(imgView: ImageView, imgUrl: String?) {
+    if (imgUrl != "null") {
+        imgUrl.let {
+            Glide.with(imgView.context)
+                .load(imgUrl)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_broken_image))
+                .into(imgView)
+        }
     }
 }

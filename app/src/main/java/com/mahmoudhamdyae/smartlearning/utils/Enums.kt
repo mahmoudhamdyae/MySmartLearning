@@ -1,7 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.utils
 
 enum class IsTeacher {
-    TEACHER, STUDENT, NOTSET
+    TEACHER, STUDENT, NOT_SET
 }
 
 enum class STATUS() {

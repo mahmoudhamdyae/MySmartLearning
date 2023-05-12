@@ -1,15 +1,21 @@
 package com.mahmoudhamdyae.smartlearning.ui.courses
 
-import androidx.lifecycle.*
-import com.google.firebase.database.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewModel() {
+@HiltViewModel
+class CoursesViewModel @Inject constructor(
+    private val repository: FirebaseRepository
+): BaseViewModel() {
 
     val courseName = MutableLiveData<String>()
 
@@ -126,12 +132,4 @@ class CoursesViewModel(private val repository: FirebaseRepository) : BaseViewMod
             repository.updateNoOfStudents(course.id, course.studentsNo - 1, course.teacher!!)
         }
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class CoursesViewModelFactory (
-    private val repository: FirebaseRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (CoursesViewModel(repository) as T)
 }

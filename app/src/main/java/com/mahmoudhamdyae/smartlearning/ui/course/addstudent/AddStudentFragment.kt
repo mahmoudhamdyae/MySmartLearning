@@ -8,15 +8,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentAddStudentBinding
 
 class AddStudentFragment: BaseFragment() {
 
     private lateinit var binding: FragmentAddStudentBinding
-    override val viewModel: AddStudentViewModel by viewModels {
-        AddStudentViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: AddStudentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

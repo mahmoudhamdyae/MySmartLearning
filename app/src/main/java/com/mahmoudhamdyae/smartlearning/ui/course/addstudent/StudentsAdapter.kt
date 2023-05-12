@@ -7,51 +7,35 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.data.models.User
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.StudentItemBinding
 
 class StudentsAdapter(
-    private val onClickListener: OnClickListener
-) :
-    ListAdapter<User, StudentsAdapter.StudentPropertyViewHolder>(DiffCallback) {
+    private val onClickListener: OnClickListener,
+): ListAdapter<User, StudentsAdapter.StudentPropertyViewHolder>(DiffCallback) {
 
-    private var hashMap: HashMap<User, Double>? = null
+    private var degreeHashMap: HashMap<User, Double>? = null
 
-    fun setDegree(hashMap2: HashMap<User, Double>) {
-        hashMap = hashMap2
+    fun setDegree(hashMap: HashMap<User, Double>) {
+        degreeHashMap = hashMap
     }
 
     /**
      * The [StudentPropertyViewHolder] constructor takes the binding variable from the associated
      * GridViewItem, which nicely gives it access to the full [User] information.
      */
-    class StudentPropertyViewHolder(private var binding: StudentItemBinding):
-        RecyclerView.ViewHolder(binding.root) {
+    class StudentPropertyViewHolder(
+        private var binding: StudentItemBinding,
+        ): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(user: User, hashMap: HashMap<User, Double>?) {
+        fun bind(user: User, degreesHashMap: HashMap<User, Double>?) {
             binding.property = user
-            val repository = FirebaseRepository()
-            repository.getProfilePicture(user.id) { task ->
-                if (task.isSuccessful) {
-                    Glide.with(binding.profileImage.context)
-                        .load(task.result)
-                        .apply(
-                            RequestOptions()
-                                .placeholder(R.drawable.loading_animation)
-                                .error(R.drawable.ic_broken_image))
-                        .into(binding.profileImage)
-                }
-            }
             if (user.teacher) {
                 binding.teacherLabel.visibility = View.VISIBLE
                 binding.teacherLabel.text = "The Teacher"
             } else {
-                val degree = hashMap?.get(user)
-                if (hashMap != null) {
+                val degree = degreesHashMap?.get(user)
+                if (degreesHashMap != null) {
                     binding.teacherLabel.text = "Degree: ${degree?.toInt()}"
                 } else {
                     binding.teacherLabel.visibility = View.GONE
@@ -66,8 +50,9 @@ class StudentsAdapter(
     /**
      * Create new [RecyclerView] item views (invoked by the layout manager)
      */
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): StudentPropertyViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup, viewType: Int
+    ): StudentPropertyViewHolder {
         return StudentPropertyViewHolder(StudentItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
@@ -79,7 +64,7 @@ class StudentsAdapter(
         holder.itemView.setOnClickListener {
             onClickListener.onClick(user)
         }
-        holder.bind(user, hashMap)
+        holder.bind(user, degreeHashMap)
     }
 
     /**

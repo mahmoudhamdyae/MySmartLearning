@@ -10,15 +10,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentChatBinding
 
 class ChatFragment: BaseFragment() {
 
     private lateinit var binding: FragmentChatBinding
-    override val viewModel: ChatViewModel by viewModels {
-        ChatViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: ChatViewModel by viewModels()
 
     private lateinit var course: Course
     private var isGroup = true
@@ -61,7 +58,7 @@ class ChatFragment: BaseFragment() {
 
         binding.messageList.layoutManager = GridLayoutManager(context, 1)
         binding.messageList.adapter = ChatAdapter(ChatAdapter.OnClickListener {
-        }, user!!.id!!)
+        }, user!!.id)
 
         binding.sendFab.setOnClickListener {
             viewModel.sendMessage(isGroup, course.id, user!!, anotherUser!!)

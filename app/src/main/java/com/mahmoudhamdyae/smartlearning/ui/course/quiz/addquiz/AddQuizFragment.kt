@@ -11,15 +11,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizAddBinding
 
 class AddQuizFragment: BaseFragment() {
 
     private lateinit var binding: FragmentQuizAddBinding
-    override val viewModel: AddQuizViewModel by viewModels {
-        AddQuizViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: AddQuizViewModel by viewModels()
 
     private var addType: Int = 0
     private lateinit var quiz: Quiz

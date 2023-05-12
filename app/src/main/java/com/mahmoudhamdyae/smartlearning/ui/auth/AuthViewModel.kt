@@ -2,23 +2,30 @@ package com.mahmoudhamdyae.smartlearning.ui.auth
 
 import android.util.Log
 import androidx.core.net.toUri
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val repository: FirebaseRepository
+): BaseViewModel() {
 
     // EditTexts fields
     val userName = MutableLiveData<String>()
     val email = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
-    val imageUri = MutableLiveData<String?>()
+    var imageUri = MutableLiveData<String?>()
 
     private var _navigate = MutableLiveData(false)
     val navigate: LiveData<Boolean>
@@ -34,7 +41,7 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
         } else if (password.value.isNullOrEmpty()) {
             _toast.value = R.string.auth_password_empty_toast
             false
-        }  else if (_isTeacher.value == IsTeacher.NOTSET) {
+        }  else if (_isTeacher.value == IsTeacher.NOT_SET) {
             _toast.value = R.string.auth_type_not_chosen_text_toast
             false
         } else {
@@ -60,9 +67,7 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
             viewModelScope.launch {
                 _status.value = STATUS.LOADING
 
-                repository.getAllUsers({ users ->
-
-                }, { error ->
+                repository.getAllUsers({}, { error ->
                     if (error != null) {
                         _status.value = STATUS.LOADING
                         _error.value = error.message
@@ -85,8 +90,8 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
                             if (error == null) {
                                 // Sign up success.
                                 Log.d("SignUp", "createUserWithEmail:success")
-                                saveUserInDatabase()
                                 saveProfilePicture()
+                                saveUserInDatabase()
                                 navigate()
                             } else {
                                 // Sign up fails
@@ -145,14 +150,16 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
 
     private fun saveProfilePicture() {
         if (imageUri.value != null) {
-            _status.value = STATUS.LOADING
-            repository.saveProfilePicture(imageUri.value!!.toUri()) { error ->
-                if (error == null) {
-                    _status.value = STATUS.DONE
-                } else {
-                    _status.value = STATUS.ERROR
-                    _error.value = error.message.toString()
-                }
+            viewModelScope.launch {
+                _status.value = STATUS.LOADING
+                imageUri.value = repository.saveProfilePicture(imageUri.value!!.toUri()) { error ->
+                    if (error == null) {
+                        _status.value = STATUS.DONE
+                    } else {
+                        _status.value = STATUS.ERROR
+                        _error.value = error.message.toString()
+                    }
+                }.toString()
             }
         }
     }
@@ -164,12 +171,4 @@ class LogInViewModel(private val repository: FirebaseRepository) : BaseViewModel
     fun finishNavigate() {
         _navigate.value = false
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class LogInViewModelFactory (
-    private val repository: FirebaseRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (LogInViewModel(repository) as T)
 }

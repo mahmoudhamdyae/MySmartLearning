@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -15,15 +14,12 @@ import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.models.User
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizAnswerBinding
 
 class AnswerQuizFragment: BaseFragment() {
 
     private lateinit var binding: FragmentQuizAnswerBinding
-    override val viewModel: AnswerQuizViewModel by viewModels {
-        AnswerQuizViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: AnswerQuizViewModel by viewModels()
 
     private lateinit var quiz: Quiz
     private lateinit var course: Course

@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,16 +19,13 @@ import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentCoursesBinding
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 
 class CoursesFragment: BaseFragment() {
 
     private lateinit var binding: FragmentCoursesBinding
-    override val viewModel: CoursesViewModel by viewModels {
-        CoursesViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: CoursesViewModel by viewModels()
 
     private lateinit var mAUth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -141,7 +140,7 @@ class CoursesFragment: BaseFragment() {
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
             with(sharedPref!!.edit()) {
                 putString(Constants.USERNAME, it.userName)
-                putBoolean(Constants.ISTEACHER, it.teacher)
+                putBoolean(Constants.IS_TEACHER, it.teacher)
                 apply()
             }
         }

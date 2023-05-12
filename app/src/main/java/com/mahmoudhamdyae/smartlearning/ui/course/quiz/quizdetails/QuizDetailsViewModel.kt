@@ -1,16 +1,18 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.quiz.quizdetails
 
-import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class QuizDetailsViewModel(
+@HiltViewModel
+class QuizDetailsViewModel @Inject constructor(
     private val repository: FirebaseRepository
 ): BaseViewModel() {
 
@@ -39,12 +41,4 @@ class QuizDetailsViewModel(
             })
         }
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class QuizDetailsViewModelFactory (
-    private val repository: FirebaseRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (QuizDetailsViewModel(repository) as T)
 }

@@ -1,18 +1,23 @@
 package com.mahmoudhamdyae.smartlearning.ui.course.materials
 
 import android.net.Uri
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Material
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.File
+import javax.inject.Inject
 
-class MaterialsViewModel(
+@HiltViewModel
+class MaterialsViewModel @Inject constructor(
     private val repository: FirebaseRepository
-) : BaseViewModel() {
+): BaseViewModel() {
 
     private val _materials = MutableLiveData<List<Material>>()
     val materials: LiveData<List<Material>>
@@ -101,12 +106,4 @@ class MaterialsViewModel(
             }
         }
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class MaterialsViewModelFactory (
-    private val repository: FirebaseRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (MaterialsViewModel(repository) as T)
 }

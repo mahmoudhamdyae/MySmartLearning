@@ -8,18 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentLogInBinding
-import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
-import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModelFactory
+import com.mahmoudhamdyae.smartlearning.ui.auth.AuthViewModel
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 
 class LogInFragment : BaseFragment() {
 
     private lateinit var binding: FragmentLogInBinding
-    override val viewModel: LogInViewModel by viewModels {
-        LogInViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +52,7 @@ class LogInFragment : BaseFragment() {
 
     private fun observeFirstTime() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val isFirstTime = sharedPref.getBoolean(Constants.FIRSTTIME, true)
+        val isFirstTime = sharedPref.getBoolean(Constants.FIRST_TIME, true)
         if (isFirstTime) {
             // Implement first time logic
             findNavController().navigate(LogInFragmentDirections.actionLogInFragmentToWelcomeFragment())

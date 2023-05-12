@@ -5,10 +5,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.mahmoudhamdyae.smartlearning.utils.Constants
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Base Fragment to observe on the common LiveData objects
  */
+@AndroidEntryPoint
 abstract class BaseFragment: Fragment() {
 
     /**
@@ -30,7 +32,7 @@ abstract class BaseFragment: Fragment() {
 
     protected fun getUserType() {
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        val isTeacher = sharedPref.getBoolean(Constants.ISTEACHER, false)
+        val isTeacher = sharedPref.getBoolean(Constants.IS_TEACHER, false)
         viewModel.setIsTeacher(if (isTeacher) IsTeacher.TEACHER else IsTeacher.STUDENT)
     }
 }

@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel" />
+            type="com.mahmoudhamdyae.smartlearning.ui.auth.AuthViewModel" />
     </data>
 
     <ScrollView

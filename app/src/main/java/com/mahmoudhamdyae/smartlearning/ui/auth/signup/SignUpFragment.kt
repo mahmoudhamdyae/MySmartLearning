@@ -10,10 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentSignUpBinding
-import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModel
-import com.mahmoudhamdyae.smartlearning.ui.auth.LogInViewModelFactory
+import com.mahmoudhamdyae.smartlearning.ui.auth.AuthViewModel
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 
 private const val PICK_IMAGE = 1
@@ -22,9 +20,7 @@ private const val PICK_IMAGE = 1
 class SignUpFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSignUpBinding
-    override val viewModel: LogInViewModel by viewModels {
-        LogInViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: AuthViewModel by viewModels()
 
     private var imageUri: Uri? = null
 

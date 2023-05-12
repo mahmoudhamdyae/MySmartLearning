@@ -8,16 +8,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizDetailsBinding
 import com.mahmoudhamdyae.smartlearning.ui.course.addstudent.StudentsAdapter
 
 class QuizDetailsFragment: BaseFragment() {
 
     private lateinit var binding: FragmentQuizDetailsBinding
-    override val viewModel: QuizDetailsViewModel by viewModels {
-        QuizDetailsViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: QuizDetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -20,7 +20,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.mahmoudhamdyae.smartlearning.R
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Material
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentMaterialsBinding
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.getFileName
@@ -30,9 +29,7 @@ import java.io.File
 class MaterialsFragment: BaseFragment() {
 
     private lateinit var binding: FragmentMaterialsBinding
-    override val viewModel: MaterialsViewModel by viewModels {
-        MaterialsViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: MaterialsViewModel by viewModels()
 
     private lateinit var courseId: String
 
@@ -89,8 +86,6 @@ class MaterialsFragment: BaseFragment() {
                 }
                 .show()
         }
-
-        verifyStoragePermission()
     }
 
     private fun playMaterial(material: String) {
@@ -102,28 +97,6 @@ class MaterialsFragment: BaseFragment() {
         val rootPath = File(Environment.getExternalStorageDirectory(), "Download")
         val localFile = File(rootPath, material)
         viewModel.getMaterial(courseId, material, localFile)
-    }
-
-    private fun verifyStoragePermission() {
-//        val permission = ActivityCompat.checkSelfPermission(requireActivity(), WRITE_EXTERNAL_STORAGE)
-//
-//        // Surrounded with if statement for Android R to get access of complete file.
-//        if (SDK_INT >= Build.VERSION_CODES.R) {
-//            if (!Environment.isExternalStorageManager() && permission != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(
-//                    requireActivity(),
-//                    PERMISSION_STORAGE,
-//                    REQUEST_EXTERNAL_STORAGE
-//                )
-//
-//                // Abruptly we will ask for permission once the application is launched for sake demo.
-//                val intent = Intent()
-//                intent.action = ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
-//                val uri = Uri.fromParts("package", requireActivity().packageName, null)
-//                intent.data = uri
-//                startActivity(intent)
-//            }
-//        }
     }
 
     private fun openPDF() {

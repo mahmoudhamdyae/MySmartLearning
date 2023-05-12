@@ -1,17 +1,21 @@
 package com.mahmoudhamdyae.smartlearning.ui.search
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.User
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.*
+import javax.inject.Inject
 
-class SearchViewModel(
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     private val repository: FirebaseRepository
-) : BaseViewModel() {
+): BaseViewModel() {
 
     private val _courses = MutableLiveData<List<Course>>()
     val courses: LiveData<List<Course>>
@@ -61,12 +65,4 @@ class SearchViewModel(
     private fun addNoOfStudents(course: Course) {
         repository.updateNoOfStudents(course.id, course.studentsNo + 1, course.teacher!!)
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class SearchViewModelFactory (
-    private val repository: FirebaseRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (SearchViewModel(repository) as T)
 }

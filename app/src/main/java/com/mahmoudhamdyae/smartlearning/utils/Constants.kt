@@ -1,8 +1,7 @@
 package com.mahmoudhamdyae.smartlearning.utils
 
-import java.security.Key
-
 object Constants {
+
     // Firebase Database
     const val USERS = "users"
     const val COURSES = "courses"
@@ -16,8 +15,7 @@ object Constants {
     const val MATERIALS = "materials"
 
     // Shared preferences keys
-    const val KEY = "key"
     const val USERNAME = "userName"
-    const val ISTEACHER = "isTeacher"
-    const val FIRSTTIME = "firstTime"
+    const val IS_TEACHER = "isTeacher"
+    const val FIRST_TIME = "firstTime"
 }

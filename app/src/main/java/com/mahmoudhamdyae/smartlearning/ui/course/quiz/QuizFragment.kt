@@ -16,15 +16,12 @@ import com.mahmoudhamdyae.smartlearning.base.BaseFragment
 import com.mahmoudhamdyae.smartlearning.data.models.Course
 import com.mahmoudhamdyae.smartlearning.data.models.Quiz
 import com.mahmoudhamdyae.smartlearning.data.models.User
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentQuizBinding
 
 class QuizFragment: BaseFragment() {
 
     private lateinit var binding: FragmentQuizBinding
-    override val viewModel: QuizViewModel by viewModels {
-        QuizViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: QuizViewModel by viewModels()
 
     private lateinit var course: Course
     private lateinit var user: User

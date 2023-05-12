@@ -30,6 +30,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:src="@drawable/default_image"
+                    app:imageUrl="@{property.imageUri}"
                     app:layout_constraintEnd_toStartOf="@+id/email"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

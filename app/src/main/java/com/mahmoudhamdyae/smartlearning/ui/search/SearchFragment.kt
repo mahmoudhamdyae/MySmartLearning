@@ -8,16 +8,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentSearchBinding
 import com.mahmoudhamdyae.smartlearning.ui.courses.CoursesAdapter
 
 class SearchFragment: BaseFragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    override val viewModel: SearchViewModel by viewModels {
-        SearchViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

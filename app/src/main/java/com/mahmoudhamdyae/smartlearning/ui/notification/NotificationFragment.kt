@@ -8,15 +8,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mahmoudhamdyae.smartlearning.base.BaseFragment
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentNotificationBinding
 
 class NotificationFragment: BaseFragment() {
 
     private lateinit var binding: FragmentNotificationBinding
-    override val viewModel: NotificationViewModel by activityViewModels {
-        NotificationViewModelFactory(FirebaseRepository())
-    }
+    override val viewModel: NotificationViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

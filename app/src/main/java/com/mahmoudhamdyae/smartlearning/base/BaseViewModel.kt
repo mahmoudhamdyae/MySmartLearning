@@ -3,16 +3,24 @@ package com.mahmoudhamdyae.smartlearning.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.tasks.Task
 import com.mahmoudhamdyae.smartlearning.utils.IsTeacher
 import com.mahmoudhamdyae.smartlearning.utils.STATUS
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Base class for View Models to declare the common LiveData objects in one place
  */
-abstract class BaseViewModel: ViewModel() {
+@HiltViewModel
+open class BaseViewModel @Inject constructor(
+): ViewModel() {
 
-    protected val _isTeacher = MutableLiveData(IsTeacher.NOTSET)
+    protected val _isTeacher = MutableLiveData(IsTeacher.NOT_SET)
     val isTeacher: LiveData<IsTeacher>
         get() = _isTeacher
 
@@ -32,15 +40,16 @@ abstract class BaseViewModel: ViewModel() {
         _isTeacher.value = isTeacher
     }
 
-    fun onCompleteListener(uploadTask: Task<Void>) {
-        _status.value = STATUS.LOADING
-        uploadTask.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                _status.value = STATUS.DONE
-            } else {
-                _status.value = STATUS.ERROR
-                _error.value = task.exception?.message
-            }
-        }
-    }
+    fun launchCatching(snackBar: Boolean = true, block: suspend CoroutineScope.() -> Unit) =
+        viewModelScope.launch(
+            CoroutineExceptionHandler { _, throwable ->
+                if (snackBar) {
+                    viewModelScope.launch {
+                        _error.value = throwable.message ?: "Unknown Error"
+                    }
+                }
+//                logService.logNonFatalCrash(throwable)
+            },
+            block = block
+        )
 }

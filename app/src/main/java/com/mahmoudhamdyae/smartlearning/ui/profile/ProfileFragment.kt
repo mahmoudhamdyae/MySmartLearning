@@ -5,21 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mahmoudhamdyae.smartlearning.R
-import com.mahmoudhamdyae.smartlearning.base.BaseFragment
-import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
 import com.mahmoudhamdyae.smartlearning.databinding.FragmentProfileBinding
 
-class ProfileFragment: BaseFragment() {
+class ProfileFragment: Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    override val viewModel: ProfileViewModel by viewModels {
-        ProfileViewModelFactory(FirebaseRepository())
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +23,6 @@ class ProfileFragment: BaseFragment() {
     ): View {
         binding = FragmentProfileBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
 
         return binding.root
     }
@@ -49,17 +43,14 @@ class ProfileFragment: BaseFragment() {
 
         val imageUri = user.imageUri
         if (imageUri != "null") {
-            viewModel.getProfileImage()
-            viewModel.uri.observe(viewLifecycleOwner) {
-                Glide.with(requireContext())
-                    .load(if (it.toString() != "null") it else R.drawable.default_image )
-                    .apply(
-                        RequestOptions()
-                            .placeholder(R.drawable.loading_animation)
-                            .fallback(R.drawable.default_image)
-                            .error(R.drawable.ic_broken_image))
-                    .into(binding.profileImage)
-            }
+            Glide.with(requireContext())
+                .load(imageUri)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .fallback(R.drawable.default_image)
+                        .error(R.drawable.ic_broken_image))
+                .into(binding.profileImage)
         } else {
             binding.profileImage.setImageDrawable(getDrawable(requireContext(), R.drawable.default_image))
         }

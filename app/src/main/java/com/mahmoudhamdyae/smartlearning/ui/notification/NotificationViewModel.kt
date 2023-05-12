@@ -1,12 +1,17 @@
 package com.mahmoudhamdyae.smartlearning.ui.notification
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mahmoudhamdyae.smartlearning.base.BaseViewModel
 import com.mahmoudhamdyae.smartlearning.data.models.Notification
 import com.mahmoudhamdyae.smartlearning.data.repository.FirebaseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NotificationViewModel(
+@HiltViewModel
+class NotificationViewModel @Inject constructor(
     private val repository: FirebaseRepository
 ): BaseViewModel() {
 
@@ -25,12 +30,4 @@ class NotificationViewModel(
 
     fun setNotificationRead() {
     }
-}
-
-@Suppress("UNCHECKED_CAST")
-class NotificationViewModelFactory (
-    private val repository: FirebaseRepository
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>) =
-        (NotificationViewModel(repository) as T)
 }
